@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title th:text="${titulo}"></title>
+
+    <!--STYLESHEET-->
+    <!--=================================================-->
+
+    <!--Open Sans Font [ OPTIONAL ]-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
+
+    <!--Bootstrap Stylesheet [ REQUIRED ]-->
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!--Nifty Stylesheet [ REQUIRED ]-->
+    <link th:href="@{/assets/css/nifty.min.css}" rel="stylesheet">
+
+    <!--Nifty Premium Icon [ DEMONSTRATION ]-->
+    <link th:href="@{/assets/css/demo/nifty-demo-icons.min.css}" rel="stylesheet">
+
+    <!--Pace - Page Load Progress Par [OPTIONAL]-->
+    <link th:href="@{/assets/plugins/pace/pace.min.css}" rel="stylesheet">
+    <script th:href="@{//assets/plugins/pace/pace.min.js}"></script>
+    <!--Demo [ DEMONSTRATION ]-->
+    <link th:href="@{/assets/css/demo/nifty-demo.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/demo/custom-login.css}" rel="stylesheet">
+</head>
+
+<body>
+
+
+<div id="container" class="effect aside-float aside-bright mainnav-out push">
+<!--NAVBAR-->
+<!--===================================================-->
+
+<header th:fragment="header" id="navbar" >
+
+
+    <a th:href="@{/person/listar}">Usuarios</a>
+
+
+    <form id="logoutForm" th:action="@{/logout}" method="post">
+        <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();" type="submit">Sign Out</button>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    </form>
+
+    <div class="alert alert-success" th:if="${success != null}"
+         th:text="${success}"></div>
+    <div class="alert alert-danger" th:if="${error != null}"
+         th:text="${error}"></div>
+    <div class="alert alert-warning" th:if="${warning != null}"
+         th:text="${warning}"></div>
+    <div class="alert alert-info" th:if="${info != null}"
+         th:text="${info}"></div>
+
+</header>
+<!--===================================================-->
+<!--END NAVBAR-->
+
+
+
+
+
+<div class="container"></div>
+
+</div>
+
+<footer th:fragment="footer" class="container">
+    <hr />
+    <p sec:authorize="isAuthenticated()">
+        Usuario logeado: <span sec:authentication="name"></span> | Roles: <span
+            sec:authentication="principal.authorities"></span>
+    </p>
+
+    <p>
+      Proyecto Feria Virtual desarrollado por: <br />
+        - Laura Gomez.
+        - Claudio Martinez.
+        - Brian Gaete.
+        - Carlos Cabezas.
+        - Rodolfo Quezada.
+    </p>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Bootstrap JS -->
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/jquery-ui.min.js}"></script>
+
+    <!--jQuery [ REQUIRED ]-->
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <!--BootstrapJS [ RECOMMENDED ]-->
+    <script th:src="@{/assets/js/bootstrap.min.js}"></script>
+    <!--NiftyJS [ RECOMMENDED ]-->
+    <script th:src="@{/static/assets/js/nifty.min.js}"></script>
+
+
+</footer>
+
+</body>
+</html>
+
+
+
+

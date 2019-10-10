@@ -7,13 +7,13 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "authorities", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "authority"})})
+@Table(name = "authorities")
 public class Role implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_ADDRESS")
+    @SequenceGenerator(name = "SEQ_ADDRESS",allocationSize = 1,sequenceName = "SEQ_ADDRESS")
     private Long id;
-
     private String authority;
 
 }
