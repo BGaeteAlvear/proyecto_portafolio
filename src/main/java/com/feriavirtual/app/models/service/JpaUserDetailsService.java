@@ -33,14 +33,16 @@ public class JpaUserDetailsService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByUserName(userName);
 
         if (usuario == null){
-            logger.error("Error login qlo");
+            logger.error("Error login");
             throw  new UsernameNotFoundException("Usuario no existe");
         }
 
         List<GrantedAuthority> grantedAuthorities  = new ArrayList<GrantedAuthority>();
         for (Role role: usuario.getRoles()) {
+            logger.info("roles ->" + usuario.getRoles());
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
         }
+        logger.info(" --- " + grantedAuthorities.toString());
         return new User(usuario.getUserName(), usuario.getPassword(), usuario.getEnabled(), true, true, true, grantedAuthorities);
     }
 }

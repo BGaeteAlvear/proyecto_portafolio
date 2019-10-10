@@ -12,7 +12,8 @@ import java.util.List;
 public class Usuario implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_ADDRESS")
+    @SequenceGenerator(name = "SEQ_ADDRESS",allocationSize = 1,sequenceName = "SEQ_ADDRESS")
     private Long id;
 
         @Column(length = 30, unique = true)
@@ -22,6 +23,6 @@ public class Usuario implements Serializable {
         private Boolean enabled;
 
         @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-        @JoinColumn(name = "user_id")
+        @JoinColumn(name= "usuario_id")
         private List<Role> roles;
 }
