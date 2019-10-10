@@ -10,14 +10,11 @@ import java.util.Date;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "persons")
 public class Person  implements Serializable {
 
 
     @Id
-    //  @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_PERSON")
     @SequenceGenerator(name = "SEQ_PERSON",allocationSize = 1,sequenceName = "SEQ_PERSON")
     private Long id;
@@ -57,5 +54,12 @@ public class Person  implements Serializable {
     private int roleId;
 
     private Boolean enabled;
+
+
+    public Person(){
+        this.roleId = 1;
+        this.passwordRecovery = 1;
+        this.status = true;
+    }
 
 }

@@ -2,20 +2,16 @@ package com.feriavirtual.app.controllers;
 
 import com.feriavirtual.app.models.entity.Person;
 import com.feriavirtual.app.models.service.IPersonService;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Collection;
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/person")
@@ -28,7 +24,7 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @Secured("ROLE_ADMIN")
+
     @GetMapping("/listar")
     public String listar(Model model){
         List<Person> lista = personService.getAll();
@@ -37,39 +33,52 @@ public class PersonController {
         return "/person/listar";
     }
 
-
-
-
-    private boolean hasRole(String role) {
-
-        SecurityContext context = SecurityContextHolder.getContext();
-
-        if(context == null) {
-            return false;
-        }
-
-        Authentication auth = context.getAuthentication();
-
-        if(auth == null) {
-            return false;
-        }
-
-        Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
-
-        return authorities.contains(new SimpleGrantedAuthority(role));
-
-		/*
-		 * for(GrantedAuthority authority: authorities) {
-			if(role.equals(authority.getAuthority())) {
-				logger.info("Hola usuario ".concat(auth.getName()).concat(" tu role es: ".concat(authority.getAuthority())));
-				return true;
-			}
-		}
-
-		return false;
-		*/
-
+    @GetMapping("/form")
+    public String crear(Map<String, Object> model){
+        Person person = new Person();
+        model.put("titulo", "Crear Usuario");
+        model.put("person", person);
+        return "/person/form";
     }
+
+
+    @PostMapping("/form")
+    public String guardar(@Valid Person person, BindingResult result, Model model, SessionStatus status){
+        if (person != null){
+            personService.save(person);
+            status.setComplete();
+        }
+        return "redirect:/person/listar";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable (value = "id") Long id){
+        if (id > 0){
+            personService.delete(id);
+        }
+        return "redirect:/person/listar";
+    }
+
+
+    @GetMapping("/form/{id}")
+    public String editar(@PathVariable(value = "id")Long id, Map<String, Object> model, RedirectAttributes flash){
+        Person person  = null;
+        if(id > 0){
+         person = personService.findById(id);
+            if (person == null){
+                flash.addFlashAttribute("error", "El ID del cliente no existe en la BBDD!");
+                return "redirect:/person/listar";
+            }
+        }else {
+            flash.addFlashAttribute("error", "El ID del cliente no puede ser cero!");
+            return "redirect:/listar";
+        }
+        model.put("person", person);
+        model.put("titulo", "Editar usuario");
+        return "/person/form";
+    }
+
+
 
 
 
