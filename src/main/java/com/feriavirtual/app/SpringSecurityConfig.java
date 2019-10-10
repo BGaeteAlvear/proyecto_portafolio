@@ -23,13 +23,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         //http.authorizeRequests().antMatchers("/").permitAll()
-        http.authorizeRequests().antMatchers("/").hasAnyRole("ADMIN")
+
+        http.authorizeRequests().antMatchers("/assets/**").permitAll()
+                .antMatchers("/").hasAnyRole("ADMIN")
+
         .anyRequest().authenticated()
         .and()
         .formLogin().loginPage("/login").permitAll()
         .and()
         .logout().permitAll()
         ;
+
+
 
 
     }
@@ -43,6 +48,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             builder.inMemoryAuthentication()
                     .withUser(user.username("admin").password("12345").roles("ADMIN"));
         }
+
+
 
 
 
