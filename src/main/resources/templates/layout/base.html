@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="layout/componets/head :: head"></head>
+
+    <!--TIPS-->
+    <!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
+    <body th:fragment="body">
+        <div id="container" class="effect aside-float aside-bright mainnav-lg">
+
+            <!--NAVBAR-->
+            <!--===================================================-->
+            <head th:replace="layout/componets/header :: header"></head>
+            <!--===================================================-->
+            <!--END NAVBAR-->
+
+            <div class="boxed">
+
+                <!--CONTENT CONTAINER-->
+                <!--===================================================-->
+                <div id="content-container">
+
+                    <div id="page-head" th:replace="layout/componets/page-head :: page-head"></div>
+
+                    <!--CONTENIDO PAGINA-->
+                    <!--===================================================-->
+                    <div id="page-content" th:fragment="page-content" >
+
+
+                    </div>
+                    <!--===================================================-->
+                    <!--END CONTENIDO PAGINA-->
+
+                </div>
+                <!--===================================================-->
+                <!--END CONTENT CONTAINER-->
+
+
+                <!--ASIDE-->
+                <!--===================================================-->
+                <aside th:replace="layout/componets/aside-container :: aside-container"></aside>
+                <!--===================================================-->
+                <!--END ASIDE-->
+
+
+                <!--MENU PRINCIPAL-->
+                <!--===================================================-->
+                <nav id="mainnav-container" th:replace="layout/componets/mainnav-container :: mainnav-container"></nav>
+                <!--===================================================-->
+                <!--END MENU PRINCIPAL-->
+
+            </div>
+
+            <!-- FOOTER -->
+            <!--===================================================-->
+            <footer id="footer" th:replace="layout/componets/footer :: footer"></footer>
+            <!--===================================================-->
+            <!-- END FOOTER -->
+
+
+            <!-- SCROLL PAGE BUTTON -->
+            <!--===================================================-->
+            <button class="scroll-top btn">
+                <i class="pci-chevron chevron-up"></i>
+            </button>
+            <!--===================================================-->
+        </div>
+        <!--===================================================-->
+        <!-- END OF CONTAINER -->
+
+    </body>
+</html>
