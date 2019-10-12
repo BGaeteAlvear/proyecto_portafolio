@@ -1,7 +1,9 @@
 package com.feriavirtual.app.models.service.impl;
 
 import com.feriavirtual.app.models.entity.Incident;
+import com.feriavirtual.app.models.entity.IncidentType;
 import com.feriavirtual.app.models.repository.IIncidentRepository;
+import com.feriavirtual.app.models.repository.IIncidentTypeRepository;
 import com.feriavirtual.app.models.service.IIncidentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +15,11 @@ import java.util.List;
 public class IIncidentServiceImpl implements IIncidentService {
 
     private final IIncidentRepository incidentRepository;
+    private final IIncidentTypeRepository incidentTypeRepository;
 
-    public IIncidentServiceImpl(IIncidentRepository incidentRepository) {
+    public IIncidentServiceImpl(IIncidentRepository incidentRepository, IIncidentTypeRepository incidentTypeRepository) {
         this.incidentRepository = incidentRepository;
+        this.incidentTypeRepository = incidentTypeRepository;
     }
 
 
@@ -41,5 +45,22 @@ public class IIncidentServiceImpl implements IIncidentService {
     @Transactional
     public void delete(Long id) {
             incidentRepository.delete(findById(id));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<IncidentType> getAllTypes() {
+        return incidentTypeRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public IncidentType findTypeById(Long id) {
+        return incidentTypeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+    }
+
+    @Override
+    public IncidentType saveType(IncidentType incidentType) {
+        return incidentTypeRepository.save(incidentType);
     }
 }

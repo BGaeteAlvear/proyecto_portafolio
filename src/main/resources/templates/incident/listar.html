@@ -20,6 +20,7 @@
                     <th>message</th>
                     <th>emisor</th>
                     <th>receptor</th>
+                    <th>Tipo</th>
                     <th>editar</th>
                     <th>eliminar</th>
                 </tr>
@@ -30,6 +31,7 @@
                     <td th:text="${incident.message}"></td>
                     <td th:text="${incident.emisor}"></td>
                     <td th:text="${incident.receptor}"></td>
+                    <td th:text="${incident.incidentType.name}"></td>
                     <td><a class="btn btn-primary btn-xs" th:href="@{/incident/form/} + ${incident.id}"
                            th:text="'editar'"></a></td>
                     <td><a class="btn btn-danger btn-xs" th:href="@{/incident/eliminar/} + ${incident.id}"
