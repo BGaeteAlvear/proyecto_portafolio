@@ -64,9 +64,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser(user.username("admin").password("12345").roles("ADMIN"))
                 .withUser(user.username("Carlos").password("12345").roles("ADMIN"))
                 .withUser(user.username("Rodolfo").password("12345").roles("ADMIN"))
-                .withUser(user.username("Brian").password("12345").roles("ADMIN"))
+                .withUser(user.username("Brian Gaete").password("admin123").roles("ADMIN"))
                 .withUser(user.username("Laura").password("12345").roles("ADMIN"))
                 .withUser(user.username("Claudio").password("12345").roles("ADMIN"))
+                .withUser(user.username("productor").password("12345").roles("PRODUCTOR"))
+                .withUser(user.username("transportista").password("12345").roles("TRANSPORTISTA"))
+                .withUser(user.username("cliente_ext").password("12345").roles("C_EXTERNO"))
+                .withUser(user.username("cliente_int").password("12345").roles("C_INTERNO"))
         ;
 
 
