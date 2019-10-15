@@ -18,8 +18,14 @@ public class IndexController {
     public String index (Authentication authentication,
                          HttpServletRequest request, Model model){
         logger.info("Entra en IndexController");
-        model.addAttribute("nombreUsuario", authentication.getName());
-        model.addAttribute("titulo", "Bienvenido! ");
+
+        /* DATOS TEMPLATE */
+        model.addAttribute("title_header", "DASHBOARD");
+        model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | DASHBOARD");
+        model.addAttribute("subtitle_header", "Bienvenido a la plataforma de ventas de frutas Online");
+
+        /* DATOS USER */
+        model.addAttribute("user", authentication);
         return "index";
     }
 

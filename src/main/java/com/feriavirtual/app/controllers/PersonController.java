@@ -24,13 +24,35 @@ public class PersonController {
         this.personService = personService;
     }
 
+    /*
 
-    @GetMapping("/listar")
-    public String listar(Model model){
-        List<Person> lista = personService.getAll();
-        model.addAttribute("titulo", "Lista Usuarios");
-        model.addAttribute("lista", lista);
-        return "/person/listar";
+    EJEMPLO ESTRUCTURA CONTROLLER
+    =========================================================================
+    Verb	  | URI	                   | Action	        | Route Name
+    =========================================================================
+    GET	      | /photos	               | index	        | photos.index
+    GET	      | /photos/create	       | create	        | photos.create
+    POST	  | /photos	               | store	        | photos.store
+    GET	      | /photos/{photo}	       | show	        | photos.show
+    GET	      | /photos/{photo}/edit   | edit	        | photos.edit
+    PUT/PATCH |	/photos/{photo}	       | update         | photos.update
+    DELETE	  | /photos/{photo}	       | destroy	    | photos.destroy
+    =========================================================================
+     */
+
+
+    @GetMapping("/index")
+    public String index (Model model){
+
+        List<Person> listUsers = personService.getAll();
+
+        /* DATOS TEMPLATE */
+        model.addAttribute("title_header", "USUARIOS");
+        model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | USUARIOS");
+        model.addAttribute("subtitle_header", "Mantenedor de Usuarios");
+        model.addAttribute("listUsers", listUsers);
+
+        return "/person/index";
     }
 
     @GetMapping("/form")

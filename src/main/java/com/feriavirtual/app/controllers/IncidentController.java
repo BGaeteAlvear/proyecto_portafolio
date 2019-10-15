@@ -30,9 +30,14 @@ public class IncidentController {
 
     @GetMapping("/listar")
     public String listar(Model model){
-        List<Incident> lista = incidentService.getAll();
-        model.addAttribute("titulo", "Lista incidentes");
-        model.addAttribute("lista", lista);
+        List<Incident> listIncidents = incidentService.getAll();
+
+        /* DATOS TEMPLATE */
+        model.addAttribute("title_header", "INCIDENTES");
+        model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | INCIDENTES");
+        model.addAttribute("subtitle_header", "Mantenedor de Incidentes");
+        model.addAttribute("listIncidents", listIncidents);
+
         return "/incident/listar";
     }
 
