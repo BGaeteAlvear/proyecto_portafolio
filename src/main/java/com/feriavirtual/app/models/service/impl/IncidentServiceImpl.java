@@ -12,12 +12,12 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-public class IIncidentServiceImpl implements IIncidentService {
+public class IncidentServiceImpl implements IIncidentService {
 
     private final IIncidentRepository incidentRepository;
     private final IIncidentTypeRepository incidentTypeRepository;
 
-    public IIncidentServiceImpl(IIncidentRepository incidentRepository, IIncidentTypeRepository incidentTypeRepository) {
+    public IncidentServiceImpl(IIncidentRepository incidentRepository, IIncidentTypeRepository incidentTypeRepository) {
         this.incidentRepository = incidentRepository;
         this.incidentTypeRepository = incidentTypeRepository;
     }
