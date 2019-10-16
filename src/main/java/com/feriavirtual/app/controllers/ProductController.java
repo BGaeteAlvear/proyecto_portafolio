@@ -18,8 +18,7 @@ import java.util.Map;
 @RequestMapping("/product")
 @SessionAttributes("product")
 public class ProductController {
-
-    private final IProductService productService;
+      private final IProductService productService;
 
     public ProductController(IProductService productService) { this.productService = productService;
     }
