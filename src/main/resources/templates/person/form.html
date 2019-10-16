@@ -1,83 +1,109 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
+<div id="container" class="effect aside-float aside-bright mainnav-lg">
 
-<header th:replace="layout/layout :: header"></header>
+    <header th:replace="layout/layout :: header"></header>
 
-<div class="container py-4">
+    <div class="boxed">
+        <div id="content-container">
+
+            <div th:replace="layout/layout :: page-head"></div>
+
+            <!-- Content -->
+            <div id="page-content">
+
+                <div class="panel mt-2">
+                    <div class="panel-heading">
+                        <h3 th:text="${title}"></h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <div th:object="${person}" th:remove="tag">
+                            <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+                                role="alert">
+                                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
 
 
+                        <div th:object="${person}" th:remove="tag">
+                            <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+                                role="alert">
+                                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
 
-    <div class="card bg-dark text-white">
 
-        <div class="card-header" th:text="${titulo}"></div>
-        <div class="card-body">
-            <div th:object="${person}" th:remove="tag">
-                <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
-                    role="alert">
-                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
-                </ul>
+                        <form th:action="@{/person/form}" th:object="${person}" method="post"
+                              enctype="multipart/form-data">
+
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-2 col-form-label">Nombre</label>
+                                <div class="col-sm-6">
+                                    <input id="name" type="text" th:field="*{name}" class="form-control"
+                                           th:errorclass="'form-control alert-danger'" /> <small
+                                        class="form-text text-danger"
+                                        th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="lastName" class="col-sm-2 col-form-label">Apellido</label>
+                                <div class="col-sm-6">
+                                    <input id="lastName" type="text" th:field="*{lastName}" class="form-control"
+                                           th:errorclass="'form-control alert-danger'" /> <small
+                                        class="form-text text-danger"
+                                        th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                                <div class="col-sm-6">
+                                    <input id="email" type="text" th:field="*{email}" class="form-control"
+                                           th:errorclass="'form-control alert-danger'" /> <small
+                                        class="form-text text-danger"
+                                        th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="companyName" class="col-sm-2 col-form-label">Nombre Compañia</label>
+                                <div class="col-sm-6">
+                                    <input id="companyName" type="text" th:field="*{companyName}" class="form-control"
+                                           th:errorclass="'form-control alert-danger'" /> <small
+                                        class="form-text text-danger"
+                                        th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}"></small>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <input type="submit" th:value="${title}"
+                                           class="btn btn-primary" />
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
             </div>
-
-
-            <form th:action="@{/person/form}" th:object="${person}" method="post"
-                  enctype="multipart/form-data">
-
-                <div class="form-group row">
-                    <label for="name" class="col-sm-2 col-form-label">Nombre</label>
-                    <div class="col-sm-6">
-                        <input id="name" type="text" th:field="*{name}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" /> <small
-                            class="form-text text-danger"
-                            th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="lastName" class="col-sm-2 col-form-label">Apellido</label>
-                    <div class="col-sm-6">
-                        <input id="lastName" type="text" th:field="*{lastName}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" /> <small
-                            class="form-text text-danger"
-                            th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="email" class="col-sm-2 col-form-label">Email</label>
-                    <div class="col-sm-6">
-                        <input id="email" type="text" th:field="*{email}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" /> <small
-                            class="form-text text-danger"
-                            th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="companyName" class="col-sm-2 col-form-label">Nombre Compañia</label>
-                    <div class="col-sm-6">
-                        <input id="companyName" type="text" th:field="*{companyName}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" /> <small
-                            class="form-text text-danger"
-                            th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}"></small>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-sm-6">
-                        <input type="submit" th:value="${titulo}"
-                               class="btn btn-secondary" />
-                    </div>
-                </div>
-
-            </form>
+            <!-- End Content -->
 
         </div>
+
+        <!-- MENU PRINCIPAL -->
+        <nav th:replace="layout/layout :: mainnav-container"></nav>
+        <!-- END MENU PRINCIPAL -->
+
     </div>
 
-</div>
+    <footer th:replace="layout/layout :: footer"></footer>
 
-<footer th:replace="layout/layout :: footer"></footer>
+</div>
 </body>
 </html>
