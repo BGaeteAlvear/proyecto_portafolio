@@ -22,7 +22,6 @@ public class IncidentServiceImpl implements IIncidentService {
         this.incidentTypeRepository = incidentTypeRepository;
     }
 
-
     @Override
     @Transactional(readOnly = true)
     public List<Incident> getAll() {
