@@ -58,6 +58,20 @@
                         </div>
                     </div>
 
+                    <div class="form-group row">
+                        <label for="type" class="col-sm-2 col-form-label">Tipo Incidente</label>
+                        <div class="col-sm-6">
+                            <select id="type" class="form-control" th:field="*{incidentType.id}" required="true">
+                                <option th:each="incidentType : ${typeList}"
+                                        th:value="${incidentType.id}"
+                                        th:text="${incidentType.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
 
 
                     <div class="form-group row">

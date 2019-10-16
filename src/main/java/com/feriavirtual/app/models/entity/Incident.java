@@ -24,6 +24,7 @@ public class Incident implements Serializable {
         this.status = true;
     }
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    public IncidentType incidentType;
 
 }

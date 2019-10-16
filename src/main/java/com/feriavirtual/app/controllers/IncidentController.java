@@ -2,6 +2,7 @@ package com.feriavirtual.app.controllers;
 
 
 import com.feriavirtual.app.models.entity.Incident;
+import com.feriavirtual.app.models.entity.IncidentType;
 import com.feriavirtual.app.models.entity.Person;
 import com.feriavirtual.app.models.service.IIncidentService;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +39,9 @@ public class IncidentController {
     @GetMapping("/form")
     public String crear(Map<String, Object> model){
         Incident incident = new Incident();
+        List<IncidentType> typeList = incidentService.getAllTypes();
         model.put("titulo", "Crear Inicidente");
+        model.put("typeList", typeList);
         model.put("incident", incident);
         return "/incident/form";
     }
