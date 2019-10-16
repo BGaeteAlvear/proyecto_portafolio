@@ -24,54 +24,77 @@ public class PersonController {
         this.personService = personService;
     }
 
+    /*
 
-    @GetMapping("/listar")
-    public String listar(Model model){
-        List<Person> lista = personService.getAll();
-        model.addAttribute("titulo", "Lista Usuarios");
-        model.addAttribute("lista", lista);
-        return "/person/listar";
+    EJEMPLO ESTRUCTURA CONTROLLER
+    =========================================================================
+    Verb	  | URI	                   | Action	        | Route Name
+    =========================================================================
+    GET	      | /photos	               | index	        | photos.index
+    GET	      | /photos/create	       | create	        | photos.create
+    POST	  | /photos	               | store	        | photos.store
+    GET	      | /photos/{photo}	       | show	        | photos.show
+    GET	      | /photos/{photo}/edit   | edit	        | photos.edit
+    PUT/PATCH |	/photos/{photo}	       | update         | photos.update
+    DELETE	  | /photos/{photo}	       | destroy	    | photos.destroy
+    =========================================================================
+     */
+
+
+    @GetMapping("/index")
+    public String index (Model model){
+
+        List<Person> listUsers = personService.getAll();
+
+        /* DATOS TEMPLATE */
+        model.addAttribute("title_header", "USUARIOS");
+        model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | USUARIOS");
+        model.addAttribute("subtitle_header", "Mantenedor de Usuarios");
+        model.addAttribute("list_users", listUsers);
+
+        return "/person/index";
     }
 
     @GetMapping("/form")
-    public String crear(Map<String, Object> model){
+    public String create(Map<String, Object> model){
         Person person = new Person();
-        model.put("titulo", "Crear Usuario");
+        model.put("title_header", "Crear Usuario");
+        model.put("title", "Crear Usuario");
         model.put("person", person);
         return "/person/form";
     }
 
 
     @PostMapping("/form")
-    public String guardar(@Valid Person person, BindingResult result, Model model, SessionStatus status){
+    public String store(@Valid Person person, BindingResult result, Model model, SessionStatus status){
         if (person != null){
             personService.save(person);
             status.setComplete();
         }
-        return "redirect:/person/listar";
+        return "redirect:/person/index";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable (value = "id") Long id){
+    public String delete(@PathVariable (value = "id") Long id){
         if (id > 0){
             personService.delete(id);
         }
-        return "redirect:/person/listar";
+        return "redirect:/person/index";
     }
 
 
     @GetMapping("/form/{id}")
-    public String editar(@PathVariable(value = "id")Long id, Map<String, Object> model, RedirectAttributes flash){
+    public String edit(@PathVariable(value = "id")Long id, Map<String, Object> model, RedirectAttributes flash){
         Person person  = null;
         if(id > 0){
          person = personService.findById(id);
             if (person == null){
                 flash.addFlashAttribute("error", "El ID del cliente no existe en la BBDD!");
-                return "redirect:/person/listar";
+                return "redirect:/person/index";
             }
         }else {
             flash.addFlashAttribute("error", "El ID del cliente no puede ser cero!");
-            return "redirect:/listar";
+            return "redirect:/index";
         }
         model.put("person", person);
         model.put("titulo", "Editar usuario");

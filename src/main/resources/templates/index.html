@@ -1,18 +1,17 @@
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
-<body>
-
-<header th:replace="layout/layout :: header"></header>
-
-
-
-<br /> <br />
-<div class="container py-4">
-    <b1>Bienvenido  </b1><b1 th:text="${nombreUsuario}"> </b1>
-</div>
-
-
-<footer th:replace="layout/layout :: footer"></footer>
+<body th:replace="layout/layout :: body">
+    <div id="container" class="effect aside-float aside-bright mainnav-lg">
+        <header th:replace="layout/layout :: header"></header>
+        <div id="page-content" >
+            <div class="row">
+                <div class="col-md-12">
+                    <b1>Bienvenido  </b1><b1 th:text="${nombreUsuario}"> </b1>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
