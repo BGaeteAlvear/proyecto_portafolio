@@ -36,7 +36,7 @@ public class JpaUserDetailsService implements UserDetailsService {
             logger.error("Error login");
             throw  new UsernameNotFoundException("Usuario no existe");
         }
-
+        
         List<GrantedAuthority> grantedAuthorities  = new ArrayList<GrantedAuthority>();
         for (Role role: usuario.getRoles()) {
             logger.info("roles ->" + usuario.getRoles());
@@ -44,5 +44,7 @@ public class JpaUserDetailsService implements UserDetailsService {
         }
         logger.info(" --- " + grantedAuthorities.toString());
         return new User(usuario.getUserName(), usuario.getPassword(), usuario.getEnabled(), true, true, true, grantedAuthorities);
+        
     }
+
 }
