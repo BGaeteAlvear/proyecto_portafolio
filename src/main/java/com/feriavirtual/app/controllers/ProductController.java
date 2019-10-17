@@ -3,16 +3,24 @@ package com.feriavirtual.app.controllers;
 
 import com.feriavirtual.app.models.entity.Product;
 import com.feriavirtual.app.models.service.IProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /*
 
@@ -35,6 +43,9 @@ import java.util.Map;
 public class ProductController {
 
     private final IProductService productService;
+
+    private final Logger log= LoggerFactory.getLogger(getClass());
+
 
     public ProductController(IProductService productService) { this.productService = productService;
     }
@@ -62,10 +73,36 @@ public class ProductController {
     }
 
     @PostMapping("/form")
-    public String  store(@Valid Product product, BindingResult result, Model model, SessionStatus status){
-        if (product !=null){
-            productService.save(product);
-            status.setComplete();
+    public String  store(@Valid Product product, BindingResult result, Model model,
+                         @RequestParam("image") MultipartFile image, RedirectAttributes flash, SessionStatus status){
+
+        if(!image.isEmpty()){
+            String uniqueFilename = UUID.randomUUID().toString()+"_"+image.getOriginalFilename();
+            Path rootPath = Paths.get("uploads").resolve(image.getOriginalFilename());
+            Path rootAbsolutePath =rootPath.toAbsolutePath();
+            log.info("rootPath: "+ rootPath);
+            log.info("rootAbsolutePath: "+ rootAbsolutePath);
+
+            try {
+               Files.copy(image.getInputStream(), rootAbsolutePath);
+               flash.addFlashAttribute("Se ha cargado correctamente '"+ image.getOriginalFilename()+ "'");
+                product.setImage(image.getOriginalFilename());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (result.hasErrors()){
+                model.addAttribute("title","Crear Producto");
+                return "form";
+            }
+
+            if (product !=null){
+                productService.save(product);
+                status.setComplete();
+            }
+
+
         }
         return "redirect:/product/index";
     }

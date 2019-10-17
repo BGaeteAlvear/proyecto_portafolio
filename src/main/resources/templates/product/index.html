@@ -45,7 +45,11 @@
                                 <td data-align="center" th:text="${product.id}"></td>
                                 <td th:text="${product.name}"></td>
                                 <td th:text="${product.description}"></td>
-                                <td th:text="${product.image}"></td>
+
+                               <td >
+                                   <img th:if= "${#strings.length(product.image)>0}" class="img-thumbnail rounded note-float-left" style="max-width: 25%;"
+                                        th:src="@{'/uploads/'+ ${product.image}}" th:alt="${product.image}"/>
+                               </td>
                                 <td th:text="${product.createdAt}"></td>
                                 <td th:text="${product.updatedAt}"></td>
                                 <td ><a class="btn btn-primary btn-xs" th:href="@{/product/form/} + ${product.id}" th:text="'Editar'"></a></td>
