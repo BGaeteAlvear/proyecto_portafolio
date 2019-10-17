@@ -657,6 +657,11 @@
 
                                     </ul>
 
+
+                                    <form id="logoutForm" th:action="@{/logout}" method="post">
+                                        <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();" type="submit">Sign Out</button>
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    </form>
                                 </div>
                             </div>
                         </div>

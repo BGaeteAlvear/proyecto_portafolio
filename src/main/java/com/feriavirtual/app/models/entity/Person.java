@@ -13,7 +13,6 @@ import java.util.Date;
 @Table(name = "persons")
 public class Person  implements Serializable {
 
-
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_PERSON")
     @SequenceGenerator(name = "SEQ_PERSON",allocationSize = 1,sequenceName = "SEQ_PERSON")
@@ -54,6 +53,10 @@ public class Person  implements Serializable {
     private int roleId;
 
     private Boolean enabled;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Role role;
+
 
 
     public Person(){
