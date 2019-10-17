@@ -41,8 +41,8 @@
         <!-- CUSTOM CSS -->
         <link th:href="@{/assets/css/demo/custom-login.css}" rel="stylesheet">
 
-        <!--Custom scheme [ OPTIONAL ]-->
-        <link th:href="@{/assets/css/themes/type-c/theme-navy.min.css}" rel="stylesheet">
+        <link th:href="@{/assets/plugins/bootstrap-validator/bootstrapValidator.min.css}" rel="stylesheet">
+
 
     </head>
 
@@ -573,22 +573,6 @@
                                                 <li><a href="#">Externas</a></li>
                                             </ul>
                                         </li>
-<<<<<<< HEAD
-=======
-
-                                        <li class="sub">
-                                            <a th:href="@{/transport-type/list}">Tipo de Transportes</a>
-                                        </li>
-
-                                        <li class="sub">
-                                            <a th:href="@{/transport/list}">Transportes</a>
-                                        </li>
-
-                                        <li class="sub">
-                                            <a th:href="@{/shopping-cart/list}">Carro de Compra</a>
-                                        </li>
-                                    </ul>
->>>>>>> master
 
 
                                         <li class="list-divider"></li>
@@ -698,8 +682,6 @@
 
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 
-                <!--jQuery [ REQUIRED ]-->
-                <script th:src="@{/assets/js/jquery.min.js}"></script>
                 <!--BootstrapJS [ RECOMMENDED ]-->
                 <script th:src="@{/assets/js/bootstrap.min.js}"></script>
                 <!--NiftyJS [ RECOMMENDED ]-->
@@ -728,11 +710,22 @@
                 <!--Specify page [ SAMPLE ]-->
                 <script th:src="@{/assets/js/demo/dashboard.js}"></script>
 
+                <!--Bootstrap Wizard [ OPTIONAL ]-->
+                <script th:src="@{/assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js}"></script>
+
+
+                <!--Bootstrap Validator [ OPTIONAL ]-->
+                <script th:src="@{/assets/plugins/bootstrap-validator/bootstrapValidator.min.js}"></script>
+
+
+                <!--Form Wizard [ SAMPLE ]-->
+                <script th:src="@{/assets/js/demo/form-wizard.js}"></script>
+
+                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.min.js}"></script>
+
+                <script th:src="@{/assets/js/demo/dashboard.js}"></script>
+
             </footer>
         </div>
     </body>
 </html>
-
-
-
-
