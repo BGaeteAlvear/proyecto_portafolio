@@ -34,8 +34,10 @@
                                         <th data-sortable="true" >nombre</th>
                                         <th data-sortable="true" >apellido</th>
                                         <th data-sortable="true" >email</th>
+                                        <th data-sortable="true" >role</th>
                                         <th data-align="center" >editar</th>
                                         <th data-align="center" >eliminar</th>
+                                        <th data-align="center" >cambiar role</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -44,8 +46,10 @@
                                         <td th:text="${user.name}"></td>
                                         <td th:text="${user.lastName}"></td>
                                         <td th:text="${user.email}"></td>
+                                        <td th:text="${user.role.name}"></td>
                                         <td ><a class="btn btn-primary btn-xs" th:href="@{/person/form/} + ${user.id}" th:text="'editar'"></a></td>
                                         <td ><a class="btn btn-danger btn-xs" th:href="@{/person/eliminar/} + ${user.id}" th:text="'eliminar'"></a></td>
+                                        <td ><a class="btn btn-info btn-xs" th:href="@{/person/form/change-role/} + ${user.id}" th:text="'cambiar role'"></a></td>
                                     </tr>
                                     </tbody>
                                 </table>
