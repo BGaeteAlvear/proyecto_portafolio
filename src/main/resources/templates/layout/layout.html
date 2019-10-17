@@ -43,15 +43,26 @@
 
         <link th:href="@{/assets/plugins/bootstrap-validator/bootstrapValidator.min.css}" rel="stylesheet">
 
+        <link th:href="@{/assets/plugins/css-loaders/css/css-loaders.css}" rel="stylesheet">
 
     </head>
 
     <body>
+        <div class="col-12" id="loader-page" th:fragment="loader">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="load3">
+                        <div class="loader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="container" class="effect aside-float aside-bright mainnav-lg">
             <!--NAVBAR-->
             <!--===================================================-->
 
             <header th:fragment="header" id="navbar">
+
                 <div id="navbar-container" class="boxed">
 
                     <!--Brand logo & name-->

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="layout/layout :: head"></head>
+    <body>
+        <div id="container" class="effect aside-float aside-bright mainnav-lg">
+
+            <header th:replace="layout/layout :: header"></header>
+
+            <div class="boxed">
+                <div id="content-container">
+
+                    <div th:replace="layout/layout :: page-head"></div>
+
+                    <!-- Content -->
+                    <div id="page-content">
+
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <a th:href="@{/person/form}" class="btn btn-success p-3">Nuevo Usuario</a>
+                            </div>
+                            <div class="panel-body">
+                                <table  data-toggle="table"
+                                        data-search="true"
+                                        data-show-refresh="true"
+                                        data-show-toggle="true"
+                                        data-show-columns="true"
+                                        data-sort-name="id"
+                                        data-page-list="[5, 10, 20]"
+                                        data-page-size="5"
+                                        data-pagination="true" data-show-pagination-switch="true">
+                                    <thead class="thead-inverse">
+                                    <tr>
+                                        <th data-align="center"  data-sortable="true" >id</th>
+                                        <th data-sortable="true" >nombre</th>
+                                        <th data-sortable="true" >apellido</th>
+                                        <th data-sortable="true" >email</th>
+                                        <th data-align="center" >editar</th>
+                                        <th data-align="center" >eliminar</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="user : ${list_users}">
+                                        <td data-align="center" th:text="${user.id}"></td>
+                                        <td th:text="${user.name}"></td>
+                                        <td th:text="${user.lastName}"></td>
+                                        <td th:text="${user.email}"></td>
+                                        <td ><a class="btn btn-primary btn-xs" th:href="@{/person/form/} + ${user.id}" th:text="'editar'"></a></td>
+                                        <td ><a class="btn btn-danger btn-xs" th:href="@{/person/eliminar/} + ${user.id}" th:text="'eliminar'"></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- End Content -->
+
+                </div>
+
+                <!-- MENU PRINCIPAL -->
+                <nav th:replace="layout/layout :: mainnav-container"></nav>
+                <!-- END MENU PRINCIPAL -->
+
+            </div>
+
+            <footer th:replace="layout/layout :: footer"></footer>
+
+        </div>
+    </body>
+</html>
