@@ -28,7 +28,7 @@ public class IncidentController {
         this.incidentService = incidentService;
     }
 
-    @GetMapping("/listar")
+    @GetMapping("/index")
     public String listar(Model model){
         List<Incident> listIncidents = incidentService.getAll();
 
@@ -38,7 +38,7 @@ public class IncidentController {
         model.addAttribute("subtitle_header", "Mantenedor de Incidentes");
         model.addAttribute("listIncidents", listIncidents);
 
-        return "/incident/listar";
+        return "/incident/index";
     }
 
     @GetMapping("/form")

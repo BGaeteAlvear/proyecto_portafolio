@@ -16,7 +16,7 @@
 
                 <div class="panel mt-2">
                     <div class="panel-heading">
-                        <h3 th:text="${title}"></h3>
+                        <h3 class="panel-title" th:text="${title}"></h3>
                     </div>
                     <div class="panel-body">
 
@@ -36,47 +36,65 @@
                         </div>
 
 
-                        <form th:action="@{/product/form}" th:object="${product}" method="post"
-                              enctype="multipart/form-data">
-
-                            <div class="form-group row">
-                                <label for="name" class="col-sm-2 col-form-label">Nombre</label>
-                                <div class="col-sm-6">
-                                    <input id="name" type="text" th:field="*{name}" class="form-control"
-                                           th:errorclass="'form-control alert-danger'" /> <small
-                                        class="form-text text-danger"
-                                        th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                        <form th:action="@{/product/form}" th:object="${product}" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img src="http://www.tourniagara.com/wp-content/uploads/2014/10/default-img.gif" class="rounded float-left" style="width: 100%; height: 300px!important; object-fit: cover;"  id="image-preview" alt="...">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="fileUpload blue-btn py-2">
+                                                <input type="file" accept="image/*" th:field="*{image}" class="uploadlogo" th:errorclass="'form-control alert-danger'" required />
+                                                <small class="form-text text-danger" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></small>
+                                                <h5 style="font-weight: bold">Subir Foto</h5>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="col-md-9">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="name" class="col-form-label">Nombre</label>
+                                                <input id="name" type="text" th:field="*{name}" class="form-control"
+                                                       th:errorclass="'form-control alert-danger'" /> <small
+                                                    class="form-text text-danger"
+                                                    th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="name" class="col-form-label">Categoría</label>
+                                                <select class="form-control" name="" id="">
+                                                    <option value="" disabled="true" selected>Seleccione una Categoría</option>
+                                                    <option value="1">Cat 1</option>
+                                                    <option value="1">Cat 2</option>
+                                                    <option value="1">Cat 3</option>
+                                                    <option value="1">Cat 4</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
-                            <div class="form-group row">
-                                <label for="description" class="col-sm-2 col-form-label">Descripción</label>
-                                <div class="col-sm-6">
-                                    <input id="description" type="text" th:field="*{description}" class="form-control"
-                                           th:errorclass="'form-control alert-danger'" /> <small
-                                        class="form-text text-danger"
-                                        th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="name" class="col-form-label">Descripción</label>
+                                                <textarea id="description" type="text" th:field="*{description}" class="form-control"
+                                                       th:errorclass="'form-control alert-danger'" cols="30" rows="12" /> <small
+                                                    class="form-text text-danger"
+                                                    th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group ">
+                                            <input type="submit" th:value="${title}" class="btn btn-primary pull-right" />
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
-
-                            <div class="form-group row my-3">
-                                <label for="image" class="col-sm-2 col-form-label">Imagen</label>
-                                <div class="col-sm-6">
-                                    <input id="image" type="file" accept="image/*" th:field="*{image}" class="form-control"
-                                           th:errorclass="'form-control alert-danger'" required /> <small
-                                        class="form-text text-danger"
-                                        th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></small>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group row">
-                                <div class="col-sm-6">
-                                    <input type="submit" th:value="${title}"
-                                           class="btn btn-primary" />
-                                </div>
-                            </div>
-
                         </form>
                     </div>
                 </div>
@@ -95,5 +113,45 @@
     <footer th:replace="layout/layout :: footer"></footer>
 
 </div>
+
+<script>
+    $('.uploadlogo').change(function () {
+
+        var file = this.files[0];
+
+        var filename = readURL(this);
+        $(this).parent().children('span').html(filename);
+        var mime_types = [ 'image/jpeg', 'image/png' ];
+        if(mime_types.indexOf(file.type) == -1) {
+            alert('Error : Incorrect file type');
+            return;
+        }
+        if(file.size > 2*1924*1524) {
+            alert('Error :  3MB');
+            return;
+        }
+        let _PREVIEW_URL = URL.createObjectURL(file);
+
+        // set src of image and show
+        $('#image-preview').attr('src', _PREVIEW_URL);
+    });
+
+    function readURL(input) {
+        var url = input.value;
+        var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+        if (input.files && input.files[0] && (
+            ext == "png" || ext == "jpeg" || ext == "jpg" || ext == "gif" || ext == "pdf"
+        )) {
+            var path = $(input).val();
+            var filename = path.replace(/^.*\\/, "");
+            // $('.fileUpload span').html('Uploaded Proof : ' + filename);
+            return "Uploaded file : "+filename;
+        } else {
+            $(input).val("");
+            return "Only image/pdf formats are allowed!";
+        }
+    }
+
+</script>
 </body>
 </html>
