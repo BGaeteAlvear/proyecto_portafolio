@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Table(name = "incidents")
 public class Incident implements Serializable {
 
+
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_INCIDENT")
     @SequenceGenerator(name = "SEQ_INCIDENT",allocationSize = 1,sequenceName = "SEQ_INCIDENT")
@@ -26,5 +27,8 @@ public class Incident implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     public IncidentType incidentType;
+
+
+    private static final long serialVersionUID = -224909979473473591L;
 
 }

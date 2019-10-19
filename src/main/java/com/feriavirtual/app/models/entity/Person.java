@@ -7,11 +7,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
 @Table(name = "persons")
 public class Person  implements Serializable {
+
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_PERSON")
@@ -57,6 +59,8 @@ public class Person  implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
 
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Address> addressList;
 
 
     public Person(){
@@ -64,5 +68,7 @@ public class Person  implements Serializable {
         this.passwordRecovery = 1;
         this.status = true;
     }
+
+    private static final long serialVersionUID = 706443423338604396L;
 
 }
