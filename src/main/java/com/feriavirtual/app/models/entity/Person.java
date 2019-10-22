@@ -33,6 +33,7 @@ public class Person  implements Serializable {
     private String phone;
     private String email;
     private String password;
+    private String username;
     private Boolean status;
     @Column(name = "password_recovery")
     private int passwordRecovery;

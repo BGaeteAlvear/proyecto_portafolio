@@ -16,7 +16,7 @@ public class Usuario implements Serializable {
     @SequenceGenerator(name = "SEQ_ADDRESS",allocationSize = 1,sequenceName = "SEQ_ADDRESS")
     private Long id;
 
-        @Column(length = 30, unique = true)
+        @Column(name="username", length = 30, unique = true)
         private String userName;
         @Column(length = 60)
         private String password;
