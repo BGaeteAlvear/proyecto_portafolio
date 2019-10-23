@@ -1,6 +1,7 @@
 package com.feriavirtual.app.models.service;
 
 
+import com.feriavirtual.app.models.entity.Authority;
 import com.feriavirtual.app.models.entity.Role;
 import com.feriavirtual.app.models.entity.Usuario;
 import com.feriavirtual.app.models.repository.IUsuarioRepository;
@@ -38,8 +39,7 @@ public class JpaUserDetailsService implements UserDetailsService {
         }
         
         List<GrantedAuthority> grantedAuthorities  = new ArrayList<GrantedAuthority>();
-        for (Role role: usuario.getRoles()) {
-            logger.info("roles ->" + usuario.getRoles());
+        for (Authority role: usuario.getAuthorities()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
         }
         logger.info(" --- " + grantedAuthorities.toString());

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -55,11 +56,19 @@ public class Person  implements Serializable {
 
     private Boolean enabled;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Role role;
+
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Address> addressList;
+
 
     public Person(){
         this.roleId = 1;
         this.passwordRecovery = 1;
         this.status = true;
     }
+
+    private static final long serialVersionUID = 706443423338604396L;
 
 }

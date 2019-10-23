@@ -38,20 +38,38 @@
         <!--X-editable [ OPTIONAL ]-->
         <link th:href="@{/assets/plugins/x-editable/css/bootstrap-editable.css}" rel="stylesheet">
 
+        <!--Dropzone [ OPTIONAL ]-->
+        <link th:src="@{/assets/plugins/dropzone/dropzone.min.css}" rel="stylesheet">
+
+
+
+        <link th:href="@{/assets/plugins/bootstrap-validator/bootstrapValidator.min.css}" rel="stylesheet">
+
+        <link th:href="@{/assets/plugins/css-loaders/css/css-loaders.css}" rel="stylesheet">
+
+
         <!-- CUSTOM CSS -->
         <link th:href="@{/assets/css/demo/custom-login.css}" rel="stylesheet">
-
-        <!--Custom scheme [ OPTIONAL ]-->
-        <link th:href="@{/assets/css/themes/type-c/theme-navy.min.css}" rel="stylesheet">
+        <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
 
     </head>
 
     <body>
+        <div class="col-12" id="loader-page" th:fragment="loader">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="load3">
+                        <div class="loader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="container" class="effect aside-float aside-bright mainnav-lg">
             <!--NAVBAR-->
             <!--===================================================-->
 
             <header th:fragment="header" id="navbar">
+
                 <div id="navbar-container" class="boxed">
 
                     <!--Brand logo & name-->
@@ -509,7 +527,7 @@
 
                                         <!--Menu list item-->
                                         <li>
-                                            <a href="#">
+                                            <a th:href="@{/product/index}">
                                                 <i class="demo-pli-gear"></i>
                                                 <span class="menu-title">
                                                     Productos
@@ -573,22 +591,6 @@
                                                 <li><a href="#">Externas</a></li>
                                             </ul>
                                         </li>
-<<<<<<< HEAD
-=======
-
-                                        <li class="sub">
-                                            <a th:href="@{/transport-type/list}">Tipo de Transportes</a>
-                                        </li>
-
-                                        <li class="sub">
-                                            <a th:href="@{/transport/list}">Transportes</a>
-                                        </li>
-
-                                        <li class="sub">
-                                            <a th:href="@{/shopping-cart/list}">Carro de Compra</a>
-                                        </li>
-                                    </ul>
->>>>>>> master
 
 
                                         <li class="list-divider"></li>
@@ -598,7 +600,7 @@
 
                                         <!--Menu list item-->
                                         <li>
-                                            <a th:href="@{/incident/listar}">
+                                            <a th:href="@{/incident/index}">
                                                 <i class="ion-clipboard"></i>
                                                 <span class="menu-title">
                                                     Incidentes
@@ -639,10 +641,10 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a th:href="@{/transport/index}">
                                                 <i class="ion-model-s"></i>
                                                 <span class="menu-title">
-                                                    Tipo de Transportes
+                                                    Transportes
                                                 </span>
                                             </a>
                                         </li>
@@ -657,6 +659,11 @@
 
                                     </ul>
 
+
+                                    <form id="logoutForm" th:action="@{/logout}" method="post">
+                                        <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();" type="submit">Sign Out</button>
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -693,20 +700,18 @@
                 <!-- Optional JavaScript -->
                 <!-- jQuery first, then Bootstrap JS -->
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/popper.min.js"></script>
+
                 <!--script th:src="@{/assets/js/popper.min.js}"></script-->
 
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 
-                <!--jQuery [ REQUIRED ]-->
-                <script th:src="@{/assets/js/jquery.min.js}"></script>
                 <!--BootstrapJS [ RECOMMENDED ]-->
                 <script th:src="@{/assets/js/bootstrap.min.js}"></script>
                 <!--NiftyJS [ RECOMMENDED ]-->
                 <script th:src="@{/assets/js/nifty.min.js}"></script>
 
                 <!--=================================================-->
-
+                <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
                 <!--Flot Chart [ OPTIONAL ]-->
                 <script th:src="@{/assets/plugins/flot-charts/jquery.flot.min.js}"></script>
                 <script th:src="@{/assets/plugins/flot-charts/jquery.flot.resize.min.js}"></script>
@@ -728,11 +733,22 @@
                 <!--Specify page [ SAMPLE ]-->
                 <script th:src="@{/assets/js/demo/dashboard.js}"></script>
 
+                <!--Bootstrap Wizard [ OPTIONAL ]-->
+                <script th:src="@{/assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js}"></script>
+
+
+                <!--Bootstrap Validator [ OPTIONAL ]-->
+                <script th:src="@{/assets/plugins/bootstrap-validator/bootstrapValidator.min.js}"></script>
+
+
+                <!--Form Wizard [ SAMPLE ]-->
+                <script th:src="@{/assets/js/demo/form-wizard.js}"></script>
+
+                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.min.js}"></script>
+
+                <!--script th:src="@{/assets/js/demo/dashboard.js}"></script-->
+
             </footer>
         </div>
     </body>
 </html>
-
-
-
-

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<div id="container" class="effect aside-float aside-bright mainnav-lg">
+
+    <header th:replace="layout/layout :: header"></header>
+    <div class="boxed">
+        <div id="content-container">
+
+            <div th:replace="layout/layout :: page-head"></div>
+
+            <!-- Content -->
+            <div id="page-content">
+                <div class="panel mt-2">
+                    <div class="panel-heading">
+                        <h3 class="text-main" th:text="${title}"></h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <div th:object="${person}" th:remove="tag">
+                            <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+                                role="alert">
+                                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+
+                        <form th:action="@{/person/form}" th:object="${person}" method="post"
+                              enctype="multipart/form-data">
+
+                            <div class="form-group row">
+                                <label for="roles" class="col-sm-2 col-form-label">Role</label>
+                                <div class="col-sm-6">
+                                    <select id="roles" class="form-control" th:field="*{role.id}" required="true">
+                                        <option th:each="rol : ${roles}"
+                                                th:value="${rol.id}"
+                                                th:text="${rol.name}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <input type="submit" th:value="${title}"
+                                           class="btn btn-primary" />
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <!-- End Content -->
+        </div>
+        <!-- MENU PRINCIPAL -->
+        <nav th:replace="layout/layout :: mainnav-container"></nav>
+        <!-- END MENU PRINCIPAL -->
+    </div>
+    <footer th:replace="layout/layout :: footer"></footer>
+</div>
+</body>
+</html>

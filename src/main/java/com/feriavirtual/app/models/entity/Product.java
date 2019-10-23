@@ -23,6 +23,7 @@ public class Product {
     private String description;
     @NotEmpty
     private String image;
+    private Boolean status;
 
     @Column(name = "created_at")
     @DateTimeFormat(pattern = "dd-MM-yyyy’T’hh:mm:")
@@ -31,9 +32,12 @@ public class Product {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
+
     public Product(){
         this.createdAt= new Date();
-
+        this.status = true;
     }
 
 }
