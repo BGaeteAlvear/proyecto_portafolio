@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,10 +65,10 @@ public class JpaUserDetailsService implements UserDetailsService {
         grantedAuthorities.add(new SimpleGrantedAuthority(person.getAuthority().getAuthority()));
  //       }
 
-      Usuario usuario = new Usuario();
-      usuario.setUserName(person.getUsername());
-      usuario.setPassword(person.getPassword());
-      usuario.setEnabled(person.getEnabled());
+        Usuario usuario = new Usuario();
+        usuario.setUserName(person.getUsername());
+        usuario.setPassword(person.getPassword());
+        usuario.setEnabled(person.getEnabled());
 
         logger.info(" --- " + grantedAuthorities.toString());
         return new User(usuario.getUserName(), usuario.getPassword(), usuario.getEnabled(), true, true, true, grantedAuthorities);

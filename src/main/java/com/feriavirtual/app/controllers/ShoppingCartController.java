@@ -1,19 +1,34 @@
 package com.feriavirtual.app.controllers;
 
+import com.feriavirtual.app.models.entity.Person;
+import com.feriavirtual.app.models.entity.Product;
 import com.feriavirtual.app.models.entity.ProductAvailable;
+import com.feriavirtual.app.models.entity.ShoppingCart;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/shopping-cart")
 @SessionAttributes("shoppingCart")
+
 public class ShoppingCartController {
+
+    @Autowired
+    private ShoppingCart shoppingCart;
+
 
     @GetMapping("/index")
     public String index(Model model) {
@@ -31,6 +46,30 @@ public class ShoppingCartController {
         model.addAttribute("title", "Carro de Compras");
         model.addAttribute("productsAvailable", productsAvailable);
         return "/shopping-cart/index";
+    }
+
+    @PostMapping("/add-cart")
+    public String addCart(@Valid ProductAvailable productAvailable, int quantity, Model model, RedirectAttributes flash, SessionStatus status, HttpSession session){
+
+        //Person cliente = (Person) session.getAttribute("Person");
+        List<ShoppingCart> productList;
+        if (session.getAttribute("shoppingCart") != null){
+            productList = (List<ShoppingCart>) session.getAttribute("shoppingCart");
+        }else{
+            productList = new ArrayList<>();
+        }
+
+        for (ShoppingCart item : productList) {
+            if (productAvailable.getId() == item.getProductAvailableId()){
+                item.setQuantity(quantity);
+            }else{
+                ShoppingCart itemCart = new ShoppingCart(Long.parseLong("1"),productAvailable.getId(),quantity);
+                productList.add(itemCart);
+                session.setAttribute("shoppingCart",productList);
+            }
+        }
+
+        return "/shopping-cart/add-cart";
     }
 
 }

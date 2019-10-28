@@ -3,6 +3,8 @@ package com.feriavirtual.app.models.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +15,8 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "persons")
+@Component
+@Scope("session")
 public class Person  implements Serializable {
 
 

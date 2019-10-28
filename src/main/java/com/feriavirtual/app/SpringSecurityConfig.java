@@ -72,10 +72,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().permitAll()
                ;
 
-
-
-
-
     }
 
     @Autowired
