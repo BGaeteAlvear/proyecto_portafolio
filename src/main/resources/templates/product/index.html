@@ -15,10 +15,9 @@
             <div id="page-content">
 
                 <div class="panel">
-                    <div class="panel-heading">
-                        <a th:href="@{/product/form}" class="btn btn-success p-3">Nuevo Producto</a>
-                    </div>
+                    <div class="panel-heading"></div>
                     <div class="panel-body">
+                        <a th:href="@{/product/form}" class="btn btn-success p-3">Nuevo Producto </a>
                         <table  data-toggle="table"
                                 data-search="true"
                                 data-show-refresh="true"
@@ -30,30 +29,31 @@
                                 data-pagination="true" data-show-pagination-switch="true">
                             <thead class="thead-inverse">
                             <tr>
+
                                 <th data-align="center"  data-sortable="true" >id</th>
-                                <th data-sortable="true" >Nombre</th>
-                                <th data-sortable="true" >Descripción</th>
                                 <th data-sortable="true" >Imagen</th>
-                                <th data-sortable="true" >Creado</th>
-                                <th data-sortable="true" >Editado</th>
-                                <th data-align="center" >Editar</th>
-                                <th data-align="center" >Eliminar</th>
+                                <th data-sortable="true"  >Nombre</th>
+                                <th data-sortable="true" >Descripción</th>
+                                <th data-sortable="true" width="100px">Creado</th>
+                                <th data-sortable="true" width="100px">Editado</th>
+                                <th data-align="center" >Opciones</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="product : ${list_products}">
                                 <td data-align="center" th:text="${product.id}"></td>
+                                <td >
+                                    <img th:if= "${#strings.length(product.image)>0}" class="img-thumbnail rounded note-float-left" style="max-width: 25%;"
+                                         th:src="@{'/uploads/'+ ${product.image}}" th:alt="${product.image}"/>
+                                </td>
                                 <td th:text="${product.name}"></td>
                                 <td th:text="${product.description}"></td>
-
-                               <td >
-                                   <img th:if= "${#strings.length(product.image)>0}" class="img-thumbnail rounded note-float-left" style="max-width: 25%;"
-                                        th:src="@{'/uploads/'+ ${product.image}}" th:alt="${product.image}"/>
-                               </td>
                                 <td th:text="${product.createdAt}"></td>
                                 <td th:text="${product.updatedAt}"></td>
-                                <td ><a class="btn btn-primary btn-xs" th:href="@{/product/form/} + ${product.id}" th:text="'Editar'"></a></td>
-                                <td ><a class="btn btn-danger btn-xs" th:href="@{/product/eliminar/} + ${product.id}" th:text="'Eliminar'"></a></td>
+                                <td>
+                                    <a class="btn btn-info btn-icon add-tooltip" data-original-title="Editar" th:href="@{/product/form/} + ${product.id}" ><i class="ion-edit"></i></a>
+                                    <a class="btn btn-danger btn-icon add-tooltip"  data-original-title="Eliminar" th:href="@{/product/eliminar/} + ${product.id}" ><i class="ion-trash-a"></i></a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
