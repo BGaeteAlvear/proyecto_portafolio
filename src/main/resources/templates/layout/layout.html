@@ -544,6 +544,17 @@
                                         <li class="list-header">Ventas</li>
 
                                         <!--Menu list item-->
+                                        <li>
+                                            <a th:href="@{/shopping-cart/index}">
+                                                <i class="demo-pli-gear"></i>
+                                                <span class="menu-title">
+                                                    Carrito de Compras
+                                                    <span class="pull-right badge badge-warning">24</span>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <!--Menu list item-->
 
                                         <li>
                                             <a href="#">
@@ -729,6 +740,8 @@
                 <script th:src="@{/assets/plugins/flot-charts/jquery.flot.min.js}"></script>
 
                 <script th:src="@{/assets/js/demo/dashboard.js}"></script>
+
+                <script th:src="@{/assets/js/shopping-cart.js}"></script>
 
             </footer>
         </div>
