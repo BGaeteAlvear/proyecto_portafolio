@@ -43,17 +43,22 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
+    public Usuario findByUserName(String userName) {
+        return usuarioRepository.findByUserName(userName);
+    }
+
+    @Override
     public List<Authority> getAllAuthorities() {
-        return null;
+        return authorityRepository.findAll();
     }
 
     @Override
     public Authority saveAuthority(Authority authority) {
-        return null;
+        return authorityRepository.save(authority);
     }
 
     @Override
     public Authority findAuthorityId(Long id) {
-        return null;
+        return authorityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
     }
 }

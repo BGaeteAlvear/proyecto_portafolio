@@ -12,6 +12,7 @@ public interface IUsuarioService {
     Usuario findById(Long id);
     Usuario save(Usuario usuario);
     void delete(Long id);
+    Usuario findByUserName(String userName);
 
 
     List<Authority> getAllAuthorities();

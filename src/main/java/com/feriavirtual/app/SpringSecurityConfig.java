@@ -56,7 +56,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().permitAll()
         ; */
 
-        http.authorizeRequests().antMatchers("/","/assets/**", "/css/**", "/js/**", "/images/**").permitAll()
+        http.authorizeRequests().antMatchers("/assets/**", "/css/**", "/js/**", "/images/**").permitAll()
                 /*.antMatchers("/ver/**").hasAnyRole("USER")*/
                 /*.antMatchers("/uploads/**").hasAnyRole("USER")*/
                 /*.antMatchers("/form/**").hasAnyRole("ADMIN")*/
@@ -81,7 +81,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
 
-
+/*
         builder.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder)
@@ -89,6 +89,20 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("select u.username, a.authority from authorities a inner join users u " +
                         "on (a.usuario_id = u.id)" +
                         "where u.username=?");
+*/
+
+
+
+        builder.jdbcAuthentication()
+                .dataSource(dataSource)
+                .passwordEncoder(passwordEncoder)
+                .usersByUsernameQuery("select username, password, enabled from persons where username=?")
+                .authoritiesByUsernameQuery("select p.username, a.authority from persons p join authorities a on (p.authority = a.id) " +
+                        "where p.username =?");
+
+
+
+
 
 /*
        builder.userDetailsService(jpaUserDetailsService)

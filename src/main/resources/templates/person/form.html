@@ -78,7 +78,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="username" class="col-form-label">Username</label>
-                                        <input id="username" type="password" th:field="*{username}" class="form-control"
+                                        <input id="username" type="text" th:field="*{username}" class="form-control"
                                                th:errorclass="'form-control alert-danger'" /> <small
                                             class="form-text text-danger"
                                             th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>

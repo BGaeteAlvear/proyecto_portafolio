@@ -23,7 +23,7 @@ public class AppApplication implements CommandLineRunner {
         String password = "admin123";
         for (int i= 0; i<2; i++){
             String bcryptpassword = passwordEncoder.encode(password);
-        //        System.out.println(bcryptpassword);
+                System.out.println(bcryptpassword);
         }
     }
 }
