@@ -10,11 +10,14 @@ import java.io.Serializable;
 @Table(name = "incidents_types")
 public class IncidentType implements Serializable {
 
+
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_PERSON")
     @SequenceGenerator(name = "SEQ_PERSON",allocationSize = 1,sequenceName = "SEQ_PERSON")
     private Long id;
     private String name;
     private String description;
+
+    private static final long serialVersionUID = 3261480956303952023L;
 
 }
