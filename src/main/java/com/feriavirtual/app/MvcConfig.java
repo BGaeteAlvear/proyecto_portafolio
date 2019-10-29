@@ -17,7 +17,10 @@ import java.util.Locale;
 public class MvcConfig implements WebMvcConfigurer {
 
 
-
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public LocaleResolver localeResolver() {

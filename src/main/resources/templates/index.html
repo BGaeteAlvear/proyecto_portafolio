@@ -15,7 +15,10 @@
 
                 <div class="row">
                     <div class="col-lg-7">
-                        <b1>Bienvenido  </b1><b1 th:text="${user.getName()}"> </b1>
+                        <h1>Bienvenido  </h1><h1 th:text="${user.getName()}"> </h1>
+                        <h1>DATOS  </h1><h5 th:text="${user.getAuthorities()}"> </h5>
+                        <h1>DATOS  </h1><h5 th:text="${user.getCredentials()}"> </h5>
+                        <h1>DATOS  </h1><h5 th:text="${user.getPrincipal()}"> </h5>
                     </div>
                     <div class="col-lg-5">
                         <div class="row">
