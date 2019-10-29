@@ -1,6 +1,8 @@
 package com.feriavirtual.app.models.entity;
 
-public class ProductAvailable {
+import java.io.Serializable;
+
+public class ProductAvailable implements Serializable {
 
     private Long id;
     private String name;
