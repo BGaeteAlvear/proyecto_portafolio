@@ -1,16 +1,21 @@
 package com.feriavirtual.app.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 
 @Entity
 @Data
 @Table(name="products")
-public class Product {
+public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_PRODUCTS")
@@ -19,25 +24,64 @@ public class Product {
     private Long id;
     @NotEmpty
     private String name;
+
     @NotEmpty
     private String description;
-    @NotEmpty
+
     private String image;
     private Boolean status;
 
-    @Column(name = "created_at")
-    @DateTimeFormat(pattern = "dd-MM-yyyy’T’hh:mm:")
 
+    @Column(name = "created_at")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date createdAt;
+
+
     @Column(name = "updated_at")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date updatedAt;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
-    private Category category;
+    public Category category;
 
     public Product(){
-        this.createdAt= new Date();
-        this.status = true;
+       this.status = true;
+     }
+
+
+    @PrePersist
+    public void createdAt() {
+        this.createdAt = new Date();
     }
 
+    /*@PrePersist
+    public void createdAt() {
+        this.createdAt = this.updatedAt = new Date();
+    }*/
+
+
+    @PreUpdate
+    public void updatedAt() {
+        this.updatedAt = new Date();
+    }
+
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

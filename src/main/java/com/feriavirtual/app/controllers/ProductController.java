@@ -1,10 +1,13 @@
 package com.feriavirtual.app.controllers;
-
-
+import com.feriavirtual.app.models.entity.Category;
 import com.feriavirtual.app.models.entity.Product;
+import com.feriavirtual.app.models.service.ICategoryService;
 import com.feriavirtual.app.models.service.IProductService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.feriavirtual.app.models.service.IUploadFileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,15 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.validation.Valid;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+
 
 /*
 
@@ -43,11 +43,14 @@ import java.util.UUID;
 public class ProductController {
 
     private final IProductService productService;
+    private final ICategoryService categoryService;
 
-    private final Logger log= LoggerFactory.getLogger(getClass());
+    @Autowired
+    private IUploadFileService uploadFileService;
 
-
-    public ProductController(IProductService productService) { this.productService = productService;
+    public ProductController(IProductService productService, ICategoryService categoryService) {
+        this.productService = productService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/index")
@@ -66,35 +69,53 @@ public class ProductController {
     @GetMapping("/form")
     public String create(Map<String,Object> model){
         Product product= new Product();
+        List<Category> listCategories = categoryService.getAll();
         model.put("title_header", "Crear Producto");
         model.put("title","Crear Producto");
         model.put("product", product);
+        model.put("list_categories", listCategories);
         return "/product/form";
     }
 
+
+    @GetMapping (value = "/uploads/{filename:.+}")
+    public ResponseEntity<Resource> verImagen(@PathVariable String filename){
+
+        Resource recurso = null;
+        try {
+            recurso = uploadFileService.load(filename);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\""+ recurso.getFilename()+ "\"")
+                .body(recurso);
+    }
+
+
     @PostMapping("/form")
-    public String  store(@Valid Product product, BindingResult result, Model model,
-                         @RequestParam("image") MultipartFile image, RedirectAttributes flash, SessionStatus status){
+   public String  store(@Valid Product product, BindingResult result, Model model,
+                         @RequestParam("file") MultipartFile image, RedirectAttributes flash, SessionStatus status){
 
         if(!image.isEmpty()){
-            String uniqueFilename = UUID.randomUUID().toString()+"_"+image.getOriginalFilename();
-            Path rootPath = Paths.get("uploads").resolve(image.getOriginalFilename());
-            Path rootAbsolutePath =rootPath.toAbsolutePath();
-            log.info("rootPath: "+ rootPath);
-            log.info("rootAbsolutePath: "+ rootAbsolutePath);
+            if (product.getId()!=null && product.getId()>0
+                    && product.getImage()!=null
+                    && product.getImage().length()>0  ){
 
+                uploadFileService.delete(product.getImage());
+            }
+            String uniqueFilename= null;
             try {
-               Files.copy(image.getInputStream(), rootAbsolutePath);
-               flash.addFlashAttribute("Se ha cargado correctamente '"+ image.getOriginalFilename()+ "'");
-                product.setImage(image.getOriginalFilename());
-
+                uniqueFilename = uploadFileService.copy(image);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            if (result.hasErrors()){
+            flash.addFlashAttribute("info","Se ha cargado correctamente '"+ uniqueFilename+ "'");
+            product.setImage(uniqueFilename);
+
+           if (result.hasErrors()){
                 model.addAttribute("title","Crear Producto");
-                return "form";
+                return "/product/form";
             }
 
             if (product !=null){
@@ -107,10 +128,18 @@ public class ProductController {
         return "redirect:/product/index";
     }
 
+    //@RequestMapping(value="/eliminar/{id}")
     @GetMapping("/eliminar/{id}")
-    public String delete(@PathVariable(value = "id")Long id){
+    public String delete(@PathVariable(value = "id")Long id, RedirectAttributes flash){
         if (id>0){
+            Product product = productService.findById(id);
+
             productService.delete(id);
+
+                if(uploadFileService.delete(product.getImage())){
+                    flash.addFlashAttribute("info", "Imagen: "+ product.getImage()+" eliminada con éxito");
+                }
+
         }
         return "redirect:/product/index";
     }
@@ -118,9 +147,11 @@ public class ProductController {
     @GetMapping("/form/{id}")
     public String edit(@PathVariable(value = "id")Long id, Map<String, Object> model, RedirectAttributes flash){
         Product product = null;
+        List<Category> listCategories = categoryService.getAll();
         if(id > 0){
             product = productService.findById(id);
-            if (product == null){
+
+           if (product == null){
                 flash.addFlashAttribute("error", "El ID del producto no existe en la BBDD!");
                 return "redirect:/product/index";
             }
@@ -129,6 +160,7 @@ public class ProductController {
             return "redirect:/product/index";
         }
         model.put("product", product);
+        model.put("list_categories", listCategories);
         model.put("title_header", "Editar Producto");
         model.put("title", "Editar producto");
         return "/product/form";

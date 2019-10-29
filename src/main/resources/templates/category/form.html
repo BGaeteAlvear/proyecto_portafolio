@@ -20,7 +20,7 @@
                     </div>
                     <div class="panel-body">
 
-                        <div th:object="${product}" th:remove="tag">
+                        <div th:object="${category}" th:remove="tag">
                             <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
                                 role="alert">
                                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
@@ -28,7 +28,7 @@
                         </div>
 
 
-                        <div th:object="${product}" th:remove="tag">
+                        <div th:object="${category}" th:remove="tag">
                             <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
                                 role="alert">
                                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
@@ -36,8 +36,7 @@
                         </div>
 
 
-                                            <div class="fileUpload blue-btn py-2">
-                        <form th:action="@{/product/form}" th:object="${product}" method="post" enctype="multipart/form-data">
+                        <form th:action="@{/category/form}" th:object="${category}" method="post" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-3">
                                     <img src="http://www.tourniagara.com/wp-content/uploads/2014/10/default-img.gif" class="rounded float-left" style="width: 100%; height: 300px!important; object-fit: cover;"  id="image-preview" alt="...">
@@ -51,14 +50,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                        </div>
                                 <div class="col-md-9">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label for="name" class="col-form-label">Nombre</label>
                                                 <input id="name" type="text" th:field="*{name}" class="form-control"
-                                                       th:errorclass="'form-control alert-danger'" required  /> <small
+                                                       th:errorclass="'form-control alert-danger'" required /> <small
                                                     class="form-text text-danger"
                                                     th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
                                             </div>
@@ -69,27 +67,12 @@
                                             <div class="form-group">
                                                 <label for="description" class="col-form-label">Descripción</label>
                                                 <textarea id="description" type="text" th:field="*{description}" class="form-control"
-                                                          th:errorclass="'form-control alert-danger'" cols="30" rows="12" required  /> <small
+                                                          th:errorclass="'form-control alert-danger'" cols="30" rows="12" required /> <small
                                                     class="form-text text-danger"
                                                     th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
-                                            <label for="category" class="col-sm-2 col-form-label">Categoría</label>
-                                            <div class="col-sm-6">
-                                                <select id="category" th:field="*{category}" class="form-control" required >
-                                                    <option th:each="category : ${list_categories}"
-                                                            th:value="${category.id}"
-                                                            th:text="${category.name}"
-                                                            th:selected="${category.id == 1}"/>
-                                                </select>
-                                                <small
-                                                        class="form-text text-danger"
-                                                        th:if="${#fields.hasErrors('category')}" th:errors="*{category}">
-                                                </small>
-                                            </div>
-                                        </div>
 
 
                                     </div>
