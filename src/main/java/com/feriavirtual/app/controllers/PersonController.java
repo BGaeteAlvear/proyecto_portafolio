@@ -1,6 +1,8 @@
 package com.feriavirtual.app.controllers;
 
 import com.feriavirtual.app.models.entity.Person;
+import com.feriavirtual.app.models.entity.Role;
+import com.feriavirtual.app.models.service.IAddressService;
 import com.feriavirtual.app.models.service.IPersonService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +40,26 @@ public class PersonController {
     PUT/PATCH |	/photos/{photo}	       | update         | photos.update
     DELETE	  | /photos/{photo}	       | destroy	    | photos.destroy
     =========================================================================
+
+       ***
+
+    =========================================================================
+    ROLES DE USUARIO
+    =========================================================================
+    ID |  ROLE
+    =========================================================================
+    1  | ADMIN
+    2  | PRODUCTOR
+    3  | CLIENTE EXTERNO
+    4  | CLIENTE INTERNO
+    5  | TRANSPORTISTA
+    6  | CONSULTOR
+    7  | SIN ASIGNAR
+    =========================================================================
+
      */
+
+
 
 
     @GetMapping("/index")
@@ -68,6 +89,9 @@ public class PersonController {
     @PostMapping("/form")
     public String store(@Valid Person person, BindingResult result, Model model, SessionStatus status){
         if (person != null){
+                if (person.getRole() == null){
+                    person.setRole(personService.findRoleById(7l));
+                }
             personService.save(person);
             status.setComplete();
         }
@@ -101,8 +125,26 @@ public class PersonController {
         return "/person/form";
     }
 
-
-
+    @GetMapping("/form/change-role/{id}")
+    public String changeRole(@PathVariable(value = "id")Long id, Map<String, Object> model, RedirectAttributes flash){
+        Person person  = null;
+        List<Role> roles = personService.getAllRoles();
+        if(id > 0){
+            person = personService.findById(id);
+            if (person == null){
+                flash.addFlashAttribute("error", "El ID del cliente no existe en la BBDD!");
+                return "redirect:/person/index";
+            }
+        }else {
+            flash.addFlashAttribute("error", "El ID del cliente no puede ser cero!");
+            return "redirect:/index";
+        }
+        model.put("roles", roles);
+        model.put("person", person);
+        model.put("title_header", "Asignar Role");
+        model.put("title", "Asignar Role");
+        return "/person/change-role";
+    }
 
 
 

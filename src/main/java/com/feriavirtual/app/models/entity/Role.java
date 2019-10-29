@@ -7,13 +7,17 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "authorities")
+@Table(name = "roles")
 public class Role implements Serializable {
 
+
     @Id
-    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_ADDRESS")
-    @SequenceGenerator(name = "SEQ_ADDRESS",allocationSize = 1,sequenceName = "SEQ_ADDRESS")
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_ROLE")
+    @SequenceGenerator(name = "SEQ_ROLE",allocationSize = 1,sequenceName = "SEQ_ROLE")
     private Long id;
-    private String authority;
+    private String name;
+    private String detail;
+
+    private static final long serialVersionUID = -624120425068441184L;
 
 }

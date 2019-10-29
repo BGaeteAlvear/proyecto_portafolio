@@ -29,6 +29,7 @@ public class Product implements Serializable {
     private String description;
 
     private String image;
+    private Boolean status;
 
     private Boolean status;
 

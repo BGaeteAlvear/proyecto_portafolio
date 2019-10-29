@@ -24,5 +24,5 @@ public class Usuario implements Serializable {
 
         @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
         @JoinColumn(name= "usuario_id")
-        private List<Role> roles;
+        private List<Authority> authorities;
 }
