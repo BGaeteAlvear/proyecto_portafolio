@@ -31,7 +31,6 @@ public class Product implements Serializable {
     private String image;
     private Boolean status;
 
-    private Boolean status;
 
     @Column(name = "created_at")
     @Temporal(TemporalType.DATE)
