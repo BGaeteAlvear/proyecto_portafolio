@@ -67,14 +67,27 @@ public class ProductController {
 
 
     @GetMapping("/form")
-    public String create(Map<String,Object> model){
+    public String create(Map<String,Object> model, RedirectAttributes flash){
         Product product= new Product();
         List<Category> listCategories = categoryService.getAll();
-        model.put("title_header", "Crear Producto");
-        model.put("title","Crear Producto");
-        model.put("product", product);
-        model.put("list_categories", listCategories);
-        return "/product/form";
+
+        System.out.println("cantidad de categorias "+listCategories.size());
+        if(listCategories.size()>0){
+            model.put("title_header", "CREAR PRODUCTO");
+            model.put("title","Crear Producto");
+            model.put("product", product);
+            model.put("list_categories", listCategories);
+            return "/product/form";
+        }else{
+            model.put("title_header", "CATEGORIAS");
+            model.put("title","CATEGORIAS");
+            model.put("product", product);
+            model.put("subtitle_header","Mantenedor de  Categorias");
+            model.put("title_page", "PLATAFORMA MAIPO GRANDE | CATEGORIAS");
+            model.put("list_categories", listCategories);
+            flash.addFlashAttribute("alert","POR FAVOR CREA UNA CATEGORIA ANTES DE CREAR UN PRODUCTO");
+            return "/category/index";
+        }
     }
 
 

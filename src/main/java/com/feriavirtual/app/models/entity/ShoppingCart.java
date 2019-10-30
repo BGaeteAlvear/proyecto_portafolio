@@ -13,7 +13,7 @@ public class ShoppingCart {
     private Long userId;
     private Long productAvailableId;
     private int quantity;
-    private List availableProducts;
+    private List availableProducts;;
 
     public ShoppingCart(){};
 
@@ -67,4 +67,5 @@ public class ShoppingCart {
     public void setAvailableProducts(List availableProducts) {
         this.availableProducts = availableProducts;
     }
+
 }

@@ -36,7 +36,6 @@
                         </div>
 
 
-                                            <div class="fileUpload blue-btn py-2">
                         <form th:action="@{/product/form}" th:object="${product}" method="post" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-3">
@@ -44,40 +43,27 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <div class="fileUpload blue-btn py-2">
-                                                <input type="file" name="file" accept="image/*" class="form-control"  required />
+                                                <input type="file" name="file" accept="image/*" class="form-control uploadFile"  required />
                                                 <small class="form-text text-danger" ></small>
                                                 <h5 style="font-weight: bold">Subir Foto</h5>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                        </div>
                                 <div class="col-md-9">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="name" class="col-form-label">Nombre</label>
+                                                <label for="name" class="col-form-label">Nombre (*)</label>
                                                 <input id="name" type="text" th:field="*{name}" class="form-control"
                                                        th:errorclass="'form-control alert-danger'" required  /> <small
                                                     class="form-text text-danger"
                                                     th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
                                             </div>
                                         </div>
-
-
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="description" class="col-form-label">Descripción</label>
-                                                <textarea id="description" type="text" th:field="*{description}" class="form-control"
-                                                          th:errorclass="'form-control alert-danger'" cols="30" rows="12" required  /> <small
-                                                    class="form-text text-danger"
-                                                    th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label for="category" class="col-sm-2 col-form-label">Categoría</label>
-                                            <div class="col-sm-6">
+                                                <label for="category" class="col-form-label">Categoría (*)</label>
                                                 <select id="category" th:field="*{category}" class="form-control" required >
                                                     <option th:each="category : ${list_categories}"
                                                             th:value="${category.id}"
@@ -91,6 +77,16 @@
                                             </div>
                                         </div>
 
+
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="description" class="col-form-label">Descripción</label>
+                                                <textarea id="description" type="text" th:field="*{description}" class="form-control"
+                                                          th:errorclass="'form-control alert-danger'" cols="30" rows="12" required  /> <small
+                                                    class="form-text text-danger"
+                                                    th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                                            </div>
+                                        </div>
 
                                     </div>
 
@@ -121,7 +117,7 @@
 </div>
 
 <script>
-    $('.uploadlogo').change(function () {
+    $('.uploadFile').change(function () {
         var file = this.files[0];
         var filename = readURL(this);
         $(this).parent().children('span').html(filename);

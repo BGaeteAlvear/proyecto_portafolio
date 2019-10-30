@@ -4,6 +4,7 @@ import com.feriavirtual.app.models.entity.Person;
 import com.feriavirtual.app.models.entity.Product;
 import com.feriavirtual.app.models.entity.ProductAvailable;
 import com.feriavirtual.app.models.entity.ShoppingCart;
+import com.feriavirtual.app.models.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.session.Session;
@@ -28,6 +29,8 @@ public class ShoppingCartController {
 
     @Autowired
     private ShoppingCart shoppingCart;
+    List<ShoppingCart> productList = new ArrayList<>();
+    //private IProductService productService;
 
 
     @GetMapping("/index")
@@ -51,8 +54,7 @@ public class ShoppingCartController {
     @PostMapping("/add-cart")
     public String addCart(@Valid ProductAvailable productAvailable, int quantity, Model model, RedirectAttributes flash, SessionStatus status, HttpSession session){
 
-        //Person cliente = (Person) session.getAttribute("Person");
-        List<ShoppingCart> productList;
+        Person customer = (Person) session.getAttribute("user");
         if (session.getAttribute("shoppingCart") != null){
             productList = (List<ShoppingCart>) session.getAttribute("shoppingCart");
         }else{
@@ -60,16 +62,38 @@ public class ShoppingCartController {
         }
 
         for (ShoppingCart item : productList) {
-            if (productAvailable.getId() == item.getProductAvailableId()){
+            if (productAvailable.getId() == item.getProductAvailableId() && item.getUserId() == customer.getId()){
                 item.setQuantity(quantity);
+                flash.addFlashAttribute("info", "Producto Actualizado Correctamente");
             }else{
-                ShoppingCart itemCart = new ShoppingCart(Long.parseLong("1"),productAvailable.getId(),quantity);
+                ShoppingCart itemCart = new ShoppingCart(customer.getId(),productAvailable.getId(),quantity);
                 productList.add(itemCart);
                 session.setAttribute("shoppingCart",productList);
+                flash.addFlashAttribute("info", "Producto Agregado Correctamente");
             }
         }
-
+        model.addAttribute("list-to-cart", productList);
         return "/shopping-cart/add-cart";
     }
 
+
+    @PostMapping("/remove-item-cart")
+    public String removeItemCart( RedirectAttributes flash, Model model, long id, SessionStatus status, HttpSession session){
+
+        Person customer = (Person)session.getAttribute("user");
+        List<ShoppingCart> productList = (List<ShoppingCart>) session.getAttribute("shoppingCart");
+
+        for (ShoppingCart item : productList) {
+            if (id == item.getProductAvailableId() && item.getUserId() == customer.getId()){
+                productList.remove(item);
+                flash.addFlashAttribute("info", "Producto Eliminado Correctamente");
+            }else{
+                flash.addFlashAttribute("error", "Producto buscado, no encontrado");
+            }
+        }
+        model.addAttribute("list-to-cart", productList);
+
+        return "/shopping-cart/update-cart";
+    }
+    
 }
