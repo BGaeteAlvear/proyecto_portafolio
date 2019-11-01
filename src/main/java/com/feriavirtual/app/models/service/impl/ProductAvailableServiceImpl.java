@@ -3,12 +3,14 @@ package com.feriavirtual.app.models.service.impl;
 import com.feriavirtual.app.models.entity.ProductAvailable;
 import com.feriavirtual.app.models.repository.IProductAvailableRepository;
 import com.feriavirtual.app.models.service.IProductAvailableService;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
+@Service
 public class ProductAvailableServiceImpl implements IProductAvailableService {
+
     private final IProductAvailableRepository productAvailableRepository;
 
     public ProductAvailableServiceImpl(IProductAvailableRepository productAvailableRepository) {
@@ -16,15 +18,13 @@ public class ProductAvailableServiceImpl implements IProductAvailableService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<ProductAvailable> getAll() {
         return productAvailableRepository.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public ProductAvailable findById(Long id) {
-        return productAvailableRepository.findById(id).orElseThrow(()->new EntityNotFoundException());
+        return productAvailableRepository.findById(id).orElseThrow(()-> new EntityNotFoundException());
     }
 
     @Override
@@ -35,6 +35,5 @@ public class ProductAvailableServiceImpl implements IProductAvailableService {
     @Override
     public void delete(Long id) {
         productAvailableRepository.delete(findById(id));
-
     }
 }
