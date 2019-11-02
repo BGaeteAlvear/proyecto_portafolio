@@ -33,7 +33,7 @@ public class IndexController {
         try{
             User user2 = (User) authentication.getPrincipal();
             person = personService.findByUsername(user2.getUsername());
-
+            session.setAttribute("userSession", person);
         }catch (Exception ex){
             System.out.println(ex.getMessage());
         }
@@ -42,9 +42,10 @@ public class IndexController {
         model.addAttribute("title_header", "DASHBOARD");
         model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | DASHBOARD");
         model.addAttribute("subtitle_header", "Bienvenido a la plataforma de ventas de frutas Online");
-        session.setAttribute("user",person );
+        Person dataUser = (Person) session.getAttribute("userSession");
         /* DATOS USER */
-        model.addAttribute("auth", authentication);
+        model.addAttribute("user", authentication);
+        model.addAttribute("userSession", dataUser.getId());
 
 
         return "index";

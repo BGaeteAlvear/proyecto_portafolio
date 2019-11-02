@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <h1>Bienvenido  </h1><h1 th:text="${user.getName()}"> </h1>
-                        <h1>SESSION  </h1><h5 th:object="${session.size()}"> </h5>
+                        <h1>SESSION  </h1><h5 th:text="${userSession}"> </h5>
                         <h1>DATOS  </h1><h5 th:text="${user.getCredentials()}"> </h5>
                         <h1>DATOS  </h1><h5 th:text="${user.getPrincipal()}"> </h5>
                     </div>
