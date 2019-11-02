@@ -66,7 +66,6 @@ public class JpaUserDetailsService implements UserDetailsService {
  //       }
 
         Usuario usuario = new Usuario();
-        usuario.setId(person.getId());
         usuario.setUserName(person.getUsername());
         usuario.setPassword(person.getPassword());
         usuario.setEnabled(person.getEnabled());

@@ -34,7 +34,8 @@ public class LoginController {
             flash.addFlashAttribute("info", "Ya se a iniciado sesion");
             try{
                 User user2 = (User) authentication.getPrincipal();
-                System.out.println("USUARIO ID : "+user2.ge);
+                Person person = personService.findByUsername(user2.getUsername().toString());
+                System.out.println("USUARIO ID : "+person.getId());
             }catch (Exception ex){
                 System.out.println(ex.getMessage());
             }
