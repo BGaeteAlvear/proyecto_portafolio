@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name = "persons")
 @Component
 @Scope("session")
-public class Person  implements Serializable {
+public class Person implements Serializable {
 
 
     @Id

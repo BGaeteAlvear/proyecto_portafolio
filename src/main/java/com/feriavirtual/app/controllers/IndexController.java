@@ -4,6 +4,7 @@ import com.feriavirtual.app.models.entity.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +23,17 @@ public class IndexController {
         logger.info("Entra en IndexController");
 
         // Datos Usuario
-        Person user = (Person)authentication.getPrincipal();
-        session.setAttribute("user", user);
+
+        try{
+            Person user2 = (Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            System.out.println("USUARIO ID : "+user2.getId());
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
+
+        //Person user = (Person)authentication.getPrincipal();
+        //session.setAttribute("user", user);
 
         /* DATOS TEMPLATE */
         model.addAttribute("title_header", "DASHBOARD");

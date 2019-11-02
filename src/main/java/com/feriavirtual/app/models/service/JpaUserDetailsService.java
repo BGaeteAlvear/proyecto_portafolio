@@ -51,7 +51,7 @@ public class JpaUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Usuario no existe");
         }
 
-
+        System.out.println(person.getUsername());
         /*
         List<GrantedAuthority> grantedAuthorities  = new ArrayList<GrantedAuthority>();
         for (Authority role: usuario.getAuthorities()) {
@@ -66,12 +66,14 @@ public class JpaUserDetailsService implements UserDetailsService {
  //       }
 
         Usuario usuario = new Usuario();
+        usuario.setId(person.getId());
         usuario.setUserName(person.getUsername());
         usuario.setPassword(person.getPassword());
         usuario.setEnabled(person.getEnabled());
 
         logger.info(" --- " + grantedAuthorities.toString());
         return new User(usuario.getUserName(), usuario.getPassword(), usuario.getEnabled(), true, true, true, grantedAuthorities);
+
      //   return new Person(person.getUsername(), person.getPassword(), true, true, true, true, grantedAuthorities);
     }
 
