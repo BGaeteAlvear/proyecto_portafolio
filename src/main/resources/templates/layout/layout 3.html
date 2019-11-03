@@ -35,62 +35,18 @@
         <!-- BOOTSTRAP TABLE -->
         <link th:href="@{/assets/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet">
 
-        <!--X-editable [ OPTIONAL ]-->
-        <link th:href="@{/assets/plugins/x-editable/css/bootstrap-editable.css}" rel="stylesheet">
-
-        <!--Dropzone [ OPTIONAL ]-->
-        <link th:src="@{/assets/plugins/dropzone/dropzone.min.css}" rel="stylesheet">
-
-
-
-        <link th:href="@{/assets/plugins/bootstrap-validator/bootstrapValidator.min.css}" rel="stylesheet">
-
-        <link th:href="@{/assets/plugins/css-loaders/css/css-loaders.css}" rel="stylesheet">
-
-        <!--Chosen [ OPTIONAL ]-->
-        <link th:href="@{/assets/plugins/chosen/chosen.css}" rel="stylesheet">
-
-        <!--noUiSlider [ OPTIONAL ]-->
-        <link th:href="@{/assets/plugins/noUiSlider/nouislider.css}" rel="stylesheet">
-
-        <!--Select2 [ OPTIONAL ]-->
-        <link th:href="@{/assets/plugins/select2/css/select2.min.css}" rel="stylesheet">
-
-
-<!--        &lt;!&ndash;DATE PICKER &ndash;&gt;-->
-<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/css/datepicker.css">-->
-<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.min.js"></script>-->
-<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/i18n/datepicker.es.min.js"></script>-->
-
         <!-- CUSTOM CSS -->
         <link th:href="@{/assets/css/demo/custom-login.css}" rel="stylesheet">
-        <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
-
-
-
-        <!--Bootstrap Datepicker [ OPTIONAL ]-->
-        <link th:href="@{/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css}" rel="stylesheet">
-
 
 
     </head>
 
     <body>
-
-        <div class="col-12" id="loader-page" th:fragment="loader">
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="load3">
-                        <div class="loader"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div id="container" class="effect aside-float aside-bright mainnav-lg">
             <!--NAVBAR-->
             <!--===================================================-->
-            <header th:fragment="header" id="navbar">
 
+            <header th:fragment="header" id="navbar">
                 <div id="navbar-container" class="boxed">
 
                     <!--Brand logo & name-->
@@ -409,6 +365,16 @@
 
                 </div>
             </header>
+
+            <div class="alert alert-success" th:if="${success != null}"
+                 th:text="${success}"></div>
+            <div class="alert alert-danger" th:if="${error != null}"
+                 th:text="${error}"></div>
+            <div class="alert alert-warning" th:if="${warning != null}"
+                 th:text="${warning}"></div>
+            <div class="alert alert-info" th:if="${info != null}"
+                 th:text="${info}"></div>
+
             <!--===================================================-->
             <!--END NAVBAR-->
             <div class="boxed">
@@ -421,14 +387,6 @@
                         </div>
                     </div>
 
-                    <div class="alert alert-success" th:if="${success != null}"
-                         th:text="${success}"></div>
-                    <div class="alert alert-danger" th:if="${error != null}"
-                         th:text="${error}"></div>
-                    <div class="alert alert-warning" th:if="${warning != null}"
-                         th:text="${warning}"></div>
-                    <div class="alert alert-info" th:if="${info != null}"
-                         th:text="${info}"></div>
                     <!-- CONTENT -->
                     <div id="page-content"></div>
                     <!-- END CONTENT -->
@@ -543,20 +501,16 @@
                                             </a>
                                         </li>
 
+
                                         <!--Menu list item-->
                                         <li>
-                                            <a th:href="@{/product/index}">
-                                                <i class="ion-person-stalker"></i>
-                                                <span class="menu-title">Productos</span>
-                                                <i class="arrow"></i>
+                                            <a href="#">
+                                                <i class="demo-pli-gear"></i>
+                                                <span class="menu-title">
+                                                    Productos
+                                                    <span class="pull-right badge badge-warning">24</span>
+                                                </span>
                                             </a>
-
-                                            <!--Submenu-->
-                                            <ul class="collapse">
-                                                <li><a th:href="@{/product/index}">Productos</a></li>
-                                                <li><a th:href="@{/category/index}">Categorías</a></li>
-                                                <li><a th:href="@{/product-available/index}">Productos Disponibles</a></li>
-                                            </ul>
                                         </li>
 
                                         <!--Menu list item-->
@@ -583,17 +537,6 @@
 
                                         <!--Category name-->
                                         <li class="list-header">Ventas</li>
-
-                                        <!--Menu list item-->
-                                        <li>
-                                            <a th:href="@{/shopping-cart/index}">
-                                                <i class="demo-pli-gear"></i>
-                                                <span class="menu-title">
-                                                    Carrito de Compras
-                                                    <span class="pull-right badge badge-warning">24</span>
-                                                </span>
-                                            </a>
-                                        </li>
 
                                         <!--Menu list item-->
 
@@ -634,7 +577,7 @@
 
                                         <!--Menu list item-->
                                         <li>
-                                            <a th:href="@{/incident/index}">
+                                            <a th:href="@{/incident/listar}">
                                                 <i class="ion-clipboard"></i>
                                                 <span class="menu-title">
                                                     Incidentes
@@ -675,10 +618,10 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a th:href="@{/transport/index}">
+                                            <a href="#">
                                                 <i class="ion-model-s"></i>
                                                 <span class="menu-title">
-                                                    Transportes
+                                                    Tipo de Transportes
                                                 </span>
                                             </a>
                                         </li>
@@ -693,11 +636,6 @@
 
                                     </ul>
 
-
-                                    <form id="logoutForm" th:action="@{/logout}" method="post">
-                                        <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();" type="submit">Sign Out</button>
-                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -730,156 +668,48 @@
 
                 <p class="pad-lft">&#0169; 2019 Maipo Grande</p>
 
+
                 <!-- Optional JavaScript -->
                 <!-- jQuery first, then Bootstrap JS -->
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/popper.min.js"></script>
                 <!--script th:src="@{/assets/js/popper.min.js}"></script-->
-<!--                <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>-->
-                <!--Bootstrap Datepicker [ OPTIONAL ]-->
-<!--                <script th:src="@{/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js}"></script>-->
 
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 
-
+                <!--jQuery [ REQUIRED ]-->
+                <script th:src="@{/assets/js/jquery.min.js}"></script>
                 <!--BootstrapJS [ RECOMMENDED ]-->
                 <script th:src="@{/assets/js/bootstrap.min.js}"></script>
                 <!--NiftyJS [ RECOMMENDED ]-->
                 <script th:src="@{/assets/js/nifty.min.js}"></script>
 
+
                 <!--=================================================-->
 
+                <!--Demo script [ DEMONSTRATION ]-->
+                <!--script th:src="@{/assets/js/demo/nifty-demo.min.js}"></script-->
+
+
                 <!--Flot Chart [ OPTIONAL ]-->
-<!--                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.min.js}"></script>-->
-<!--                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.resize.min.js}"></script>-->
-<!--                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.tooltip.min.js}"></script>-->
+                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.min.js}"></script>
+                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.resize.min.js}"></script>
+                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.tooltip.min.js}"></script>
                 <script th:src="@{/assets/js/demo/tables-bs-table.js}"></script>
 
-                <!--X-editable [ OPTIONAL ]-->
-                <script th:src="@{/assets/plugins/x-editable/js/bootstrap-editable.min.js}"></script>
-
-                <!--Bootstrap Table [ OPTIONAL ]-->
-                <script th:src="@{/assets/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
-
-                <!--Bootstrap Table Extension [ OPTIONAL ]-->
-                <script th:src="@{/assets/plugins/bootstrap-table/extensions/editable/bootstrap-table-editable.js}"></script>
 
                 <!--Sparkline [ OPTIONAL ]-->
-<!--                <script th:src="@{/assets/plugins/sparkline/jquery.sparkline.min.js}"></script>-->
-
-<!--                &lt;!&ndash;Specify page [ SAMPLE ]&ndash;&gt;-->
-<!--                <script th:src="@{/assets/js/demo/dashboard.js}"></script>-->
-
-                <!--Bootstrap Wizard [ OPTIONAL ]-->
-                <script th:src="@{/assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js}"></script>
+                <script th:src="@{/assets/plugins/sparkline/jquery.sparkline.min.js}"></script>
 
 
-                <!--Bootstrap Validator [ OPTIONAL ]-->
-                <script th:src="@{/assets/plugins/bootstrap-validator/bootstrapValidator.min.js}"></script>
+                <!--Specify page [ SAMPLE ]-->
+                <script th:src="@{/assets/js/demo/dashboard.js}"></script>
 
-
-                <!--Form Wizard [ SAMPLE ]-->
-                <script th:src="@{/assets/js/demo/form-wizard.js}"></script>
-
-<!--                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.min.js}"></script>-->
-
-                <!--script th:src="@{/assets/js/demo/dashboard.js}"></script-->
-
-                <script th:src="@{/assets/js/shopping-cart.js}"></script>
-
-                <!--noUiSlider [ OPTIONAL ]-->
-                <script th:src="@{/assets/plugins/noUiSlider/nouislider.min.js}"></script>
-
-
-                <!--Select2 [ OPTIONAL ]-->
-                <script th:src="@{/assets/plugins/select2/js/select2.min.js}"></script>
-
-
-
-
-
-                <script>
-
-                    $(document).ready(function () {
-
-                        $('.select2').select2();
-                        var defaults = {
-                            closeText: 'Cerrar',
-                            prevText: '<Ant',
-                            nextText: 'Sig>',
-                            currentText: 'Hoy',
-                            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                            monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
-                            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                            dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
-                            dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-                            weekHeader: 'Sm',
-                            dateFormat: 'yy/mm/dd',
-                            firstDay: 1,
-                            isRTL: false,
-                            showMonthAfterYear: false,
-                            yearSuffix: ''
-                        };
-
-                        $('#date_expire').datepicker({
-                            format: 'dd-mm-yyyy',
-                            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                            monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
-                            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                            dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
-                            dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-                            closeText: 'Cerrar',
-                            prevText: '<Ant',
-                            nextText: 'Sig>',
-                            currentText: 'Hoy',
-                        });
-                        console.log($('#info').val());
-                        if($('#info').val()){
-                            $.niftyNoty({
-                                type: 'info',
-                                container : 'floating',
-                                title : 'Info!',
-                                message : $('#info').val() ,
-                                closeBtn : true,
-                                timer : 5500
-                            });
-                        }
-                        console.log($('#danger').val());
-                        if($('#danger').val()){
-                            $.niftyNoty({
-                                type: 'danger',
-                                container : 'floating',
-                                title : 'Error',
-                                message : $('#danger').val() ,
-                                closeBtn : true,
-                                timer : 5500
-                            });
-                        }
-
-                        if($('#warning').val()){
-                            $.niftyNoty({
-                                type: 'warning',
-                                container : 'floating',
-                                title : 'Alerta',
-                                message : $('#warning').val() ,
-                                closeBtn : true,
-                                timer : 5500
-                            });
-                        }
-
-                        if($('#success').val()){
-                            $.niftyNoty({
-                                type: 'success',
-                                container : 'floating',
-                                title : 'Exito!',
-                                message : $('#success').val() ,
-                                closeBtn : true,
-                                timer : 5500
-                            });
-                        }
-
-                    });
-
-                </script>
             </footer>
         </div>
     </body>
 </html>
+
+
+
+

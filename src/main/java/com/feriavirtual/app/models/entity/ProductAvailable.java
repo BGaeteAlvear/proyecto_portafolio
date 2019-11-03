@@ -39,7 +39,7 @@ public class ProductAvailable implements Serializable {
     private Date updatedAt;
 
     @Column(name = "date_expire")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date date_expire;
 

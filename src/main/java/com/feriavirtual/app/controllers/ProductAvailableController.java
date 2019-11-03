@@ -44,6 +44,7 @@ public class ProductAvailableController {
     public String index (Model model, HttpSession session){
         Person productor =  (Person) session.getAttribute("userSession");
         List<ProductAvailable> listProductsAvailable = productAvailableService.findByPerson(productor);
+        System.out.println("cantidad de productos : "+productAvailableService.findByPerson(productor).size());
         /* DATOS TEMPLATE */
         model.addAttribute("title_header", "PRODUCTOS DISPONIBLES");
         model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | PRODUCTOS DISPONIBLES");
@@ -60,7 +61,7 @@ public class ProductAvailableController {
         model.put("title_header", "Crear Producto Disponible");
         model.put("title","Crear Producto Disponible");
         model.put("productAvailable", productAvailable);
-        model.put("listProduct", ListProduct);
+        model.put("ListProduct", ListProduct);
         return "/product-available/form";
     }
 
@@ -69,8 +70,13 @@ public class ProductAvailableController {
                          RedirectAttributes flash, SessionStatus status , HttpSession session){
         ProductAvailable pa;
         Person productor =  (Person) session.getAttribute("userSession");
+        List<Product> ListProduct = productService.getAll();
         if (result.hasErrors()){
+            model.addAttribute("title_header", "PRODUCTOS DISPONIBLES");
+            model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | PRODUCTOS DISPONIBLES");
+            model.addAttribute("subtitle_header", "Mantenedor de Productos Disponibles");
             model.addAttribute("title","Crear Producto Disponible");
+            model.addAttribute("ListProduct", ListProduct);
             return "/product-available/form";
         }
 
@@ -120,13 +126,18 @@ public class ProductAvailableController {
         pa.setStatus(productAvailable.getStatus());
         pa.setStock_unity(productAvailable.getStock_unity());
 
-        if ( flash.getFlashAttributes()!=null){
+        if ( pa.getProduct() != null){
             productAvailableService.save(pa);
             status.setComplete();
+            flash.addFlashAttribute("success", "Producto Agregado con exito!");
+            return "redirect:/product-available/index";
+        }else{
+            flash.addFlashAttribute("error", "No cargo el producto!");
+            return "redirect:/product-available/form";
         }
 
 
-        return "/product-available/form";
+
     }
 
     //@RequestMapping(value="/eliminar/{id}")

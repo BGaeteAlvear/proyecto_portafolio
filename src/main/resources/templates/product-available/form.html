@@ -13,6 +13,10 @@
 
             <!-- Content -->
             <div id="page-content">
+                <input type="hidden" th:if="${info != null}" id="info" th:value="${info}">
+                <input type="hidden" th:if="${error != null}" id="danger" th:value="${error}">
+                <input type="hidden" th:if="${success != null}" id="success" th:value="${success}">
+                <input type="hidden" th:if="${warning != null}" id="warning" th:value="${warning}">
 
                 <div class="panel mt-2">
                     <div class="panel-heading">
@@ -20,7 +24,7 @@
                     </div>
                     <div class="panel-body">
 
-                        <div th:object="${product}" th:remove="tag">
+                        <div th:object="${productAvailable}" th:remove="tag">
                             <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
                                 role="alert">
                                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
@@ -28,7 +32,7 @@
                         </div>
 
 
-                        <div th:object="${product}" th:remove="tag">
+                        <div th:object="${productAvailable}" th:remove="tag">
                             <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
                                 role="alert">
                                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
@@ -36,55 +40,69 @@
                         </div>
 
 
-                        <form th:action="@{/product/form}" th:object="${product}" method="post" enctype="multipart/form-data">
+                        <form th:action="@{/product-available/form}" th:object="${productAvailable}" method="post" enctype="multipart/form-data">
                             <div class="row">
-                                <div class="col-md-3">
-                                    <img src="http://www.tourniagara.com/wp-content/uploads/2014/10/default-img.gif" class="rounded float-left" style="width: 100%; height: 300px!important; object-fit: cover;"  id="image-preview" alt="...">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <div class="fileUpload blue-btn py-2">
-                                                <input type="file" name="file" accept="image/*" class="form-control uploadFile"  required />
-                                                <small class="form-text text-danger" ></small>
-                                                <h5 style="font-weight: bold">Subir Foto</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-md-9">
                                     <div class="row">
+
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="name" class="col-form-label">Nombre (*)</label>
-                                                <input id="name" type="text" th:field="*{name}" class="form-control"
-                                                       th:errorclass="'form-control alert-danger'" required  /> <small
-                                                    class="form-text text-danger"
-                                                    th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="category" class="col-form-label">Categoría (*)</label>
-                                                <select id="category" th:field="*{category}" class="form-control" required >
-                                                    <option th:each="category : ${list_categories}"
-                                                            th:value="${category.id}"
-                                                            th:text="${category.name}"
-                                                            th:selected="${category.id == 1}"/>
+                                                <label for="product" class="col-form-label">Producto (*)</label>
+                                                <select id="product" th:field="*{product}" class="form-control select2" required >
+                                                    <option value="" selected disabled>Seleccione un Producto</option>
+                                                    <option th:each="prod : ${ListProduct}"
+                                                            th:value="${prod.id}"
+                                                            th:text="${prod.name}"
+                                                            />
                                                 </select>
                                                 <small
                                                         class="form-text text-danger"
-                                                        th:if="${#fields.hasErrors('category')}" th:errors="*{category}">
+                                                        th:if="${#fields.hasErrors('product')}" th:errors="*{product}">
                                                 </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="precio" class="col-form-label">Precio (*)</label>
+                                                <input id="precio" type="number" th:field="*{price}" class="form-control"
+                                                       th:errorclass="'form-control alert-danger'" required  /> <small
+                                                    class="form-text text-danger"
+                                                    th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
                                             </div>
                                         </div>
 
 
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="description" class="col-form-label">Descripción</label>
-                                                <textarea id="description" type="text" th:field="*{description}" class="form-control"
-                                                          th:errorclass="'form-control alert-danger'" cols="30" rows="12" required  /> <small
+                                                <label for="stock" class="col-form-label">Stock (*)</label>
+                                                <input id="stock" type="text" th:field="*{stock}" class="form-control"
+                                                       th:errorclass="'form-control alert-danger'" required  /> <small
                                                     class="form-text text-danger"
-                                                    th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                                                    th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="stock_unity" class="col-form-label">Tipo de Unidad Stock (*)</label>
+                                                <select id="stock_unity" th:field="*{stock_unity}" class="form-control select2" required >
+                                                    <option value="" selected disabled>Seleccione un Producto</option>
+                                                    <option value="BIN" >BIN</option>
+                                                    <option value="CAJA" >CAJA</option>
+                                                    <option value="KG" >KG</option>
+                                                </select>
+                                                <small th:if="${#fields.hasErrors('stock_unity')}" th:errors="*{stock_unity}"></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="date_expire" class="col-form-label">Fecha de Expiración (*)</label>
+
+                                                <input th:field="*{date_expire}" id="date_expire" type="text" required class="form-control">
+
+                                                 <small class="form-text text-danger"
+                                                    th:if="${#fields.hasErrors('date_expire')}" th:errors="*{date_expire}"></small>
                                             </div>
                                         </div>
 
@@ -116,51 +134,5 @@
 
 </div>
 
-<script>
-    $('.uploadFile').change(function () {
-        var file = this.files[0];
-        var filename = readURL(this);
-        $(this).parent().children('span').html(filename);
-        var mime_types = [ 'image/jpeg', 'image/png' ];
-        if(mime_types.indexOf(file.type) == -1) {
-            alert('Error : Incorrect file type');
-            return;
-        }
-        if(file.size > 2*1924*1524) {
-            alert('Error :  3MB');
-            return;
-        }
-        let _PREVIEW_URL = URL.createObjectURL(file);
-        // set src of image and show
-        $('#image-preview').attr('src', _PREVIEW_URL);
-    });
-    function readURL(input) {
-        var url = input.value;
-        var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-        if (input.files && input.files[0] && (
-            ext == "png" || ext == "jpeg" || ext == "jpg" || ext == "gif" || ext == "pdf"
-        )) {
-            var path = $(input).val();
-            var filename = path.replace(/^.*\\/, "");
-            // $('.fileUpload span').html('Uploaded Proof : ' + filename);
-            return "Uploaded file : "+filename;
-        } else {
-            $(input).val("");
-            return "Only image/pdf formats are allowed!";
-        }
-    }
-</script>
 </body>
 </html>
-© 2019 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
