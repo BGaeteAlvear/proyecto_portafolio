@@ -48,7 +48,34 @@ public class IndexController {
         model.addAttribute("userSession", dataUser.getId());
 
 
-        return "index";
+        return "home/index";
+    }
+
+    @GetMapping("/home")
+    public String home (Authentication authentication,
+                         HttpServletRequest request, Model model, HttpSession session){
+        logger.info("Entra en IndexController");
+        Person person = null;
+        // Datos Usuario
+        try{
+            User user2 = (User) authentication.getPrincipal();
+            person = personService.findByUsername(user2.getUsername());
+            session.setAttribute("userSession", person);
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
+        /* DATOS TEMPLATE */
+        model.addAttribute("title_header", "DASHBOARD");
+        model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | DASHBOARD");
+        model.addAttribute("subtitle_header", "Bienvenido a la plataforma de ventas de frutas Online");
+        Person dataUser = (Person) session.getAttribute("userSession");
+        /* DATOS USER */
+        model.addAttribute("user", authentication);
+        model.addAttribute("userSession", dataUser.getId());
+
+
+        return "home/index";
     }
 
 }

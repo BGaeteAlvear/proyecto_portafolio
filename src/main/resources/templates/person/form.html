@@ -67,6 +67,21 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
+                                        <label for="role" class="col-form-label">Rol (*)</label>
+                                        <select id="role" th:field="*{role}" class="form-control" required >
+                                            <option th:each="role : ${listRoles}"
+                                                    th:value="${role.id}"
+                                                    th:text="${role.name}"
+                                                    th:selected="${role.id == 1}"/>
+                                        </select>
+                                        <small
+                                                class="form-text text-danger"
+                                                th:if="${#fields.hasErrors('role')}" th:errors="*{role}">
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
                                         <label for="companyName" class="col-form-label">Nombre Compañia</label>
                                         <input id="companyName" type="text" th:field="*{companyName}" class="form-control"
                                                th:errorclass="'form-control alert-danger'" /> <small
