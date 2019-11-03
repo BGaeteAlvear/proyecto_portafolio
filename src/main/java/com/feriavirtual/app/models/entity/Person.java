@@ -59,13 +59,21 @@ public class Person implements Serializable {
     private String companyEmail;
 
 
+    private String address;
+
+    private String city;
+
+    private String country;
+
+
     private Boolean enabled;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
 
+    /*
     @OneToMany(mappedBy = "person", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Address> addressList;
+    private List<Address> addressList; */
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Authority authority;
@@ -82,7 +90,7 @@ public class Person implements Serializable {
         this.enabled = true;
         this.passwordRecovery = 1;
         this.status = true;
-        this.addressList = new ArrayList<>();
+  //      this.addressList = new ArrayList<>();
     }
 
     private static final long serialVersionUID = 706443423338604396L;

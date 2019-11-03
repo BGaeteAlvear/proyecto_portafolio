@@ -80,6 +80,7 @@
                                         </small>
                                     </div>
                                 </div>
+
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="companyName" class="col-form-label">Nombre Compañia</label>
@@ -112,7 +113,79 @@
                                 </div>
 
 
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="country" class="col-form-label">País</label>
+                                        <select id="country" th:field="*{country}" class="form-control" required >
+                                           <!-- <option th:each="role : ${listRoles}"
+                                                    th:value="${role.id}"
+                                                    th:text="${role.name}"
+                                                    th:selected="${role.id == 1}"/> -->
+                                            <option th:value="cl" th:text="Chile"></option>
+                                            <option th:value="ar" th:text="Argentina"></option>
+                                            <option th:value="br" th:text="Brasil"></option>
+                                            <option th:value="bo" th:text="Bolivia"></option>
+                                        </select>
+                                        <small
+                                                class="form-text text-danger"
+                                                th:if="${#fields.hasErrors('country')}" th:errors="*{country}">
+                                        </small>
+                                    </div>
+                                </div>
 
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="city" class="col-form-label">Ciudad</label>
+                                        <select id="city" th:field="*{city}" class="form-control" required >
+                                            <!-- <option th:each="role : ${listRoles}"
+                                                     th:value="${role.id}"
+                                                     th:text="${role.name}"
+                                                     th:selected="${role.id == 1}"/> -->
+                                            <option th:value="vina" th:text="Vina_del_Mar"></option>
+                                            <option th:value="valpo" th:text="Valparaiso"></option>
+                                            <option th:value="stgo" th:text="Santiago"></option>
+                                        </select>
+                                        <small
+                                                class="form-text text-danger"
+                                                th:if="${#fields.hasErrors('city')}" th:errors="*{city}">
+                                        </small>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="address" class="col-form-label">Dirección</label>
+                                        <input id="address" type="text" th:field="*{address}" class="form-control"
+                                               th:errorclass="'form-control alert-danger'" /> <small
+                                            class="form-text text-danger"
+                                            th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></small>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+<!--
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="country" class="col-form-label">País</label>
+                                        <input id="country" type="text" th:field="*{country}" class="form-control"
+                                               th:errorclass="'form-control alert-danger'" /> <small
+                                            class="form-text text-danger"
+                                            th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></small>
+                                    </div>
+                                </div>
+-->
 
 
 
