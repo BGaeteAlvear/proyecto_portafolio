@@ -87,8 +87,10 @@ public class PersonController {
     @GetMapping("/form")
     public String create(Map<String, Object> model){
         Person person = new Person();
+        List<Role> roles = personService.getAllRoles();
         model.put("title_header", "Crear Usuario");
         model.put("title", "Crear Usuario");
+        model.put("listRoles", roles);
         model.put("person", person);
         return "/person/form";
     }
@@ -176,6 +178,7 @@ public class PersonController {
     @GetMapping("/form/{id}")
     public String edit(@PathVariable(value = "id")Long id, Map<String, Object> model, RedirectAttributes flash){
         Person person  = null;
+        List<Role> roles = personService.getAllRoles();
         if(id > 0){
          person = personService.findById(id);
             if (person == null){
@@ -188,6 +191,7 @@ public class PersonController {
         }
         model.put("person", person);
         model.put("titulo", "Editar usuario");
+        model.put("listRoles", roles);
         return "/person/form";
     }
 
