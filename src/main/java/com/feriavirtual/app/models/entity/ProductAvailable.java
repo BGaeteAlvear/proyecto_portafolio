@@ -1,9 +1,12 @@
 package com.feriavirtual.app.models.entity;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Data
@@ -15,46 +18,42 @@ public class ProductAvailable implements Serializable {
     @SequenceGenerator(name = "SEQ_PRODUCTS_AVAILABLE",allocationSize = 1,sequenceName = "SEQ_PRODUCTS_AVAILABLE")
 
     private Long id;
-    @NotEmpty
-    private String name;
-
-    @NotEmpty
-    private String description;
-
     @NotNull
     private int stock;
 
     @NotNull
+    private String stock_unity;
+
+    @NotNull
     private int price;
 
-    private String image;
+    @Column(name = "created_at")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date createdAt;
+
+
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date updatedAt;
+
+    @Column(name = "date_expire")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date date_expire;
+
+    @NotNull
     private Boolean status;
 
-
-
     @ManyToOne(fetch = FetchType.LAZY)
-    public Category category;
+    public Product product;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    public Person person;
 
     public ProductAvailable(){
         this.status = true;
     }
 
-
-
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

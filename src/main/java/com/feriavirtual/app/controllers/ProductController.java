@@ -85,8 +85,8 @@ public class ProductController {
             model.put("subtitle_header","Mantenedor de  Categorias");
             model.put("title_page", "PLATAFORMA MAIPO GRANDE | CATEGORIAS");
             model.put("list_categories", listCategories);
-            flash.addFlashAttribute("alert","POR FAVOR CREA UNA CATEGORIA ANTES DE CREAR UN PRODUCTO");
-            return "/category/index";
+            flash.addFlashAttribute("info","POR FAVOR CREA UNA CATEGORIA ANTES DE CREAR UN PRODUCTO");
+            return "redirect:/category/index";
         }
     }
 

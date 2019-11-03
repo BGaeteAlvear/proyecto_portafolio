@@ -1,5 +1,6 @@
 package com.feriavirtual.app.models.service.impl;
 
+import com.feriavirtual.app.models.entity.Person;
 import com.feriavirtual.app.models.entity.ProductAvailable;
 import com.feriavirtual.app.models.repository.IProductAvailableRepository;
 import com.feriavirtual.app.models.service.IProductAvailableService;
@@ -25,6 +26,11 @@ public class ProductAvailableServiceImpl implements IProductAvailableService {
     @Override
     public ProductAvailable findById(Long id) {
         return productAvailableRepository.findById(id).orElseThrow(()-> new EntityNotFoundException());
+    }
+
+    @Override
+    public List<ProductAvailable> findByPerson(Person person) {
+        return productAvailableRepository.findByPerson(person);
     }
 
     @Override

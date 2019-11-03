@@ -55,6 +55,11 @@
     </head>
 
     <body>
+        <input type="hidden" th:if="${info != null}" id="info" th:value="${info}">product
+        <input type="hidden" th:if="${error != null}" id="danger" th:value="${error}">
+        <input type="hidden" th:if="${success != null}" id="success" th:value="${success}">
+        <input type="hidden" th:if="${warning != null}" id="warning" th:value="${warning}">
+
         <div class="col-12" id="loader-page" th:fragment="loader">
             <div class="panel">
                 <div class="panel-body">
@@ -388,16 +393,6 @@
 
                 </div>
             </header>
-
-            <div class="alert alert-success" th:if="${success != null}"
-                 th:text="${success}"></div>
-            <div class="alert alert-danger" th:if="${error != null}"
-                 th:text="${error}"></div>
-            <div class="alert alert-warning" th:if="${warning != null}"
-                 th:text="${warning}"></div>
-            <div class="alert alert-info" th:if="${info != null}"
-                 th:text="${info}"></div>
-
             <!--===================================================-->
             <!--END NAVBAR-->
             <div class="boxed">
@@ -409,7 +404,6 @@
                             <p th:text="${subtitle_header}"></p>
                         </div>
                     </div>
-
                     <!-- CONTENT -->
                     <div id="page-content"></div>
                     <!-- END CONTENT -->
@@ -524,16 +518,20 @@
                                             </a>
                                         </li>
 
-
                                         <!--Menu list item-->
                                         <li>
                                             <a th:href="@{/product/index}">
-                                                <i class="demo-pli-gear"></i>
-                                                <span class="menu-title">
-                                                    Productos
-                                                    <span class="pull-right badge badge-warning">24</span>
-                                                </span>
+                                                <i class="ion-person-stalker"></i>
+                                                <span class="menu-title">Productos</span>
+                                                <i class="arrow"></i>
                                             </a>
+
+                                            <!--Submenu-->
+                                            <ul class="collapse">
+                                                <li><a th:href="@{/product/index}">Productos</a></li>
+                                                <li><a th:href="@{/category/index}">Categorías</a></li>
+                                                <li><a th:href="@{/category/index}">Productos Disponibles</a></li>
+                                            </ul>
                                         </li>
 
                                         <!--Menu list item-->
@@ -688,6 +686,12 @@
 
 
             </div>
+            <div class="alert alert-success" th:if="${success != null}"
+                 th:text="${success}"></div>
+            <div class="alert alert-danger" th:if="${error != null}"
+                 th:text="${error}"></div>
+            <div class="alert alert-warning" th:if="${warning != null}"
+                 th:text="${warning}"></div>
 
             <footer id="footer" th:fragment="footer">
 
@@ -761,6 +765,48 @@
 
                 <script th:src="@{/assets/js/shopping-cart.js}"></script>
 
+                <script>
+                    $(document).ready(function () {
+                        console.log($('#info').val());
+                        if($('#info').val()){
+                            $.niftyNoty({
+                                type: 'info',
+                                container : 'floating',
+                                title : 'Exito!',
+                                message : $('#info').val() ,
+                                closeBtn : true,
+                                timer : 5500
+                            });
+                        }
+
+                        console.log($('#danger').val());
+                        if($('#danger').val()){
+                            $.niftyNoty({
+                                type: 'danger',
+                                container : 'floating',
+                                title : 'Error',
+                                message : $('#danger').val() ,
+                                closeBtn : true,
+                                timer : 5500
+                            });
+                        }
+
+                        console.log($('#warning').val());
+                        if($('#warning').val()){
+                            $.niftyNoty({
+                                type: 'warning',
+                                container : 'floating',
+                                title : 'Alerta',
+                                message : $('#warning').val() ,
+                                closeBtn : true,
+                                timer : 5500
+                            });
+                        }
+
+
+                    });
+
+                </script>
             </footer>
         </div>
     </body>
