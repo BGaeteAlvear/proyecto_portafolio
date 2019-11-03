@@ -1,17 +1,158 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
-<body th:replace="layout/layout :: body">
-    <div id="container" class="effect aside-float aside-bright mainnav-lg">
-        <header th:replace="layout/layout :: header"></header>
-        <div id="page-content" >
-            <div class="row">
-                <div class="col-md-12">
-                    <b1>Bienvenido  </b1><b1 th:text="${nombreUsuario}"> </b1>
+<body>
+<div id="container" class="effect aside-float aside-bright mainnav-lg">
+
+    <header th:replace="layout/layout :: header"></header>
+
+    <div class="boxed">
+        <div id="content-container">
+
+            <div th:replace="layout/layout :: page-head"></div>
+
+            <div id="page-content">
+
+                <div class="row">
+                    <div class="col-lg-7">
+                        <h1>Bienvenido  </h1><h1 th:text="${user.getName()}"> </h1>
+                        <h1>SESSION  </h1><h5 th:text="${userSession}"> </h5>
+                        <h1>DATOS  </h1><h5 th:text="${user.getCredentials()}"> </h5>
+                        <h1>DATOS  </h1><h5 th:text="${user.getPrincipal()}"> </h5>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-6">
+
+                                <!--Sparkline Area Chart-->
+                                <div class="panel panel-success panel-colorful">
+                                    <div class="pad-all">
+                                        <p class="text-lg text-semibold"><i class="demo-pli-data-storage icon-fw"></i> Bodega</p>
+                                        <p class="mar-no">
+                                            <span class="pull-right text-bold">200 Vines</span> Espacio Disponible
+                                        </p>
+                                        <p class="mar-no">
+                                            <span class="pull-right text-bold">450</span> Espacio Utilizado
+                                        </p>
+                                    </div>
+                                    <div class="pad-top text-center">
+                                        <!--Placeholder-->
+                                        <div id="demo-sparkline-area" class="sparklines-full-content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-6">
+
+                                <!--Sparkline Line Chart-->
+                                <div class="panel panel-info panel-colorful">
+                                    <div class="pad-all">
+                                        <p class="text-lg text-semibold">Licitaciones Transporte Activas</p>
+                                        <p class="mar-no">
+                                            <span class="pull-right text-bold">12</span> Externas
+                                        </p>
+                                        <p class="mar-no">
+                                            <span class="pull-right text-bold">23</span> Internas
+                                        </p>
+                                    </div>
+                                    <div class="pad-top text-center">
+
+                                        <!--Placeholder-->
+                                        <div id="demo-sparkline-line" class="sparklines-full-content"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-6">
+
+                                <!--Sparkline bar chart -->
+                                <div class="panel panel-purple panel-colorful">
+                                    <div class="pad-all">
+                                        <p class="text-lg text-semibold"><i class="demo-pli-basket-coins icon-fw"></i> Ventas Hoy</p>
+                                        <p class="mar-no">
+                                            <span class="pull-right text-bold">$70.004.000</span> Hoy
+                                        </p>
+                                        <p class="mar-no">
+                                            <span class="pull-right text-bold">$332.000.500</span> Ultimos 7 Dias
+                                        </p>
+                                    </div>
+                                    <div class="text-center">
+
+                                        <!--Placeholder-->
+                                        <div id="demo-sparkline-bar" class="box-inline"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-6">
+
+                                <!--Sparkline pie chart -->
+                                <div class="panel panel-warning panel-colorful">
+                                    <div class="pad-all">
+                                        <p class="text-lg text-semibold">Licitaciones</p>
+                                        <p class="mar-no">
+                                            <span class="pull-right text-bold">34</span> Finalizadas
+                                        </p>
+                                        <p class="mar-no">
+                                            <span class="pull-right text-bold">79</span> Total
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!--Extra Small Weather Widget-->
+                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                        <div class="panel">
+                            <div class="panel-body text-center clearfix">
+                                <div class="col-sm-4 pad-top">
+                                    <div class="text-lg">
+                                        <p class="text-5x text-thin text-main">95</p>
+                                    </div>
+                                    <p class="text-sm text-bold text-uppercase">Nuevos Usuarios</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <button class="btn btn-pink mar-ver">Ver Detalles</button>
+                                    <p class="text-xs">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                                    <ul class="list-unstyled text-center bord-top pad-top mar-no row">
+                                        <li class="col-xs-4">
+                                            <span class="text-lg text-semibold text-main">1,345</span>
+                                            <p class="text-sm text-muted mar-no">Following</p>
+                                        </li>
+                                        <li class="col-xs-4">
+                                            <span class="text-lg text-semibold text-main">23K</span>
+                                            <p class="text-sm text-muted mar-no">Followers</p>
+                                        </li>
+                                        <li class="col-xs-4">
+                                            <span class="text-lg text-semibold text-main">278</span>
+                                            <p class="text-sm text-muted mar-no">Post</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                        <!--End Extra Small Weather Widget-->
+
+
+                    </div>
                 </div>
+
             </div>
+
         </div>
+
+        <!-- MENU PRINCIPAL -->
+        <nav th:replace="layout/layout :: mainnav-container"></nav>
+        <!-- END MENU PRINCIPAL -->
+
     </div>
+
+    <footer th:replace="layout/layout :: footer"></footer>
+
+</div>
 </body>
 </html>

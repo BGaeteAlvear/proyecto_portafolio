@@ -17,7 +17,7 @@
 
                 <div class="panel mt-2">
                     <div class="panel-heading">
-                        <h3 th:text="${title}"></h3>
+                        <h3 class="panel-title" th:text="${title}"></h3>
                     </div>
                     <div class="panel-body">
 
@@ -36,58 +36,81 @@
                             </ul>
                         </div>
 
-
-                        <form th:action="@{/person/form}" th:object="${person}" method="post"
-                              enctype="multipart/form-data">
-
-                            <div class="form-group row">
-                                <label for="name" class="col-sm-2 col-form-label">Nombre</label>
+                        <form th:action="@{/person/form}" th:object="${person}" method="post" enctype="multipart/form-data">
+                            <div class="row">
                                 <div class="col-sm-6">
-                                    <input id="name" type="text" th:field="*{name}" class="form-control"
-                                           th:errorclass="'form-control alert-danger'" /> <small
-                                        class="form-text text-danger"
-                                        th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                                    <div class="form-group">
+                                        <label for="name" class="col-form-label">Nombre</label>
+                                        <input id="name" type="text" th:field="*{name}" required class="form-control"
+                                               th:errorclass="'form-control alert-danger'" /> <small
+                                            class="form-text text-danger"
+                                            th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="lastName" class="col-form-label">Apellido</label>
+                                        <input id="lastName" type="text" th:field="*{lastName}" required class="form-control"
+                                               th:errorclass="'form-control alert-danger'" /> <small
+                                            class="form-text text-danger"
+                                            th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="email" class="col-form-label">Email</label>
+                                        <input id="email" type="email" th:field="*{email}" required class="form-control"
+                                               th:errorclass="'form-control alert-danger'" /> <small
+                                            class="form-text text-danger"
+                                            th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="companyName" class="col-form-label">Nombre Compañia</label>
+                                        <input id="companyName" type="text" th:field="*{companyName}" class="form-control"
+                                               th:errorclass="'form-control alert-danger'" /> <small
+                                            class="form-text text-danger"
+                                            th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}"></small>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="username" class="col-form-label">Username</label>
+                                        <input id="username" type="text" th:field="*{username}" class="form-control"
+                                               th:errorclass="'form-control alert-danger'" /> <small
+                                            class="form-text text-danger"
+                                            th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="password" class="col-form-label">Contraseña</label>
+                                        <input id="password" type="password" th:field="*{password}" class="form-control"
+                                               th:errorclass="'form-control alert-danger'" /> <small
+                                            class="form-text text-danger"
+                                            th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+                                <div class="col-sm-6">
+                                    <div class="form-group ">
+                                        <input type="submit" th:value="${title}" class="btn btn-primary" />
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <label for="lastName" class="col-sm-2 col-form-label">Apellido</label>
-                                <div class="col-sm-6">
-                                    <input id="lastName" type="text" th:field="*{lastName}" class="form-control"
-                                           th:errorclass="'form-control alert-danger'" /> <small
-                                        class="form-text text-danger"
-                                        th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="email" class="col-sm-2 col-form-label">Email</label>
-                                <div class="col-sm-6">
-                                    <input id="email" type="text" th:field="*{email}" class="form-control"
-                                           th:errorclass="'form-control alert-danger'" /> <small
-                                        class="form-text text-danger"
-                                        th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="companyName" class="col-sm-2 col-form-label">Nombre Compañia</label>
-                                <div class="col-sm-6">
-                                    <input id="companyName" type="text" th:field="*{companyName}" class="form-control"
-                                           th:errorclass="'form-control alert-danger'" /> <small
-                                        class="form-text text-danger"
-                                        th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}"></small>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-sm-6">
-                                    <input type="submit" th:value="${title}"
-                                           class="btn btn-primary" />
-                                </div>
-                            </div>
-
                         </form>
+
                     </div>
                 </div>
 
@@ -102,7 +125,7 @@
 
     </div>
 
-    <footer th:replace="layout/layout :: footer"></footer>
+    <footer th:replace="layout/layout :: footer"></footer>}
 
 </div>
 </body>

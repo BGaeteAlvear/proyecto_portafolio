@@ -1,28 +1,45 @@
 package com.feriavirtual.app.models.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+
 import java.io.Serializable;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "categories")
+@Table(name="categories")
 public class Category implements Serializable {
-
-
     @Id
-    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_CATEGORY")
-    @SequenceGenerator(name = "SEQ_CATEGORY",allocationSize = 1,sequenceName = "SEQ_CATEGORY")
-    private Long id;
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_CATEGORIES")
+    @SequenceGenerator(name = "SEQ_CATEGORIES",allocationSize = 1,sequenceName = "SEQ_CATEGORIES")
+    private Long Id;
+
+    @NotEmpty
     private String name;
+
+    @NotEmpty
     private String description;
 
-    private static final long serialVersionUID = 2625797175843733106L;
+    private String image;
+
+
+    public Category() {
+
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
 
 
 }
+
+
+

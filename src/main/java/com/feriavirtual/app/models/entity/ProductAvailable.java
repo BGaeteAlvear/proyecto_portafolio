@@ -1,58 +1,59 @@
 package com.feriavirtual.app.models.entity;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-public class ProductAvailable {
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Date;
+
+@Entity
+@Data
+@Table(name="products_Available")
+public class ProductAvailable implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_PRODUCTS_AVAILABLE")
+    @SequenceGenerator(name = "SEQ_PRODUCTS_AVAILABLE",allocationSize = 1,sequenceName = "SEQ_PRODUCTS_AVAILABLE")
 
     private Long id;
-    private String name;
-    private String description;
+    @NotNull
     private int stock;
-    private String image;
 
-    public ProductAvailable(Long id, String name, String description, int stock, String image) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.stock = stock;
-        this.image = image;
+    @NotNull
+    private String stock_unity;
+
+    @NotNull
+    private int price;
+
+    @Column(name = "created_at")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date createdAt;
+
+
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date updatedAt;
+
+    @Column(name = "date_expire")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date date_expire;
+
+    @NotNull
+    private Boolean status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Product product;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    public Person person;
+
+    public ProductAvailable(){
+        this.status = true;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 }

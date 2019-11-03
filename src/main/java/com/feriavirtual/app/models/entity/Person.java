@@ -3,16 +3,21 @@ package com.feriavirtual.app.models.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
 @Table(name = "persons")
-public class Person  implements Serializable {
+@Component
+@Scope("session")
+public class Person implements Serializable {
 
 
     @Id
@@ -33,6 +38,7 @@ public class Person  implements Serializable {
     private String phone;
     private String email;
     private String password;
+    private String username;
     private Boolean status;
     @Column(name = "password_recovery")
     private int passwordRecovery;
@@ -51,22 +57,32 @@ public class Person  implements Serializable {
     private String companyPhone;
     @Column(name = "company_email")
     private String companyEmail;
-    @Column(name = "role_id")
-    private int roleId;
+
 
     private Boolean enabled;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Address> addressList;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Authority authority;
+
+
+
+
+    /*
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name= "person_id")
+    private List<Authority> authorities; */
 
     public Person(){
-        this.roleId = 1;
+        this.enabled = true;
         this.passwordRecovery = 1;
         this.status = true;
+        this.addressList = new ArrayList<>();
     }
 
     private static final long serialVersionUID = 706443423338604396L;

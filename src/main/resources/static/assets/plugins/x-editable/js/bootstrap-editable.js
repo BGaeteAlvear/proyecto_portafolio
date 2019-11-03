@@ -6233,7 +6233,7 @@ $(function(){
             });
             
             //language
-            this.options.datepicker.language = this.options.datepicker.language || 'en'; 
+            this.options.datepicker.language = this.options.datepicker.language || 'es';
 
             //store DPglobal
             this.dpg = $.fn.bdatepicker.DPGlobal; 

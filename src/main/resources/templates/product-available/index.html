@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<div id="container" class="effect aside-float aside-bright mainnav-lg">
+
+    <header th:replace="layout/layout :: header"></header>
+
+    <div class="boxed">
+        <div id="content-container">
+
+            <div th:replace="layout/layout :: page-head"></div>
+
+            <!-- Content -->
+            <div id="page-content">
+                <input type="hidden" th:if="${info != null}" id="info" th:value="${info}">
+                <input type="hidden" th:if="${error != null}" id="danger" th:value="${error}">
+                <input type="hidden" th:if="${success != null}" id="success" th:value="${success}">
+                <input type="hidden" th:if="${warning != null}" id="warning" th:value="${warning}">
+
+                <div class="panel">
+                    <div class="panel-heading"></div>
+                    <div class="panel-body">
+                        <a th:href="@{/product-available/form}" class="btn btn-success p-3">Nuevo Producto </a>
+                        <table  data-toggle="table"
+                                data-search="true"
+                                data-show-refresh="true"
+                                data-show-toggle="true"
+                                data-show-columns="true"
+                                data-sort-name="id"
+                                data-page-list="[5, 10, 20]"
+                                data-page-size="5"
+                                data-pagination="true" data-show-pagination-switch="true">
+                            <thead class="thead-inverse">
+                            <tr>
+
+                                <th data-align="center"  data-sortable="true" >id</th>
+                                <th data-sortable="true"  style="white-space: nowrap" >Imagen</th>
+                                <th data-sortable="true" >Producto</th>
+                                <th data-sortable="true" >Descripción</th>
+                                <th data-sortable="true" >Precio</th>
+                                <th data-sortable="true" >Categoría</th>
+                                <th data-sortable="true" >Cantidad</th>
+                                <th data-sortable="true" >Unidad</th>
+                                <th data-sortable="true" width="100px">Fecha Expiración</th>
+                                <th data-sortable="true" width="100px">Creado</th>
+                                <th data-sortable="true" width="100px">Editado</th>
+                                <th data-align="center" >Opciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="productAvailable : ${list_products_available}">
+                                <td data-align="center" th:text="${productAvailable.id}"></td>
+                                <td >
+                                    <img th:if= "${#strings.length(productAvailable.product)>0}" class="img-thumbnail rounded note-float-left" style="max-width: 25%;"
+                                         th:src="@{'/uploads/'+ ${productAvailable.product.image}}" th:alt="${productAvailable.product.image}"/>
+                                </td>
+                                <td th:text="${productAvailable.product.name}"></td>
+                                <td th:text="${productAvailable.product.description}"></td>
+                                <td th:text="${productAvailable.price}">$</td>
+                                <td th:text="${productAvailable.product.category.name}"></td>
+                                <td th:text="${productAvailable.stock}"></td>
+                                <td th:text="${productAvailable.stock_unity}"></td>
+                                <td th:text="${productAvailable.date_expire}"></td>
+                                <td th:text="${productAvailable.createdAt}"></td>
+                                <td th:text="${productAvailable.updatedAt}"></td>
+                                <td>
+                                    <a class="btn btn-info btn-icon add-tooltip" data-original-title="Editar" th:href="@{/product-available/form/} + ${productAvailable.id}" ><i class="ion-edit"></i></a>
+                                    <a class="btn btn-danger btn-icon add-tooltip"  data-original-title="Eliminar" th:href="@{/product-available/eliminar/} + ${productAvailable.id}" ><i class="ion-trash-a"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End Content -->
+
+        </div>
+
+        <!-- MENU PRINCIPAL -->
+        <nav th:replace="layout/layout :: mainnav-container"></nav>
+        <!-- END MENU PRINCIPAL -->
+
+    </div>
+
+    <footer th:replace="layout/layout :: footer"></footer>
+
+</div>
+</body>
+</html>
