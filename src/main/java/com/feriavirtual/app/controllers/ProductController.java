@@ -142,7 +142,7 @@ public class ProductController {
     }
 
     //@RequestMapping(value="/eliminar/{id}")
-    @GetMapping("/eliminar/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable(value = "id")Long id, RedirectAttributes flash){
         if (id>0){
             Product product = productService.findById(id);
@@ -150,7 +150,7 @@ public class ProductController {
             productService.delete(id);
 
                 if(uploadFileService.delete(product.getImage())){
-                    flash.addFlashAttribute("info", "Imagen: "+ product.getImage()+" eliminada con éxito");
+                    flash.addFlashAttribute("success", "Imagen: "+ product.getImage()+" eliminada con éxito");
                 }
 
         }

@@ -15,6 +15,10 @@
 
             <!-- Content -->
             <div id="page-content">
+                <input type="hidden" th:if="${info != null}" id="info" th:value="${info}">
+                <input type="hidden" th:if="${error != null}" id="danger" th:value="${error}">
+                <input type="hidden" th:if="${success != null}" id="success" th:value="${success}">
+                <input type="hidden" th:if="${warning != null}" id="warning" th:value="${warning}">
 
                 <div class="panel">
                     <div class="panel-heading"></div>
