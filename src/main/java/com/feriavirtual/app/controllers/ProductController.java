@@ -165,7 +165,7 @@ public class ProductController {
             product = productService.findById(id);
 
            if (product == null){
-                flash.addFlashAttribute("error", "El ID del producto no existe en la BBDD!");
+                flash.addFlashAttribute("error", "El id del producto no existe en la base de datos");
                 return "redirect:/product/index";
             }
         }else {

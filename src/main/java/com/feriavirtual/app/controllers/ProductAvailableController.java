@@ -159,11 +159,11 @@ public class ProductAvailableController {
             productAvailable = productAvailableService.findById(id);
 
             if (productAvailable == null){
-                flash.addFlashAttribute("error", "El ID del producto no existe en la BBDD!");
+                flash.addFlashAttribute("error", "El id del producto disponible no existe en la base de datos");
                 return "redirect:/product-available/index";
             }
         }else {
-            flash.addFlashAttribute("error", "El ID del producto no puede ser cero!");
+            flash.addFlashAttribute("error", "El id del producto disponible no puede ser cero");
             return "redirect:/product-available/index";
         }
         model.put("productAvailable", productAvailable);

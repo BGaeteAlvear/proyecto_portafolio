@@ -2,72 +2,116 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
+<div id="container" class="effect aside-float aside-bright mainnav-lg">
 
-<header th:replace="layout/layout :: header"></header>
+    <header th:replace="layout/layout :: header"></header>
 
-<div class="container py-4" style="margin-top: 80px">
-    <div class="container py-4">
-        <div class="card bg-dark text-white">
-            <div class="card-header" th:text="${title}"></div>
-            <div class="card-body">
-                <div th:object="${transport}" th:remove="tag">
-                    <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
-                        role="alert">
-                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
-                    </ul>
+    <div class="boxed">
+        <div id="content-container">
+
+            <div th:replace="layout/layout :: page-head"></div>
+
+            <!-- Content -->
+            <div id="page-content">
+                <input type="hidden" th:if="${info != null}" id="info" th:value="${info}">
+                <input type="hidden" th:if="${error != null}" id="danger" th:value="${error}">
+                <input type="hidden" th:if="${success != null}" id="success" th:value="${success}">
+                <input type="hidden" th:if="${warning != null}" id="warning" th:value="${warning}">
+
+                <div class="panel mt-2">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" th:text="${title}"></h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <div th:object="${transport}" th:remove="tag">
+                            <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+                                role="alert">
+                                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+
+
+                        <div th:object="${transport}" th:remove="tag">
+                            <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+                                role="alert">
+                                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+
+
+                        <form th:action="@{/transport/form}" th:object="${transport}" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="row">
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                            <label for="transportType" class="col-form-label">Tipo de Transporte (*)</label>
+                                            <select id="transportType" th:field="*{transportType}" class="form-control">
+                                                <option th:each="transportType : ${transportTypes}"
+                                                        th:value="${transportType.id}"
+                                                        th:text="${transportType.name}"
+                                                        th:selected="${transportType.id == 1}"/>
+                                            </select>
+                                            <small
+                                                    class="form-text text-danger"
+                                                    th:if="${#fields.hasErrors('transportType')}" th:errors="*{transportType}">
+                                            </small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="refrigeration" class="col-form-label">Refrigeración (*)</label>
+                                                <select id="refrigeration" th:field="*{refrigeration}" class="form-control">
+                                                    <option value="1">Si</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                                <small
+                                                    class="form-text text-danger"
+                                                    th:if="${#fields.hasErrors('refrigeration')}" th:errors="*{refrigeration}">
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="capacity" class="col-form-label">Capacidad (*)</label>
+                                                <input id="capacity" type="number" th:field="*{capacity}" class="form-control"
+                                                       th:errorclass="'form-control alert-danger'" required  /> <small
+                                                    class="form-text text-danger"
+                                                    th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></small>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group ">
+                                            <input type="submit" th:value="${title}" class="btn btn-primary pull-right" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <form th:action="@{/transport/form}" th:object="${transport}" method="post"
-                      enctype="multipart/form-data">
 
-                    <div class="form-group row">
-                        <label for="transportType" class="col-sm-2 col-form-label">Tipo Transporte</label>
-                        <div class="col-sm-6">
-                            <select id="transportType" th:field="*{transportType}" class="form-control">
-                                <option th:each="transportType : ${transportTypes}"
-                                        th:value="${transportType.id}"
-                                        th:text="${transportType.name}"
-                                        th:selected="${transportType.id == 1}"/>
-                            </select>
-                            <small
-                                    class="form-text text-danger"
-                                    th:if="${#fields.hasErrors('transportType')}" th:errors="*{transportType}">
-                            </small>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="refrigeration" class="col-sm-2 col-form-label">Refrigeración</label>
-                        <div class="col-sm-6">
-                            <input id="refrigeration" type="checkbox" th:field="*{refrigeration}"
-                                   th:errorclass="'form-control alert-danger'" />
-                            <small
-                                class="form-text text-danger"
-                                th:if="${#fields.hasErrors('refrigeration')}" th:errors="*{refrigeration}">
-                            </small>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="capacity" class="col-sm-2 col-form-label">Capacidad</label>
-                        <div class="col-sm-6">
-                            <input id="capacity" type="text" th:field="*{capacity}" class="form-control"
-                                   th:errorclass="'form-control alert-danger'" /> <small
-                                class="form-text text-danger"
-                                th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></small>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-sm-6">
-                            <input type="submit" th:value="${title}" class="btn btn-secondary" />
-                        </div>
-                    </div>
-                </form>
             </div>
+            <!-- End Content -->
+
         </div>
+
+        <!-- MENU PRINCIPAL -->
+        <nav th:replace="layout/layout :: mainnav-container"></nav>
+        <!-- END MENU PRINCIPAL -->
+
     </div>
-</div>
 
     <footer th:replace="layout/layout :: footer"></footer>
+
+</div>
+
 </body>
 </html>

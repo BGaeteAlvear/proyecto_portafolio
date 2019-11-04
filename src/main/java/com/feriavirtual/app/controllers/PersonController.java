@@ -201,11 +201,11 @@ public class PersonController {
             if(id > 0){
                 person = personService.findById(id);
                 if (person == null){
-                    flash.addFlashAttribute("error", "El ID del cliente no existe en la BBDD!");
+                    flash.addFlashAttribute("error", "El id de la persona no existe en la base de datos");
                     return "redirect:/person/index";
                 }
             }else {
-                flash.addFlashAttribute("error", "El ID del cliente no puede ser cero!");
+                flash.addFlashAttribute("error", "El id de la persona no puede ser cero");
                 return "redirect:/index";
             }
 

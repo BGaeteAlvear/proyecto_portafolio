@@ -32,7 +32,6 @@ public class ProductAvailable implements Serializable {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date createdAt;
 
-
     @Column(name = "updated_at")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")

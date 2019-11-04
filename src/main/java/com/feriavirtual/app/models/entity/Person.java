@@ -70,9 +70,6 @@ public class Person implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Authority authority;
 
-
-
-
     /*
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name= "person_id")

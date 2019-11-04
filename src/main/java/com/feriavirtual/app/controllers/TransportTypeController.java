@@ -26,12 +26,12 @@ public class TransportTypeController {
         this.transportTypeService = transportTypeService;
     }
 
-    @GetMapping("/list")
-    public String list(Model model){
+    @GetMapping("/index")
+    public String index(Model model){
         List<TransportType> list = transportTypeService.getAll();
         model.addAttribute("title", "Lista de Tipos de Transportes");
         model.addAttribute("list", list);
-        return "/transport-type/list";
+        return "/transport-type/index";
     }
 
     @GetMapping("/form")
@@ -48,7 +48,7 @@ public class TransportTypeController {
             transportTypeService.save(transportType);
             status.setComplete();
         }
-        return "redirect:/transport-type/list";
+        return "redirect:/transport-type/index";
     }
 
     @GetMapping("/delete/{id}")
@@ -56,9 +56,8 @@ public class TransportTypeController {
         if (id > 0){
             transportTypeService.delete(id);
         }
-        return "redirect:/transport-type/list";
+        return "redirect:/transport-type/index";
     }
-
 
     @GetMapping("/form/{id}")
     public String edit(@PathVariable(value = "id")Long id, Map<String, Object> model, RedirectAttributes flash){
@@ -66,12 +65,12 @@ public class TransportTypeController {
         if(id > 0){
             transportType = transportTypeService.findById(id);
             if (transportType == null){
-                flash.addFlashAttribute("error", "El ID del tipo de transporte no existe en la BBDD!");
-                return "redirect:/transport-type/list";
+                flash.addFlashAttribute("error", "El id del tipo de transporte no existe en la base de datos");
+                return "redirect:/transport-type/index";
             }
         }else {
-            flash.addFlashAttribute("error", "El ID del tipo de transporte no puede ser cero!");
-            return "redirect:/list";
+            flash.addFlashAttribute("error", "El id del tipo de transporte no puede ser cero");
+            return "redirect:/index";
         }
         model.put("transportType", transportType);
         model.put("title", "Editar Tipo de Transporte");

@@ -29,14 +29,14 @@
                                         data-pagination="true" data-show-pagination-switch="true">
                                     <thead class="thead-inverse">
                                     <tr>
-                                        <th data-align="center"  data-sortable="true" >id</th>
-                                        <th data-sortable="true" >nombre</th>
-                                        <th data-sortable="true" >apellido</th>
-                                        <th data-sortable="true" >email</th>
-                                        <th data-sortable="true" >role</th>
-                                        <th data-align="center" >editar</th>
-                                        <th data-align="center" >eliminar</th>
-                                        <th data-align="center" >cambiar role</th>
+                                        <th data-align="center"  data-sortable="true" >Id</th>
+                                        <th data-sortable="true" >Nombre</th>
+                                        <th data-sortable="true" >Apellido</th>
+                                        <th data-sortable="true" >Email</th>
+                                        <th data-sortable="true" >Rol</th>
+                                        <th data-align="center" >Editar</th>
+                                        <th data-align="center" >Eliminar</th>
+                                        <th data-align="center" >Cambiar Rol</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -46,9 +46,9 @@
                                         <td th:text="${user.lastName}"></td>
                                         <td th:text="${user.email}"></td>
                                         <td th:text="${user.role.name}"></td>
-                                        <td ><a class="btn btn-primary btn-xs" th:href="@{/person/form/} + ${user.id}" th:text="'editar'"></a></td>
-                                        <td ><a class="btn btn-danger btn-xs" th:href="@{/person/eliminar/} + ${user.id}" th:text="'eliminar'"></a></td>
-                                        <td ><a class="btn btn-info btn-xs" th:href="@{/person/form/change-role/} + ${user.id}" th:text="'cambiar role'"></a></td>
+                                        <td ><a class="btn btn-primary btn-xs" th:href="@{/person/form/} + ${user.id}" th:text="'Editar'"></a></td>
+                                        <td ><a class="btn btn-danger btn-xs" th:href="@{/person/eliminar/} + ${user.id}" th:text="'Eliminar'"></a></td>
+                                        <td ><a class="btn btn-info btn-xs" th:href="@{/person/form/change-role/} + ${user.id}" th:text="'Cambiar Rol'"></a></td>
                                     </tr>
                                     </tbody>
                                 </table>

@@ -2,11 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
-
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
 
     <header th:replace="layout/layout :: header"></header>
-
 
     <div class="boxed">
         <div id="content-container">
@@ -15,11 +13,15 @@
 
             <!-- Content -->
             <div id="page-content">
+                <input type="hidden" th:if="${info != null}" id="info" th:value="${info}">
+                <input type="hidden" th:if="${error != null}" id="danger" th:value="${error}">
+                <input type="hidden" th:if="${success != null}" id="success" th:value="${success}">
+                <input type="hidden" th:if="${warning != null}" id="warning" th:value="${warning}">
 
                 <div class="panel">
                     <div class="panel-heading"></div>
                     <div class="panel-body">
-                        <a th:href="@{/category/form}" class="btn btn-success p-3">Crear Categoría</a>
+                        <a th:href="@{/transport-type/form}" class="btn btn-success p-3">Nuevo Tipo de Transporte</a>
                         <table  data-toggle="table"
                                 data-search="true"
                                 data-show-refresh="true"
@@ -32,25 +34,20 @@
                             <thead class="thead-inverse">
                             <tr>
 
-                                <th data-align="center" data-sortable="true" >Id</th>
-                                <th data-sortable="true" >Imagen</th>
-                                <th data-sortable="true">Nombre</th>
-                                <th data-sortable="true">Descripción</th>
-                                <th data-align="center">Opciones</th>
+                                <th data-align="center"  data-sortable="true" >Id</th>
+                                <th data-sortable="true"  style="white-space: nowrap" >Nombre</th>
+                                <th data-sortable="true" >Descripción</th>
+                                <th data-align="center" >Opciones</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="category : ${list_categories}">
-                                <td data-align="center" th:text="${category.id}"></td>
-                                <td >
-                                    <img th:if= "${#strings.length(category.image)>0}" class="img-thumbnail rounded note-float-left" style="max-width: 25%;"
-                                         th:src="@{'/uploads/'+ ${category.image}}" th:alt="${category.image}"/>
-                                </td>
-                                <td th:text="${category.name}"></td>
-                                <td th:text="${category.description}"></td>
+                            <tr th:each="transporType : ${list}">
+                                <td data-align="center" th:text="${transporType.id}"></td>
+                                <td th:text="${transporType.name}"></td>
+                                <td th:text="${transporType.description}"></td>
                                 <td>
-                                    <a class="btn btn-info btn-icon add-tooltip" data-original-title="Editar" th:href="@{/category/form/} + ${category.id}" ><i class="ion-edit"></i></a>
-                                    <a class="btn btn-danger btn-icon add-tooltip"  data-original-title="Eliminar" th:href="@{/category/eliminar/} + ${category.id}" ><i class="ion-trash-a"></i></a>
+                                    <a class="btn btn-info btn-icon add-tooltip" data-original-title="Editar" th:href="@{/transport-type/form/} + ${transporType.id}" ><i class="ion-edit"></i></a>
+                                    <a class="btn btn-danger btn-icon add-tooltip"  data-original-title="Eliminar" th:href="@{/transport-type/delete/} + ${transporType.id}" ><i class="ion-trash-a"></i></a>
                                 </td>
                             </tr>
                             </tbody>
@@ -70,8 +67,7 @@
     </div>
 
     <footer th:replace="layout/layout :: footer"></footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+
 </div>
 </body>
 </html>
-
