@@ -117,11 +117,11 @@ public class CategoryController {
         if(id > 0){
             category = categoryService.findById(id);
             if (category == null){
-                flash.addFlashAttribute("error", "El ID de categoria no existe en la BBDD!");
+                flash.addFlashAttribute("error", "El ID de categoría no existe en la BBDD!");
                 return "redirect:/category/index";
             }
         }else {
-            flash.addFlashAttribute("error", "El ID de categoria no puede ser cero!");
+            flash.addFlashAttribute("error", "El id de la categoría no puede ser cero");
             return "redirect:/category/index";
         }
         model.put("category", category);

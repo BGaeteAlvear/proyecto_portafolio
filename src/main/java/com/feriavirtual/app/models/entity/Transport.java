@@ -16,8 +16,7 @@ public class Transport implements Serializable {
     private Long id;
     private boolean refrigeration;
     private int capacity;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "transport_type_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private TransportType transportType;
 
 }
