@@ -3,6 +3,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.xml.soap.Text;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,6 +23,7 @@ public class Product implements Serializable {
     private String name;
 
     @NotEmpty
+    @Lob
     private String description;
 
     private String image;

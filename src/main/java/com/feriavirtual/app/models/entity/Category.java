@@ -20,6 +20,7 @@ public class Category implements Serializable {
     private String name;
 
     @NotEmpty
+    @Lob
     private String description;
 
     private String image;
