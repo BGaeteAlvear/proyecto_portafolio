@@ -1,5 +1,6 @@
 package com.feriavirtual.app.models.service.impl;
 
+import com.feriavirtual.app.models.entity.Category;
 import com.feriavirtual.app.models.entity.Product;
 import com.feriavirtual.app.models.repository.IProductRepository;
 import com.feriavirtual.app.models.service.IProductService;
@@ -25,6 +26,11 @@ public class ProductServiceImpl  implements IProductService {
     @Override
     @Transactional(readOnly = true)
     public Product findById(Long id) { return productRepository.findById(id).orElseThrow(()-> new EntityNotFoundException());}
+
+    @Override
+    public List<Product> findByCategory(Category category) {
+        return productRepository.findByCategory(category);
+    }
 
     @Override
     @Transactional

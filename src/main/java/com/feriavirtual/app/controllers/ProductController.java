@@ -67,14 +67,27 @@ public class ProductController {
 
 
     @GetMapping("/form")
-    public String create(Map<String,Object> model){
+    public String create(Map<String,Object> model, RedirectAttributes flash){
         Product product= new Product();
         List<Category> listCategories = categoryService.getAll();
-        model.put("title_header", "Crear Producto");
-        model.put("title","Crear Producto");
-        model.put("product", product);
-        model.put("list_categories", listCategories);
-        return "/product/form";
+
+        System.out.println("cantidad de categorias "+listCategories.size());
+        if(listCategories.size()>0){
+            model.put("title_header", "CREAR PRODUCTO");
+            model.put("title","Crear Producto");
+            model.put("product", product);
+            model.put("list_categories", listCategories);
+            return "/product/form";
+        }else{
+            model.put("title_header", "CATEGORIAS");
+            model.put("title","CATEGORIAS");
+            model.put("product", product);
+            model.put("subtitle_header","Mantenedor de  Categorias");
+            model.put("title_page", "PLATAFORMA MAIPO GRANDE | CATEGORIAS");
+            model.put("list_categories", listCategories);
+            flash.addFlashAttribute("info","POR FAVOR CREA UNA CATEGORIA ANTES DE CREAR UN PRODUCTO");
+            return "redirect:/category/index";
+        }
     }
 
 
@@ -129,7 +142,7 @@ public class ProductController {
     }
 
     //@RequestMapping(value="/eliminar/{id}")
-    @GetMapping("/eliminar/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable(value = "id")Long id, RedirectAttributes flash){
         if (id>0){
             Product product = productService.findById(id);
@@ -137,7 +150,7 @@ public class ProductController {
             productService.delete(id);
 
                 if(uploadFileService.delete(product.getImage())){
-                    flash.addFlashAttribute("info", "Imagen: "+ product.getImage()+" eliminada con éxito");
+                    flash.addFlashAttribute("success", "Imagen: "+ product.getImage()+" eliminada con éxito");
                 }
 
         }

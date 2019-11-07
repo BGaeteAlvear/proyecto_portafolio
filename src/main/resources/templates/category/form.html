@@ -13,6 +13,11 @@
 
             <!-- Content -->
             <div id="page-content">
+                <input type="hidden" th:if="${info != null}" id="info" th:value="${info}">
+                <input type="hidden" th:if="${error != null}" id="danger" th:value="${error}">
+                <input type="hidden" th:if="${success != null}" id="success" th:value="${success}">
+                <input type="hidden" th:if="${warning != null}" id="warning" th:value="${warning}">
+
 
                 <div class="panel mt-2">
                     <div class="panel-heading">
@@ -43,7 +48,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <div class="fileUpload blue-btn py-2">
-                                                <input type="file" name="file" accept="image/*" class="form-control"  required />
+                                                <input type="file" name="file" accept="image/*" class="form-control uploadFile"  required />
                                                 <small class="form-text text-danger" ></small>
                                                 <h5 style="font-weight: bold">Subir Foto</h5>
                                             </div>
@@ -72,8 +77,6 @@
                                                     th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
                                             </div>
                                         </div>
-
-
 
                                     </div>
 
@@ -104,7 +107,7 @@
 </div>
 
 <script>
-    $('.uploadlogo').change(function () {
+    $('.uploadFile').change(function () {
         var file = this.files[0];
         var filename = readURL(this);
         $(this).parent().children('span').html(filename);
@@ -139,15 +142,4 @@
 </script>
 </body>
 </html>
-© 2019 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
+

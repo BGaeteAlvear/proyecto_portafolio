@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4" style="margin-top: 80px">
+
+    <div class="card bg-light">
+        <div class="card-header" th:text="${title}"></div>
+        <div class="card-body">
+
+            <h4 class="card-title">
+                <a th:href="@{/transport/form}" class="btn btn-primary btn-xs">
+                    Crear Transporte
+                </a>
+            </h4>
+
+            <table class="table table-striped table-bordered">
+                <thead class="thead-inverse">
+                <tr>
+                    <th>ID</th>
+                    <th>Tipo Transporte</th>
+                    <th>Refrigeración</th>
+                    <th>Capacidad</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="transport : ${list}">
+                    <td th:text="${transport.id}"></td>
+                    <td th:text="${transport.transportType.name}"></td>
+                    <td th:text="${transport.refrigeration} ? 'Si' : 'No'"></td>
+                    <td th:text="${transport.capacity}"></td>
+                    <td><a class="btn btn-primary btn-xs" th:href="@{/transport/form/} + ${transport.id}"
+                           th:text="'Editar'"></a></td>
+                    <td><a class="btn btn-danger btn-xs" th:href="@{/transport/delete/} + ${transport.id}"
+                           th:text="'Eliminar'"></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
