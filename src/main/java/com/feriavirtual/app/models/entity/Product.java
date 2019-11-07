@@ -40,6 +40,7 @@ public class Product implements Serializable {
     private Date updatedAt;
 
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     public Category category;
 
@@ -80,4 +81,5 @@ public class Product implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
 }

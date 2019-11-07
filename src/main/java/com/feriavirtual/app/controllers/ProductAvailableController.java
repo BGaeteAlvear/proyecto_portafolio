@@ -1,10 +1,10 @@
 package com.feriavirtual.app.controllers;
 
 import com.feriavirtual.app.models.entity.Category;
+import com.feriavirtual.app.models.entity.Person;
+import com.feriavirtual.app.models.entity.Product;
 import com.feriavirtual.app.models.entity.ProductAvailable;
-import com.feriavirtual.app.models.service.ICategoryService;
-import com.feriavirtual.app.models.service.IProductAvailableService;
-import com.feriavirtual.app.models.service.IUploadFileService;
+import com.feriavirtual.app.models.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -24,94 +25,119 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/productAvailable")
+@RequestMapping("/product-available")
 @SessionAttributes("productAvailable")
 
 public class ProductAvailableController {
-    private final IProductAvailableService productAvailableService;
-    private final ICategoryService categoryService;
+
 
     @Autowired
-    private IUploadFileService uploadFileService;
+    private IPersonService personService;
 
-    public ProductAvailableController(IProductAvailableService productAvailableService, ICategoryService categoryService) {
-        this.productAvailableService = productAvailableService;
-        this.categoryService = categoryService;
-    }
+    @Autowired
+    private IProductService productService;
+
+    @Autowired
+    private IProductAvailableService productAvailableService;
 
     @GetMapping("/index")
-    public String index (Model model){
-        List<ProductAvailable> listProductsAvailable = productAvailableService.getAll();
+    public String index (Model model, HttpSession session){
+        Person productor =  (Person) session.getAttribute("userSession");
+        List<ProductAvailable> listProductsAvailable = productAvailableService.findByPerson(productor);
+        System.out.println("cantidad de productos : "+productAvailableService.findByPerson(productor).size());
         /* DATOS TEMPLATE */
         model.addAttribute("title_header", "PRODUCTOS DISPONIBLES");
         model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | PRODUCTOS DISPONIBLES");
         model.addAttribute("subtitle_header", "Mantenedor de Productos Disponibles");
         model.addAttribute("list_products_available", listProductsAvailable);
-        return "/productAvailable/index";
+        return "/product-available/index";
     }
 
 
     @GetMapping("/form")
     public String create(Map<String,Object> model){
         ProductAvailable productAvailable= new ProductAvailable();
-        List<Category> listCategories = categoryService.getAll();
+        List<Product> ListProduct = productService.getAll();
         model.put("title_header", "Crear Producto Disponible");
         model.put("title","Crear Producto Disponible");
         model.put("productAvailable", productAvailable);
-        model.put("list_categories", listCategories);
-        return "/productAvailable/form";
+        model.put("ListProduct", ListProduct);
+        return "/product-available/form";
     }
-
-
-    @GetMapping (value = "/uploads/{filename:.+}")
-    public ResponseEntity<Resource> verImagen(@PathVariable String filename){
-
-        Resource recurso = null;
-        try {
-            recurso = uploadFileService.load(filename);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\""+ recurso.getFilename()+ "\"")
-                .body(recurso);
-    }
-
-
 
     @PostMapping("/form")
     public String  store(@Valid ProductAvailable productAvailable, BindingResult result, Model model,
-                         @RequestParam("file") MultipartFile image, RedirectAttributes flash, SessionStatus status){
-
-        if(!image.isEmpty()){
-            if (productAvailable.getId()!=null && productAvailable.getId()>0
-                    && productAvailable.getImage()!=null
-                    && productAvailable.getImage().length()>0  ){
-
-                uploadFileService.delete(productAvailable.getImage());
-            }
-            String uniqueFilename= null;
-            try {
-                uniqueFilename = uploadFileService.copy(image);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            flash.addFlashAttribute("info","Se ha cargado correctamente '"+ uniqueFilename+ "'");
-            productAvailable.setImage(uniqueFilename);
-
-            if (result.hasErrors()){
-                model.addAttribute("title","Crear Producto Disponible");
-                return "/productAvailable/form";
-            }
-
-            if (productAvailable !=null){
-                productAvailableService.save(productAvailable);
-                status.setComplete();
-            }
-
-
+                         RedirectAttributes flash, SessionStatus status , HttpSession session){
+        ProductAvailable pa;
+        Person productor =  (Person) session.getAttribute("userSession");
+        List<Product> ListProduct = productService.getAll();
+        if (result.hasErrors()){
+            model.addAttribute("title_header", "PRODUCTOS DISPONIBLES");
+            model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | PRODUCTOS DISPONIBLES");
+            model.addAttribute("subtitle_header", "Mantenedor de Productos Disponibles");
+            model.addAttribute("title","Crear Producto Disponible");
+            model.addAttribute("ListProduct", ListProduct);
+            return "/product-available/form";
         }
-        return "redirect:/productAvailable/index";
+
+        if (productAvailable.getId() !=null){
+            pa = productAvailableService.findById(productAvailable.getId());
+        }else {
+            pa  =  new ProductAvailable();
+        }
+
+        if (productAvailable.getPrice()>0){
+            pa.setPrice(productAvailable.getPrice());
+        }else{
+            flash.addFlashAttribute("error", "El precio debe ser mayor a 0");
+            return "redirect:/product-available/form";
+        }
+
+        if (productAvailable.getStock()>0){
+            pa.setStock(productAvailable.getStock());
+        }else{
+            flash.addFlashAttribute("error", "El stock debe ser mayor a 0");
+            return "redirect:/product-available/form";
+        }
+
+        if (productAvailable.getProduct() !=null){
+            pa.setProduct(productAvailable.getProduct());
+        }else{
+            flash.addFlashAttribute("error", "El producto es requerido!");
+            return "redirect:/product-available/form";
+        }
+
+        if (productAvailable.getCreatedAt()!=null){
+            pa.setCreatedAt(productAvailable.getCreatedAt());
+        }
+
+        if (productAvailable.getUpdatedAt()!=null){
+            pa.setUpdatedAt(productAvailable.getUpdatedAt());
+        }
+
+        if (productAvailable.getDate_expire()!=null){
+            pa.setDate_expire(productAvailable.getDate_expire());
+        }else{
+            flash.addFlashAttribute("error", "La fecha de expiración del producto es requerido!");
+            return "redirect:/product-available/form";
+        }
+
+        pa.setPerson(productor);
+        pa.setStatus(productAvailable.getStatus());
+        pa.setStock_unity(productAvailable.getStock_unity());
+
+        if ( pa.getProduct() != null){
+            productAvailableService.save(pa);
+            status.setComplete();
+            flash.addFlashAttribute("success", "Producto Agregado con exito!");
+            return "redirect:/product-available/index";
+        }else{
+            flash.addFlashAttribute("error", "No cargo el producto!");
+            return "redirect:/product-available/form";
+        }
+
+
+
     }
 
     //@RequestMapping(value="/eliminar/{id}")
@@ -121,35 +147,30 @@ public class ProductAvailableController {
             ProductAvailable productAvailable = productAvailableService.findById(id);
 
             productAvailableService.delete(id);
-
-            if(uploadFileService.delete(productAvailable.getImage())){
-                flash.addFlashAttribute("info", "Imagen: "+ productAvailable.getImage()+" eliminada con éxito");
-            }
-
         }
-        return "redirect:/productAvailable/index";
+        return "redirect:/product-available/index";
     }
 
     @GetMapping("/form/{id}")
     public String edit(@PathVariable(value = "id")Long id, Map<String, Object> model, RedirectAttributes flash){
         ProductAvailable productAvailable = null;
-        List<Category> listCategories = categoryService.getAll();
+        List<Product> product = productService.getAll();
         if(id > 0){
             productAvailable = productAvailableService.findById(id);
 
             if (productAvailable == null){
                 flash.addFlashAttribute("error", "El ID del producto no existe en la BBDD!");
-                return "redirect:/productAvailable/index";
+                return "redirect:/product-available/index";
             }
         }else {
             flash.addFlashAttribute("error", "El ID del producto no puede ser cero!");
-            return "redirect:/productAvailable/index";
+            return "redirect:/product-available/index";
         }
         model.put("productAvailable", productAvailable);
-        model.put("list_categories", listCategories);
+        model.put("listProduct", product);
         model.put("title_header", "Editar Producto Disponible" );
         model.put("title", "Editar producto disponible");
-        return "/productAvailable/form";
+        return "/product-available/form";
     }
 
 }

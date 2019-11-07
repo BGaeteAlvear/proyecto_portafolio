@@ -54,7 +54,7 @@
                                 <td th:text="${product.updatedAt}"></td>
                                 <td>
                                     <a class="btn btn-info btn-icon add-tooltip" data-original-title="Editar" th:href="@{/product/form/} + ${product.id}" ><i class="ion-edit"></i></a>
-                                    <a class="btn btn-danger btn-icon add-tooltip"  data-original-title="Eliminar" th:href="@{/product/eliminar/} + ${product.id}" ><i class="ion-trash-a"></i></a>
+                                    <a class="btn btn-danger btn-icon add-tooltip"  data-original-title="Eliminar" th:href="@{/product/delete/} + ${product.id}" ><i class="ion-trash-a"></i></a>
                                 </td>
                             </tr>
                             </tbody>
@@ -78,19 +78,3 @@
 </div>
 </body>
 </html>
-
-
-
-
-© 2019 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
