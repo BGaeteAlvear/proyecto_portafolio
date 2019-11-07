@@ -24,7 +24,7 @@
                     </div>
                     <div class="panel-body">
 
-                        <div th:object="${transportType}" th:remove="tag">
+                        <div th:object="${incidentType}" th:remove="tag">
                             <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
                                 role="alert">
                                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
@@ -32,7 +32,7 @@
                         </div>
 
 
-                        <div th:object="${transportType}" th:remove="tag">
+                        <div th:object="${incidentType}" th:remove="tag">
                             <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
                                 role="alert">
                                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
@@ -40,7 +40,7 @@
                         </div>
 
 
-                        <form th:action="@{/transport-type/form}" th:object="${transportType}" method="post" enctype="multipart/form-data">
+                        <form th:action="@{/incident-type/form}" th:object="${incidentType}" method="post" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-9">
                                     <div class="row">
@@ -60,11 +60,9 @@
                                             <div class="form-group">
                                                 <label for="description" class="col-form-label">Descripción (*)</label>
                                                 <input id="description" type="text" th:field="*{description}" class="form-control"
-                                                       th:errorclass="'form-control alert-danger'" required />
-                                                <small
+                                                       th:errorclass="'form-control alert-danger'" required  /> <small
                                                     class="form-text text-danger"
-                                                    th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
-                                                </small>
+                                                    th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
                                             </div>
                                         </div>
 

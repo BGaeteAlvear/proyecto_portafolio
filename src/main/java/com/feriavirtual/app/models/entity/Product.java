@@ -29,19 +29,15 @@ public class Product implements Serializable {
     private String image;
     private Boolean status;
 
-
     @Column(name = "created_at")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date createdAt;
 
-
     @Column(name = "updated_at")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date updatedAt;
-
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     public Category category;
