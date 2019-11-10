@@ -36,7 +36,8 @@
                                     <h3 class="box-title" th:text="${product.name}"></h3>
                                 </div>
                                 <div class="body-box-container">
-                                    <p class="box-description mb-2" th:text="${product.description}"></p>
+<!--                                    <p class="box-description mb-2" th:text="${#strings.length(product.description)>120 ? #strings.substring(product.description,0,120) + '...' : product.description}"></p>-->
+                                    <p class="box-description mb-2" th:text="${#strings.abbreviate(product.description,150)}"></p>
                                     <a th:href="@{/shopping-cart/product/detail/} + ${product.id}" class="btn-rounded btn btn-warning">Ver Detalle</a>
                                 </div>
                                 <img th:if= "${#strings.length(product.image)>0}"  class="img-box" width="100%"
