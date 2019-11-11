@@ -28,8 +28,6 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(Model model, Principal principal, RedirectAttributes flash, HttpSession session, Authentication authentication){
-        logger.info("Entra a LoginController");
-
         if (principal != null){
             flash.addFlashAttribute("info", "Ya se a iniciado sesion");
             try{

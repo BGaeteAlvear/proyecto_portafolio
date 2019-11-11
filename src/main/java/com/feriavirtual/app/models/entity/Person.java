@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Scope;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -18,7 +19,6 @@ import java.util.List;
 @Component
 @Scope("session")
 public class Person implements Serializable {
-
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_PERSON")
@@ -58,13 +58,16 @@ public class Person implements Serializable {
     @Column(name = "company_email")
     private String companyEmail;
 
-
     private String address;
 
     private String city;
 
     private String country;
 
+    @Column(name = "end_contract")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date endContract;
 
     private Boolean enabled;
 
