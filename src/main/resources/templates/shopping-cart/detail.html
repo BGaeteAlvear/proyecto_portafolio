@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<div id="container" class="effect aside-float aside-bright mainnav-lg">
+
+    <header th:replace="layout/layout :: header"></header>
+
+    <div class="boxed">
+        <div id="content-container">
+
+            <div th:replace="layout/layout :: page-head"></div>
+
+            <!-- Content -->
+            <div id="page-content">
+                <input type="hidden" th:if="${info != null}" id="info" th:value="${info}">
+                <input type="hidden" th:if="${error != null}" id="danger" th:value="${error}">
+                <input type="hidden" th:if="${success != null}" id="success" th:value="${success}">
+                <input type="hidden" th:if="${warning != null}" id="warning" th:value="${warning}">
+
+                <div class="panel">
+                    <div class="panel-heading">
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <!-- BOX 1-->
+                            <div class="col-md-3 box-cart p-4 mb-3">
+                                <img th:if="${#strings.length(product.image)>0}" class="img-detail" width="100%"
+                                     th:src="@{'/uploads/'+ ${product.image}}" th:alt="${product.image}"/>
+                            </div>
+                            <div class="col-md-9 p-3">
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <h2 th:text="${product.name}"></h2>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="mb-2" th:text="${product.description}"></p>
+                                        <hr>
+                                        <form action="">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="unity" class="col-form-label">Unidad *</label>
+                                                        <select id="unity" name="unity" class="form-control" required >
+                                                            <option value="" selected disabled>Seleccione Unidad</option>
+                                                            <option value="ton">Toneladas</option>
+                                                            <option value="pall">Pallets</option>
+                                                            <option value="cajas">Cajas</option>
+                                                        </select>
+                                                        <small
+                                                                class="form-text text-danger">
+                                                        </small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="quantity" class="col-form-label">Cantidad</label>
+                                                        <div class="number-spinner">
+                                                            <span class="ns-btn"><a data-dir="dwn"><span class="icon-minus"></span></a></span>
+                                                            <input type="text" name="quantity" id="quantity" class="pl-ns-value" value="1" maxlength=2>
+                                                            <span class="ns-btn"><a data-dir="up"><span class="icon-plus"></span></a></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <button type="submit" class="btn btn-warning btn-rounded"><i class="fa fa-cart-plus"></i> AÑADIR PRODUCTO</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END BOX 1-->
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End Content -->
+
+        </div>
+
+        <!-- MENU PRINCIPAL -->
+        <nav th:replace="layout/layout :: mainnav-container"></nav>
+        <!-- END MENU PRINCIPAL -->
+
+    </div>
+
+    <footer th:replace="layout/layout :: footer"></footer>
+
+</div>
+</body>
+</html>

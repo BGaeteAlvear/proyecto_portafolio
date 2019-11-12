@@ -50,8 +50,18 @@ public class ShoppingCartController {
         List<Product> listProduct = productService.findByCategory(category);
         model.addAttribute("title_header", "TIENDA DE PRODUCTOS");
         model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | "+category.getName().toUpperCase());
-        model.addAttribute("subtitle_header", "Tienda online Maipo Grande S.A");
+        model.addAttribute("subtitle_header", "PRODUCTOS / "+category.getName().toUpperCase());
         model.addAttribute("listProduct", listProduct);
         return "/shopping-cart/product";
+    }
+
+    @GetMapping("/product/detail/{id}")
+    public String productDetail (@PathVariable(value = "id")Long id,Model model, HttpSession session){
+        Product product = productService.findById(id);
+        model.addAttribute("title_header", "TIENDA DE PRODUCTOS");
+        model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | "+product.getName().toUpperCase());
+        model.addAttribute("subtitle_header","PRODUCTOS  / "+product.category.getName().toUpperCase()+" / "+product.getName().toUpperCase());
+        model.addAttribute("product", product);
+        return "/shopping-cart/detail";
     }
 }
