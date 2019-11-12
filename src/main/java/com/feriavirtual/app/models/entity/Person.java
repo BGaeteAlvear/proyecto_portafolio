@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Scope;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -18,7 +19,6 @@ import java.util.List;
 @Component
 @Scope("session")
 public class Person implements Serializable {
-
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_PERSON")
@@ -58,14 +58,25 @@ public class Person implements Serializable {
     @Column(name = "company_email")
     private String companyEmail;
 
+    private String address;
+
+    private String city;
+
+    private String country;
+
+    @Column(name = "end_contract")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date endContract;
 
     private Boolean enabled;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
 
+    /*
     @OneToMany(mappedBy = "person", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Address> addressList;
+    private List<Address> addressList; */
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Authority authority;
@@ -79,7 +90,7 @@ public class Person implements Serializable {
         this.enabled = true;
         this.passwordRecovery = 1;
         this.status = true;
-        this.addressList = new ArrayList<>();
+  //      this.addressList = new ArrayList<>();
     }
 
     private static final long serialVersionUID = 706443423338604396L;

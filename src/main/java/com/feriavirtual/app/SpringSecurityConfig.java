@@ -56,7 +56,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().permitAll()
         ; */
 
-        http.authorizeRequests().antMatchers("/assets/**", "/css/**", "/js/**", "/images/**").permitAll()
+        http.authorizeRequests().antMatchers("/assets/**", "/css/**", "/js/**", "/images/**", "/profile/**").permitAll()
                 /*.antMatchers("/ver/**").hasAnyRole("USER")*/
                 /*.antMatchers("/uploads/**").hasAnyRole("USER")*/
                 /*.antMatchers("/form/**").hasAnyRole("ADMIN")*/
@@ -70,6 +70,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout().permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/error_403");
                ;
 
     }
