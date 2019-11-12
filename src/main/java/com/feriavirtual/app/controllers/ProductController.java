@@ -142,7 +142,7 @@ public class ProductController {
     }
 
     //@RequestMapping(value="/eliminar/{id}")
-    @GetMapping("/eliminar/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable(value = "id")Long id, RedirectAttributes flash){
         if (id>0){
             Product product = productService.findById(id);
@@ -150,7 +150,7 @@ public class ProductController {
             productService.delete(id);
 
                 if(uploadFileService.delete(product.getImage())){
-                    flash.addFlashAttribute("info", "Imagen: "+ product.getImage()+" eliminada con éxito");
+                    flash.addFlashAttribute("success", "Imagen: "+ product.getImage()+" eliminada con éxito");
                 }
 
         }
@@ -165,7 +165,7 @@ public class ProductController {
             product = productService.findById(id);
 
            if (product == null){
-                flash.addFlashAttribute("error", "El ID del producto no existe en la BBDD!");
+                flash.addFlashAttribute("error", "El id del producto no existe en la base de datos");
                 return "redirect:/product/index";
             }
         }else {

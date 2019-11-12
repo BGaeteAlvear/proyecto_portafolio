@@ -2,22 +2,65 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
+<div id="container" class="effect aside-float aside-bright mainnav-lg">
 
-<header th:replace="layout/layout :: header"></header>
+    <header th:replace="layout/layout :: header"></header>
 
-<div class="container py-4" style="margin-top: 80px">
-    <div class="row">
-        <div th:each="productAvailable : ${productsAvailable}">
-            <div class="col-md-2">
-                <img src="https://png.pngtree.com/png_detail/20181019/red-apple-kind-png-clipart_1848379.png" alt="product" style="width: 50%">
-                <h4><b th:text="${productAvailable.name}"></b></h4>
-                <p th:text="${productAvailable.description}"></p>
-                <input type="number" value="1" style="width: 50%" />
-                <button onclick="addProduct()">Agregar</button>
+    <div class="boxed">
+        <div id="content-container">
+
+            <div th:replace="layout/layout :: page-head"></div>
+
+            <!-- Content -->
+            <div id="page-content">
+                <input type="hidden" th:if="${info != null}" id="info" th:value="${info}">
+                <input type="hidden" th:if="${error != null}" id="danger" th:value="${error}">
+                <input type="hidden" th:if="${success != null}" id="success" th:value="${success}">
+                <input type="hidden" th:if="${warning != null}" id="warning" th:value="${warning}">
+
+                <div class="panel">
+                    <div class="panel-heading">
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-12 m-3">
+                                <h2 class="bold text-uppercase">Seleciona Categoría</h2>
+                            </div>
+                        </div>
+
+                        <div class="row" >
+                            <!-- BOX 1-->
+                            <div class="col-md-3 box-cart p-3 mb-3" th:each="category : ${listCategory}">
+                                <div class="velo-box"></div>
+                                <div class="header-box-container">
+                                    <h3 class="box-title" th:text="${category.name}"></h3>
+                                </div>
+                                <div class="body-box-container">
+                                    <p class="box-description mb-2" th:text="${#strings.abbreviate(category.description,150)}"></p>
+                                    <a th:href="@{/shopping-cart/product/} + ${category.id}" class="btn-rounded btn btn-warning">Ver Productos</a>
+                                </div>
+                                <img th:if= "${#strings.length(category.image)>0}"  class="img-box" width="100%"
+                                     th:src="@{'/uploads/'+ ${category.image}}" th:alt="${category.image}"/>
+                            </div>
+                            <!-- END BOX 1-->
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
+            <!-- End Content -->
+
         </div>
+
+        <!-- MENU PRINCIPAL -->
+        <nav th:replace="layout/layout :: mainnav-container"></nav>
+        <!-- END MENU PRINCIPAL -->
+
     </div>
+
+    <footer th:replace="layout/layout :: footer"></footer>
+
 </div>
-<footer th:replace="layout/layout :: footer"></footer>
 </body>
 </html>

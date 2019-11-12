@@ -10,25 +10,26 @@ import java.io.Serializable;
 @Table(name = "incidents")
 public class Incident implements Serializable {
 
-
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_INCIDENT")
     @SequenceGenerator(name = "SEQ_INCIDENT",allocationSize = 1,sequenceName = "SEQ_INCIDENT")
     private Long id;
-
     private String message;
     private Boolean status;
-    private String emisor;
-    private String receptor;
-
-    public Incident(){
-        this.status = true;
-    }
-
+    private String transmitter;
+    private String receiver;
     @ManyToOne(fetch = FetchType.LAZY)
     public IncidentType incidentType;
 
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 
-    private static final long serialVersionUID = -224909979473473591L;
+    public void setTransmitter(String transmitter) {
+        this.transmitter = transmitter;
+    }
 
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
 }
