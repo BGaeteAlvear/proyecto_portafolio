@@ -45,7 +45,7 @@
                                 <div class="col-md-9">
                                     <div class="row">
 
-                                        <div class="col-sm-6">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="product" class="col-form-label">Producto (*)</label>
                                                 <select id="product" th:field="*{product}" class="form-control select2" required >
@@ -61,7 +61,19 @@
                                                 </small>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+
+                                        <div class="col-md-6" style="float: left">
+                                            <div class="form-group">
+                                                <label for="date_expire" class="col-form-label">Fecha de Expiración (*)</label>
+
+                                                <input th:field="*{date_expire}" id="date_expire" type="text" required class="form-control">
+
+                                                <small class="form-text text-danger"
+                                                       th:if="${#fields.hasErrors('date_expire')}" th:errors="*{date_expire}"></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="precio" class="col-form-label">Precio (*)</label>
                                                 <input id="precio" type="number" th:field="*{price}" class="form-control"
@@ -71,8 +83,7 @@
                                             </div>
                                         </div>
 
-
-                                        <div class="col-sm-6">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="stock" class="col-form-label">Stock (*)</label>
                                                 <input id="stock" type="text" th:field="*{stock}" class="form-control"
@@ -82,27 +93,21 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-sm-6">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="stock_unity" class="col-form-label">Tipo de Unidad Stock (*)</label>
                                                 <select id="stock_unity" th:field="*{stock_unity}" class="form-control select2" required >
                                                     <option value="" selected disabled>Seleccione un Producto</option>
-                                                    <option value="BIN" >BIN</option>
-                                                    <option value="CAJA" >CAJA</option>
                                                     <option value="KG" >KG</option>
                                                 </select>
                                                 <small th:if="${#fields.hasErrors('stock_unity')}" th:errors="*{stock_unity}"></small>
                                             </div>
                                         </div>
 
-                                        <div class="col-sm-6">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="date_expire" class="col-form-label">Fecha de Expiración (*)</label>
-
-                                                <input th:field="*{date_expire}" id="date_expire" type="text" required class="form-control">
-
-                                                 <small class="form-text text-danger"
-                                                    th:if="${#fields.hasErrors('date_expire')}" th:errors="*{date_expire}"></small>
+                                                <label for="precio" class="col-form-label">Tipo de Venta</label><br>
+                                                <input type="checkbox" id="sale_type" data-width="100" data-offstyle="success" data-toggle="toggle" data-on="Interna" data-off="Externa">
                                             </div>
                                         </div>
 
@@ -134,5 +139,13 @@
 
 </div>
 
+<script>
+    $(function() {
+        $('#sale_type').bootstrapToggle({
+            on: '1',
+            off: '0'
+        });
+    })
+</script>
 </body>
 </html>

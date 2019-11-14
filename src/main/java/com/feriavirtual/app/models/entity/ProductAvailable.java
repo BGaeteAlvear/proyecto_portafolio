@@ -45,6 +45,16 @@ public class ProductAvailable implements Serializable {
     @NotNull
     private Boolean status;
 
+    public String getSale_type() {
+        return sale_type;
+    }
+
+    public void setSale_type(String sale_type) {
+        this.sale_type = sale_type;
+    }
+
+    private String sale_type;
+
     @ManyToOne(fetch = FetchType.LAZY)
     public Product product;
 
@@ -134,4 +144,6 @@ public class ProductAvailable implements Serializable {
     public void setPerson(Person person) {
         this.person = person;
     }
+
+
 }
