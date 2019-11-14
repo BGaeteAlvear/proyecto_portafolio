@@ -16,8 +16,10 @@ public class Incident implements Serializable {
     private Long id;
     private String message;
     private Boolean status;
-    private String transmitter;
-    private String receiver;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Person transmitter;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Person receiver;
     @ManyToOne(fetch = FetchType.LAZY)
     public IncidentType incidentType;
 
@@ -25,11 +27,19 @@ public class Incident implements Serializable {
         this.status = status;
     }
 
-    public void setTransmitter(String transmitter) {
+    public Person getTransmitter() {
+        return transmitter;
+    }
+
+    public void setTransmitter(Person transmitter) {
         this.transmitter = transmitter;
     }
 
-    public void setReceiver(String receiver) {
+    public Person getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Person receiver) {
         this.receiver = receiver;
     }
 }

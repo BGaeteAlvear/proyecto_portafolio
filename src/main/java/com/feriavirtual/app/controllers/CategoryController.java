@@ -117,7 +117,7 @@ public class CategoryController {
         if(id > 0){
             category = categoryService.findById(id);
             if (category == null){
-                flash.addFlashAttribute("error", "El ID de categoría no existe en la BBDD!");
+                flash.addFlashAttribute("error", "El id de la categoría no existe en la base de datos");
                 return "redirect:/category/index";
             }
         }else {

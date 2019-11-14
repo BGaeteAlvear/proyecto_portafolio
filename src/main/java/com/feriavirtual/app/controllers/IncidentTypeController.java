@@ -41,11 +41,12 @@ public class IncidentTypeController {
     }
 
     @PostMapping("/form")
-    public String save(@Valid IncidentType incidentType, BindingResult result, Model model, SessionStatus status){
+    public String save(@Valid IncidentType incidentType, BindingResult result, Model model, SessionStatus status, RedirectAttributes flash){
         if (incidentType != null){
             incidentTypeService.save(incidentType);
             status.setComplete();
         }
+        flash.addFlashAttribute("success", "El tipo de incidente ha sido creado");
         return "redirect:/incident-type/index";
     }
 
