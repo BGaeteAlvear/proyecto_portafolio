@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,6 +23,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import static com.feriavirtual.app.models.service.impl.UploadFileServiceImpl.getFileSizeMegaBytes;
 
 @Controller
 @RequestMapping("/category")
@@ -66,6 +69,7 @@ public class CategoryController {
                          @RequestParam("file") MultipartFile image, RedirectAttributes flash, SessionStatus status){
 
         if(!image.isEmpty()){
+
             String uniqueFilename = UUID.randomUUID().toString()+"_"+image.getOriginalFilename();
             Path rootPath = Paths.get("uploads").resolve(uniqueFilename);
 
@@ -73,28 +77,39 @@ public class CategoryController {
             log.info("rootPath: "+ rootPath);
             log.info("rootAbsolutePath: "+ rootAbsolutePath);
 
-            try {
-                Files.copy(image.getInputStream(), rootAbsolutePath);
-                flash.addFlashAttribute("info","Se ha cargado correctamente '"+ uniqueFilename+ "'");
-                category.setImage(uniqueFilename);
 
-            } catch (IOException e) {
+                if ((image.getSize()/ (1024 * 1024))<15){
 
-                e.printStackTrace();
+                try {
+
+                    Files.copy(image.getInputStream(), rootAbsolutePath);
+                    flash.addFlashAttribute("info", "Se ha cargado correctamente '" + uniqueFilename + "'");
+                    category.setImage(uniqueFilename);
+
+
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+                }
+
+
+            }else{
+                    flash.addFlashAttribute("error","Imagen excede el Límite");
+                    return "redirect:/category/form";
+                }
+
+
+
+                if (result.hasErrors()) {
+                    model.addAttribute("title", "Crear Categoría");
+                    return "form";
+                }
+
+                if (category != null) {
+                    categoryService.save(category);
+                    status.setComplete();
+                }
             }
-
-            if (result.hasErrors()){
-                model.addAttribute("title","Crear Categoría");
-                return "form";
-            }
-
-            if (category !=null){
-                categoryService.save(category);
-                status.setComplete();
-            }
-
-
-        }
         return "redirect:/category/index";
     }
 

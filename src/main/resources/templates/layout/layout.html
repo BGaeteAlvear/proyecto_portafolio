@@ -885,6 +885,21 @@
 
                     });
 
+                    function lengthValidator(v_input, v_response, v_maxLength, v_parent) {
+
+                        if ($(v_input).val().length <= v_maxLength) {
+                            $('#'+v_response).html((v_maxLength - $(v_input).val().length) + ' carateres restantes');
+                            $('#'+v_parent).removeClass('has-error');
+                        } else {
+                            $('#'+v_response).html('Largo máximo de '+ v_maxLength+' caracteres excedido!');
+                            $('#'+v_parent).addClass('has-error');
+                            $(v_input).focusout();
+                            $(v_input).attr('maxlength', v_maxLength);
+                        }
+
+
+                    }
+
                 </script>
             </footer>
         </div>

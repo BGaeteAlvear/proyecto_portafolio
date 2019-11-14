@@ -50,7 +50,7 @@
                                                 <label for="product" class="col-form-label">Producto (*)</label>
                                                 <select id="product" th:field="*{product}" class="form-control select2" required >
                                                     <option value="" selected disabled>Seleccione un Producto</option>
-                                                    <option th:each="prod : ${ListProduct}"
+                                                    <option th:each="prod : ${listProduct}"
                                                             th:value="${prod.id}"
                                                             th:text="${prod.name}"
                                                             />
