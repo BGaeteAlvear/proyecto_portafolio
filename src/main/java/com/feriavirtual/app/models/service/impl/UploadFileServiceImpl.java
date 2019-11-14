@@ -6,8 +6,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -28,8 +33,7 @@ public class UploadFileServiceImpl implements IUploadFileService {
         log.info("pathImagen: " + pathImagen);
         Resource recurso =null;
 
-
-            recurso = new UrlResource(pathImagen.toUri());
+           recurso = new UrlResource(pathImagen.toUri());
 
             if (!recurso.exists() || !recurso.isReadable()){
                 throw new RuntimeException("Error: No se puede cargar la imagen: "+ pathImagen.toString());
@@ -46,8 +50,8 @@ public class UploadFileServiceImpl implements IUploadFileService {
         Path rootPath = getPath(uniqueFilename);
 
         log.info("rootPath: "+ rootPath);
-
-            Files.copy(file.getInputStream(), rootPath);
+         Files.copy(file.getInputStream(), rootPath);
+        System.out.println(getFileSizeMegaBytes((File) file));
 
         return uniqueFilename;
     }
@@ -65,8 +69,12 @@ public class UploadFileServiceImpl implements IUploadFileService {
         return true;
     }
 
+    public static String getFileSizeMegaBytes(File file) {
+        return (double) file.length() / (1024 * 1024) + " MB";
+    }
 
     public Path getPath(String filename){
         return Paths.get(UPLOADS_FOLDER).resolve(filename).toAbsolutePath();
     }
+
 }
