@@ -34,6 +34,11 @@ public class ProductAvailableServiceImpl implements IProductAvailableService {
     }
 
     @Override
+    public List<ProductAvailable> findBySaleTypeEquals (String saleType, Long id ) {
+        return productAvailableRepository.findBySaleTypeEquals(saleType);
+    }
+
+    @Override
     public ProductAvailable save(ProductAvailable productAvailable) {
         return productAvailableRepository.save(productAvailable);
     }

@@ -24,6 +24,8 @@ public class ProductAvailable implements Serializable {
     @NotNull
     private String stock_unity;
 
+    private String saleType;
+
     @NotNull
     private int price;
 
@@ -54,5 +56,7 @@ public class ProductAvailable implements Serializable {
     public ProductAvailable(){
         this.status = true;
     }
+
+
 
 }

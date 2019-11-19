@@ -84,11 +84,21 @@
 
                                         <div class="col-sm-6">
                                             <div class="form-group">
+                                                <label for="sale_type" class="col-form-label">Tipo Venta (*)</label>
+                                                <select id="sale_type" th:field="*{saleType}" class="form-control select2" required >
+                                                    <option value="" selected disabled>Seleccione Tipo</option>
+                                                    <option value="EXTERNA" >EXTERNA</option>
+                                                    <option value="INTERNA" >INTERNA</option>
+                                                </select>
+                                                <small th:if="${#fields.hasErrors('saleType')}" th:errors="*{saleType}"></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
                                                 <label for="stock_unity" class="col-form-label">Tipo de Unidad Stock (*)</label>
                                                 <select id="stock_unity" th:field="*{stock_unity}" class="form-control select2" required >
-                                                    <option value="" selected disabled>Seleccione un Producto</option>
-                                                    <option value="BIN" >BIN</option>
-                                                    <option value="CAJA" >CAJA</option>
+                                                    <option value="" selected disabled>Seleccione unidad</option>
                                                     <option value="KG" >KG</option>
                                                 </select>
                                                 <small th:if="${#fields.hasErrors('stock_unity')}" th:errors="*{stock_unity}"></small>
@@ -98,9 +108,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label for="date_expire" class="col-form-label">Fecha de Expiración (*)</label>
-
                                                 <input th:field="*{date_expire}" id="date_expire" type="text" required class="form-control">
-
                                                  <small class="form-text text-danger"
                                                     th:if="${#fields.hasErrors('date_expire')}" th:errors="*{date_expire}"></small>
                                             </div>
