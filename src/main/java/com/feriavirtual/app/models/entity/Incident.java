@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,10 +16,12 @@ public class Incident implements Serializable {
     @SequenceGenerator(name = "SEQ_INCIDENT",allocationSize = 1,sequenceName = "SEQ_INCIDENT")
     private Long id;
     private String message;
+    @Column(nullable = true)
+    private String answer;
     private Boolean status;
     @ManyToOne(fetch = FetchType.LAZY)
     private Person transmitter;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Person receiver;
     @ManyToOne(fetch = FetchType.LAZY)
     public IncidentType incidentType;
@@ -41,5 +44,13 @@ public class Incident implements Serializable {
 
     public void setReceiver(Person receiver) {
         this.receiver = receiver;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }

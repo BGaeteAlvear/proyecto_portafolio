@@ -53,8 +53,6 @@ public class CategoryController {
         return "/category/index";
     }
 
-
-
     @GetMapping("/form")
     public String create(Map<String,Object> model){
         Category category= new Category();
@@ -83,7 +81,7 @@ public class CategoryController {
                 try {
 
                     Files.copy(image.getInputStream(), rootAbsolutePath);
-                    flash.addFlashAttribute("info", "Se ha cargado correctamente '" + uniqueFilename + "'");
+                    flash.addFlashAttribute("success", "Se ha cargado correctamente '" + uniqueFilename + "'");
                     category.setImage(uniqueFilename);
 
 
@@ -120,7 +118,7 @@ public class CategoryController {
             categoryService.delete(id);
 
             if(uploadFileService.delete(category.getImage())){
-                flash.addFlashAttribute("info", "Imagen: "+ category.getImage()+" eliminada con éxito");
+                flash.addFlashAttribute("warning", "Imagen: "+ category.getImage()+" eliminada con éxito");
             }
         }
         return "redirect:/category/index";

@@ -148,6 +148,7 @@ public class ProductAvailableController {
 
             productAvailableService.delete(id);
         }
+        flash.addFlashAttribute("warning", "El producto ha sido eliminado");
         return "redirect:/product-available/index";
     }
 

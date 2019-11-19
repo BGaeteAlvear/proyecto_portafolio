@@ -22,7 +22,6 @@ public class Usuario implements Serializable {
         private String password;
         private Boolean enabled;
 
-
         /*
         @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
         @JoinColumn(name= "usuario_id")

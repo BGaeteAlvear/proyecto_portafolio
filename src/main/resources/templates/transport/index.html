@@ -41,8 +41,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="transport : ${list}">
-                                <td th:text="${transport.id}"></td>
+                            <tr th:each="transport, iterator : ${list}">
+                                <td th:text="${iterator.index + 1}"></td>
                                 <td th:text="${transport.transportType.name}"></td>
                                 <td th:text="${transport.refrigeration} ? 'Si' : 'No'"></td>
                                 <td th:text="${transport.capacity}"></td>

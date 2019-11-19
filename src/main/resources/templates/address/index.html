@@ -41,8 +41,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="user : ${list_users}">
-                                <td data-align="center" th:text="${user.id}"></td>
+                            <tr th:each="user, iterator : ${list_users}">
+                                <td data-align="center" th:text="${iterator.index + 1}"></td>
                                 <td th:text="${user.name}"></td>
                                 <td th:text="${user.lastName}"></td>
                                 <td th:text="${user.email}"></td>

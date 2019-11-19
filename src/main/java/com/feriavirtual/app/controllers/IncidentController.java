@@ -5,6 +5,7 @@ import com.feriavirtual.app.models.entity.Incident;
 import com.feriavirtual.app.models.entity.IncidentType;
 import com.feriavirtual.app.models.entity.Person;
 import com.feriavirtual.app.models.service.IIncidentService;
+import com.feriavirtual.app.models.service.IIncidentTypeService;
 import com.feriavirtual.app.models.service.IPersonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,33 +29,46 @@ public class IncidentController {
 
     private Logger logger = LoggerFactory.getLogger(IndexController.class);
     private final IIncidentService incidentService;
+    private final IIncidentTypeService incidentTypeService;
     private final IPersonService personService;
 
-    public IncidentController(IIncidentService incidentService, IPersonService personService) {
+    public IncidentController(IIncidentService incidentService, IIncidentTypeService incidentTypeService, IPersonService personService) {
         this.incidentService = incidentService;
+        this.incidentTypeService = incidentTypeService;
         this.personService = personService;
     }
 
     @GetMapping("/index")
-    public String index(Model model){
-        List<Incident> list = incidentService.getAll();
+    public String index(Model model, HttpSession session){
+        Person person = (Person) session.getAttribute("userSession");
+        List<Incident> list = new ArrayList<>();
+        if (person.getRole().getId() == 1) {
+            list = incidentService.getIncidentsNotAssigned(person.getId());
+        }
+        if (person.getRole().getId() == 3 || person.getRole().getId() == 4) {
+            list = incidentService.getIncidentsByClientId(person.getId());
+        }
+        //List<Incident> list = incidentService.getAll();
 
         /* DATOS TEMPLATE */
         model.addAttribute("title_header", "INCIDENTES");
         model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | INCIDENTES");
         model.addAttribute("subtitle_header", "Mantenedor de Incidentes");
         model.addAttribute("list", list);
+        model.addAttribute("person", person);
 
         return "/incident/index";
     }
 
     @GetMapping("/form")
-    public String create(Map<String, Object> model){
+    public String create(Map<String, Object> model, HttpSession session){
         Incident incident = new Incident();
+        Person person = (Person) session.getAttribute("userSession");
         List<IncidentType> incidentTypes = incidentService.getAllTypes();
         model.put("title", "Crear Incidente");
         model.put("incident", incident);
         model.put("incidentTypes", incidentTypes);
+        model.put("person", person);
         return "/incident/form";
     }
 
@@ -64,29 +79,37 @@ public class IncidentController {
             if (person.getRole().getId() == 3 || person.getRole().getId() == 4) {
                 incident.setStatus(true);
                 incident.setTransmitter(person);
-                incident.setReceiver(personService.findById(1L));
+                incident.setReceiver(null);
+                incident.setAnswer(null);
                 incidentService.save(incident);
                 status.setComplete();
-            } else {
-                flash.addFlashAttribute("error", "El usuario no es un cliente");
-                return "redirect:/incident/index";
+                flash.addFlashAttribute("success", "El incidente ha sido almacenado");
+            } else if (person.getRole().getId() == 1) {
+                incident.setStatus(true);
+                incident.setReceiver(person);
+                incidentService.save(incident);
+                status.setComplete();
+                flash.addFlashAttribute("success", "El incidente ha sido respondido");
             }
         }
-        flash.addFlashAttribute("success", "El incidente ha sido creado");
+
         return "redirect:/incident/index";
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable(value = "id") Long id){
+    public String delete(@PathVariable(value = "id") Long id, RedirectAttributes flash){
         if (id > 0){
             incidentService.delete(id);
         }
+        flash.addFlashAttribute("warning", "El incidente ha sido eliminado");
         return "redirect:/incident/index";
     }
 
     @GetMapping("/form/{id}")
-    public String edit(@PathVariable(value = "id")Long id, Map<String, Object> model, RedirectAttributes flash){
+    public String edit(@PathVariable(value = "id")Long id, Map<String, Object> model, RedirectAttributes flash, HttpSession session){
         Incident incident = null;
+        List<IncidentType> incidentTypes = incidentTypeService.getAll();
+        Person person = (Person) session.getAttribute("userSession");
         if(id > 0){
             incident = incidentService.findById(id);
             if (incident == null){
@@ -98,7 +121,10 @@ public class IncidentController {
             return "redirect:/incident/index";
         }
         model.put("incident", incident);
+        model.put("incidentTypes", incidentTypes);
         model.put("title", "Editar Incidente");
+        model.put("person", person);
+
         return "/incident/form";
     }
 

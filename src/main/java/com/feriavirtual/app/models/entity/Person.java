@@ -74,23 +74,13 @@ public class Person implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
 
-    /*
-    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Address> addressList; */
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Authority authority;
-
-    /*
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name= "person_id")
-    private List<Authority> authorities; */
 
     public Person(){
         this.enabled = true;
         this.passwordRecovery = 1;
         this.status = true;
-  //      this.addressList = new ArrayList<>();
     }
 
     public Role getRole() {
@@ -99,6 +89,14 @@ public class Person implements Serializable {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     private static final long serialVersionUID = 706443423338604396L;
