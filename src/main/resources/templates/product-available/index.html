@@ -49,8 +49,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="productAvailable : ${list_products_available}">
-                                <td data-align="center" th:text="${productAvailable.id}"></td>
+                            <tr th:each="productAvailable, iterator : ${list_products_available}">
+                                <td data-align="center" th:text="${iterator.index + 1}"></td>
                                 <td >
                                     <img th:if= "${#strings.length(productAvailable.product)>0}" class="img-thumbnail rounded note-float-left" style="max-width: 25%;"
                                          th:src="@{'/uploads/'+ ${productAvailable.product.image}}" th:alt="${productAvailable.product.image}"/>

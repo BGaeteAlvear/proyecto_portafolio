@@ -21,7 +21,7 @@
                 <div class="panel">
                     <div class="panel-heading"></div>
                     <div class="panel-body">
-                        <a th:href="@{/incident/form}" class="btn btn-success p-3">Nuevo Incidente</a>
+                        <a th:if="${person.getRole().getId() == 3 || person.getRole().getId() == 4}" th:href="@{/incident/form}" class="btn btn-success p-3">Nuevo Incidente</a>
                         <table  data-toggle="table"
                                 data-search="true"
                                 data-show-refresh="true"
@@ -39,16 +39,18 @@
                                 <th data-sortable="true">Estado</th>
                                 <th data-sortable="true">Emisor</th>
                                 <th data-sortable="true">Receptor</th>
+                                <th data-sortable="true">Respuesta</th>
                                 <th data-align="center">Opciones</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="incident : ${list}">
-                                <td data-align="center" th:text="${incident.id}"></td>
+                            <tr th:each="incident, iterator : ${list}">
+                                <td data-align="center" th:text="${iterator.index + 1}"></td>
                                 <td th:text="${incident.message}"></td>
                                 <td th:text="${incident.status} ? 'Activo' : 'Inactivo'"></td>
                                 <td th:text="${incident.transmitter.name}"></td>
-                                <td th:text="${incident.receiver.name}"></td>
+                                <td th:text="${incident.receiver == null} ? 'Pendiente' : ${incident.receiver.name}"></td>
+                                <td th:text="${incident.answer == null} ? 'Pendiente' : ${incident.answer}"></td>
                                 <td>
                                     <a class="btn btn-info btn-icon add-tooltip" data-original-title="Editar" th:href="@{/incident/form/} + ${incident.id}" ><i class="ion-edit"></i></a>
                                     <a class="btn btn-danger btn-icon add-tooltip"  data-original-title="Eliminar" th:href="@{/incident/delete/} + ${incident.id}" ><i class="ion-trash-a"></i></a>

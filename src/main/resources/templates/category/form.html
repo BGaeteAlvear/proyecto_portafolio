@@ -58,25 +58,31 @@
                                 <div class="col-md-9">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="name" class="col-form-label">Nombre</label>
-                                                <input id="name" type="text" th:field="*{name}" class="form-control"
-                                                       th:errorclass="'form-control alert-danger'" required /> <small
-                                                    class="form-text text-danger"
+                                            <div class="form-group" id="idName">
+                                                <label for="name" class="col-form-label">Nombre (*)</label>
+                                                <input onkeyup="lengthValidator(this,'nameCounter',50,'idName')" id="name" type="text"
+                                                       th:field="*{name}" class="form-control counter-text"
+                                                       th:errorclass="'form-control alert-danger'" required  /> <small
+                                                    class="form-text text-danger "
                                                     th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                                                <span id="nameCounter"></span>
                                             </div>
                                         </div>
 
 
                                         <div class="col-sm-12">
-                                            <div class="form-group">
+                                            <div class="form-group" id="idDescripcion">
                                                 <label for="description" class="col-form-label">Descripción</label>
-                                                <textarea id="description" type="text" th:field="*{description}" class="form-control"
-                                                          th:errorclass="'form-control alert-danger'" cols="30" rows="12" required /> <small
+                                                <textarea onkeyup="lengthValidator(this, 'descripCounter', 500, 'idDescripcion')" id="description" type="text"
+                                                          th:field="*{description}" class="form-control counter-text"
+                                                          th:errorclass="'form-control alert-danger'" cols="30" rows="12" required  /> <small
                                                     class="form-text text-danger"
                                                     th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                                                <span id="descripCounter"></span>
                                             </div>
                                         </div>
+
+
 
                                     </div>
 

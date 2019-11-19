@@ -47,6 +47,16 @@ public class ProductAvailable implements Serializable {
     @NotNull
     private Boolean status;
 
+    public String getSale_type() {
+        return sale_type;
+    }
+
+    public void setSale_type(String sale_type) {
+        this.sale_type = sale_type;
+    }
+
+    private String sale_type;
+
     @ManyToOne(fetch = FetchType.LAZY)
     public Product product;
 
@@ -57,6 +67,85 @@ public class ProductAvailable implements Serializable {
         this.status = true;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public String getStock_unity() {
+        return stock_unity;
+    }
+
+    public void setStock_unity(String stock_unity) {
+        this.stock_unity = stock_unity;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Date getDate_expire() {
+        return date_expire;
+    }
+
+    public void setDate_expire(Date date_expire) {
+        this.date_expire = date_expire;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 
 
 }

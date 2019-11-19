@@ -97,7 +97,7 @@ public class PersonController {
 
 
     @PostMapping("/form")
-    public String store(@Valid Person person, BindingResult result, Model model, SessionStatus status){
+    public String store(@Valid Person person, BindingResult result, Model model, SessionStatus status, RedirectAttributes flash){
         Authority authority = new Authority();
         if (person != null){
                 if (person.getRole() == null){
@@ -162,15 +162,17 @@ public class PersonController {
             }
             System.out.println("-- Person: " + person.toString());
         }
+        flash.addFlashAttribute("success", "La persona ha sido almacenada");
         return "redirect:/person/index";
     }
 
     // @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/eliminar/{id}")
-    public String delete(@PathVariable (value = "id") Long id){
+    public String delete(@PathVariable (value = "id") Long id, RedirectAttributes flash){
         if (id > 0){
             personService.delete(id);
         }
+        flash.addFlashAttribute("warning", "La persona ha sido eliminada");
         return "redirect:/person/index";
     }
 
@@ -182,11 +184,11 @@ public class PersonController {
         if(id > 0){
          person = personService.findById(id);
             if (person == null){
-                flash.addFlashAttribute("error", "El ID del cliente no existe en la BBDD!");
+                flash.addFlashAttribute("error", "El id de la persona no existe en la base de datos");
                 return "redirect:/person/index";
             }
         }else {
-            flash.addFlashAttribute("error", "El ID del cliente no puede ser cero!");
+            flash.addFlashAttribute("error", "El id de la persona no puede ser cero");
             return "redirect:/index";
         }
         model.put("person", person);
@@ -220,6 +222,7 @@ public class PersonController {
         } catch (Exception e){
             System.out.println("- Error : " + e.toString());
         }
+        flash.addFlashAttribute("success", "El rol ha sido cambiado");
         return "/person/change-role";
     }
 

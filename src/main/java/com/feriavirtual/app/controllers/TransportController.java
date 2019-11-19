@@ -71,15 +71,16 @@ public class TransportController {
                 return "redirect:/transport/index";
             }
         }
-        flash.addFlashAttribute("success", "El transporte ha sido creado");
+        flash.addFlashAttribute("success", "El transporte ha sido almacenado");
         return "redirect:/transport/index";
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable (value = "id") Long id){
+    public String delete(@PathVariable (value = "id") Long id, RedirectAttributes flash){
         if (id > 0){
             transportService.delete(id);
         }
+        flash.addFlashAttribute("warning", "El transporte ha sido eliminado");
         return "redirect:/transport/index";
     }
 

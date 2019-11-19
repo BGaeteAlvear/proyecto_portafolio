@@ -48,15 +48,16 @@ public class TransportTypeController {
             transportTypeService.save(transportType);
             status.setComplete();
         }
-        flash.addFlashAttribute("success", "El tipo de transporte ha sido creado");
+        flash.addFlashAttribute("success", "El tipo de transporte ha sido almacenado");
         return "redirect:/transport-type/index";
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable (value = "id") Long id){
+    public String delete(@PathVariable (value = "id") Long id, RedirectAttributes flash){
         if (id > 0){
             transportTypeService.delete(id);
         }
+        flash.addFlashAttribute("warning", "El tipo de transporte ha sido eliminado");
         return "redirect:/transport-type/index";
     }
 

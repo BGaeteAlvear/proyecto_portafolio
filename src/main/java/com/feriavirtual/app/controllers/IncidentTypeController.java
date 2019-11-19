@@ -46,15 +46,16 @@ public class IncidentTypeController {
             incidentTypeService.save(incidentType);
             status.setComplete();
         }
-        flash.addFlashAttribute("success", "El tipo de incidente ha sido creado");
+        flash.addFlashAttribute("success", "El tipo de incidente ha sido almacenado");
         return "redirect:/incident-type/index";
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable (value = "id") Long id){
+    public String delete(@PathVariable (value = "id") Long id, RedirectAttributes flash){
         if (id > 0){
             incidentTypeService.delete(id);
         }
+        flash.addFlashAttribute("warning", "El tipo de incidente ha sido eliminado");
         return "redirect:/incident-type/index";
     }
 

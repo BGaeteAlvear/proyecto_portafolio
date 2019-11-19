@@ -61,7 +61,7 @@
 <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/css/datepicker.css">-->
 <!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.min.js"></script>-->
 <!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/i18n/datepicker.es.min.js"></script>-->
-
+        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
         <!-- CUSTOM CSS -->
         <link th:href="@{/assets/css/demo/custom-login.css}" rel="stylesheet">
         <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
@@ -799,8 +799,7 @@
                 <!--Select2 [ OPTIONAL ]-->
                 <script th:src="@{/assets/plugins/select2/js/select2.min.js}"></script>
 
-
-
+                <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 
                 <script>
@@ -883,7 +882,51 @@
                             });
                         }
 
+
+
                     });
+
+                    function lengthValidator(v_input, v_response, v_maxLength, v_parent) {
+
+                        if ($(v_input).val().length <= v_maxLength) {
+                            $('#'+v_response).html((v_maxLength - $(v_input).val().length) + ' carateres restantes');
+                            $('#'+v_parent).removeClass('has-error');
+                        } else {
+                            $('#'+v_response).html('Largo máximo de '+ v_maxLength+' caracteres excedido!');
+                            $('#'+v_parent).addClass('has-error');
+                            $(v_input).focusout();
+                            $(v_input).attr('maxlength', v_maxLength);
+                        }
+
+
+                    }
+
+                    var numberSpinner = (function() {
+                        $('.number-spinner>.ns-btn>a').click(function() {
+                            var btn = $(this),
+                                oldValue = btn.closest('.number-spinner').find('input').val().trim(),
+                                newVal = 0;
+
+                            if (btn.attr('data-dir') === 'up') {
+                                newVal = parseInt(oldValue) + 1;
+                            } else {
+                                if (oldValue > 1) {
+                                    newVal = parseInt(oldValue) - 1;
+                                } else {
+                                    newVal = 1;
+                                }
+                            }
+                            btn.closest('.number-spinner').find('input').val(newVal);
+                        });
+                        $('.number-spinner>input').keypress(function(evt) {
+                            evt = (evt) ? evt : window.event;
+                            var charCode = (evt.which) ? evt.which : evt.keyCode;
+                            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                return false;
+                            }
+                            return true;
+                        });
+                    })();
 
                 </script>
             </footer>
