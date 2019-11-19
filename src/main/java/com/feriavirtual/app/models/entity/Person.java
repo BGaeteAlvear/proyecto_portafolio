@@ -93,6 +93,14 @@ public class Person implements Serializable {
   //      this.addressList = new ArrayList<>();
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     private static final long serialVersionUID = 706443423338604396L;
 
 }

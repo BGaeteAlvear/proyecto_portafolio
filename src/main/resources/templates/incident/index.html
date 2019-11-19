@@ -47,8 +47,8 @@
                                 <td data-align="center" th:text="${incident.id}"></td>
                                 <td th:text="${incident.message}"></td>
                                 <td th:text="${incident.status} ? 'Activo' : 'Inactivo'"></td>
-                                <td th:text="${incident.transmitter}"></td>
-                                <td th:text="${incident.receiver}"></td>
+                                <td th:text="${incident.transmitter.name}"></td>
+                                <td th:text="${incident.receiver.name}"></td>
                                 <td>
                                     <a class="btn btn-info btn-icon add-tooltip" data-original-title="Editar" th:href="@{/incident/form/} + ${incident.id}" ><i class="ion-edit"></i></a>
                                     <a class="btn btn-danger btn-icon add-tooltip"  data-original-title="Eliminar" th:href="@{/incident/delete/} + ${incident.id}" ><i class="ion-trash-a"></i></a>

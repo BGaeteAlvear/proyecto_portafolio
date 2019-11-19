@@ -43,11 +43,12 @@ public class TransportTypeController {
     }
 
     @PostMapping("/form")
-    public String save(@Valid TransportType transportType, BindingResult result, Model model, SessionStatus status){
+    public String save(@Valid TransportType transportType, BindingResult result, Model model, SessionStatus status, RedirectAttributes flash){
         if (transportType != null){
             transportTypeService.save(transportType);
             status.setComplete();
         }
+        flash.addFlashAttribute("success", "El tipo de transporte ha sido creado");
         return "redirect:/transport-type/index";
     }
 

@@ -18,6 +18,14 @@ public class Role implements Serializable {
     private String name;
     private String detail;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     private static final long serialVersionUID = -624120425068441184L;
 
 }

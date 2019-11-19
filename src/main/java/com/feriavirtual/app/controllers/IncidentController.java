@@ -5,6 +5,7 @@ import com.feriavirtual.app.models.entity.Incident;
 import com.feriavirtual.app.models.entity.IncidentType;
 import com.feriavirtual.app.models.entity.Person;
 import com.feriavirtual.app.models.service.IIncidentService;
+import com.feriavirtual.app.models.service.IPersonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,9 +27,11 @@ public class IncidentController {
 
     private Logger logger = LoggerFactory.getLogger(IndexController.class);
     private final IIncidentService incidentService;
+    private final IPersonService personService;
 
-    public IncidentController(IIncidentService incidentService) {
+    public IncidentController(IIncidentService incidentService, IPersonService personService) {
         this.incidentService = incidentService;
+        this.personService = personService;
     }
 
     @GetMapping("/index")
@@ -55,15 +58,21 @@ public class IncidentController {
     }
 
     @PostMapping("/form")
-    public String store(@Valid  Incident incident, BindingResult result, Model model, SessionStatus status){
+    public String store(@Valid  Incident incident, BindingResult result, Model model, SessionStatus status, HttpSession session, RedirectAttributes flash){
         if (incident != null){
-            incident.setStatus(true);
-            incident.setTransmitter("Client");
-            incident.setReceiver("Pendiente");
-            incidentService.save(incident);
-            logger.info(String.valueOf(incident));
-            status.setComplete();
+            Person person = (Person) session.getAttribute("userSession");
+            if (person.getRole().getId() == 3 || person.getRole().getId() == 4) {
+                incident.setStatus(true);
+                incident.setTransmitter(person);
+                incident.setReceiver(personService.findById(1L));
+                incidentService.save(incident);
+                status.setComplete();
+            } else {
+                flash.addFlashAttribute("error", "El usuario no es un cliente");
+                return "redirect:/incident/index";
+            }
         }
+        flash.addFlashAttribute("success", "El incidente ha sido creado");
         return "redirect:/incident/index";
     }
 

@@ -18,5 +18,30 @@ public class Transport implements Serializable {
     private int capacity;
     @ManyToOne(fetch = FetchType.LAZY)
     private TransportType transportType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Person person;
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public boolean isRefrigeration() {
+        return refrigeration;
+    }
+
+    public void setRefrigeration(boolean refrigeration) {
+        this.refrigeration = refrigeration;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
 }
