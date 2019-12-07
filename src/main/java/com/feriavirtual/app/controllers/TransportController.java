@@ -1,7 +1,9 @@
 package com.feriavirtual.app.controllers;
 
+import com.feriavirtual.app.models.entity.Person;
 import com.feriavirtual.app.models.entity.Transport;
 import com.feriavirtual.app.models.entity.TransportType;
+import com.feriavirtual.app.models.service.IPersonService;
 import com.feriavirtual.app.models.service.ITransportService;
 import com.feriavirtual.app.models.service.ITransportTypeService;
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +28,12 @@ public class TransportController {
     private Logger logger = LoggerFactory.getLogger(IndexController.class);
     private final ITransportService transportService;
     private final ITransportTypeService transportTypeService;
+    private final IPersonService personService;
 
-    public TransportController(ITransportService transportService, ITransportTypeService transportTypeService) {
+    public TransportController(ITransportService transportService, ITransportTypeService transportTypeService, IPersonService personService) {
         this.transportService = transportService;
         this.transportTypeService = transportTypeService;
+        this.personService = personService;
     }
 
     @GetMapping("/index")
@@ -50,20 +55,32 @@ public class TransportController {
     }
 
     @PostMapping("/form")
-    public String save(@Valid Transport transport, BindingResult result, Model model, SessionStatus status){
+    public String save(@Valid Transport transport, BindingResult result, Model model, SessionStatus status, HttpSession session, RedirectAttributes flash){
         if (transport != null){
-            logger.info(String.valueOf(transport));
-            transportService.save(transport);
-            status.setComplete();
+            if (transport.getCapacity() == 0 || transport.getCapacity() < 0) {
+                flash.addFlashAttribute("warning", "La capacidad debe ser mayor a cero");
+                return "redirect:/transport/form";
+            }
+            Person person = (Person) session.getAttribute("userSession");
+            if (person.getRole().getId() == 5) {
+                transport.setPerson(person);
+                transportService.save(transport);
+                status.setComplete();
+            } else {
+                flash.addFlashAttribute("error", "El usuario no es un transportista");
+                return "redirect:/transport/index";
+            }
         }
+        flash.addFlashAttribute("success", "El transporte ha sido almacenado");
         return "redirect:/transport/index";
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable (value = "id") Long id){
+    public String delete(@PathVariable (value = "id") Long id, RedirectAttributes flash){
         if (id > 0){
             transportService.delete(id);
         }
+        flash.addFlashAttribute("warning", "El transporte ha sido eliminado");
         return "redirect:/transport/index";
     }
 

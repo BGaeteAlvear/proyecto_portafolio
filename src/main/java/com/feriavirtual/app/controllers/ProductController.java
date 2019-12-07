@@ -137,7 +137,7 @@ public class ProductController {
 
                 try {
                     Files.copy(image.getInputStream(), rootAbsolutePath);
-                    flash.addFlashAttribute("info", "Se ha cargado correctamente '" + uniqueFilename + "'");
+                    flash.addFlashAttribute("success", "Se ha cargado correctamente '" + uniqueFilename + "'");
                     product.setImage(uniqueFilename);
                     //uniqueFilename = uploadFileService.copy(image);
                 } catch (IOException e) {
@@ -176,7 +176,7 @@ public class ProductController {
             productService.delete(id);
 
                 if(uploadFileService.delete(product.getImage())){
-                    flash.addFlashAttribute("success", "Imagen: "+ product.getImage()+" eliminada con éxito");
+                    flash.addFlashAttribute("warning", "Imagen: "+ product.getImage()+" eliminada con éxito");
                 }
 
         }

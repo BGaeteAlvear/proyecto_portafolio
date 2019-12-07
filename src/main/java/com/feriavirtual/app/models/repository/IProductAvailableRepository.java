@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface IProductAvailableRepository extends JpaRepository<ProductAvailable, Long> {
     List<ProductAvailable> findByPerson(Person person);
+    List<ProductAvailable> findBySaleTypeEquals(String saleType);
 }

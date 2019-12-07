@@ -36,6 +36,8 @@ public class LoginController {
                 System.out.println("USUARIO ID : "+person.getId());
             }catch (Exception ex){
                 System.out.println(ex.getMessage());
+                flash.addFlashAttribute("error","DATOS DE CREDENCIALES INCORRECTOS");
+                return "redirect:/category/index";
             }
             //Person person = personService.findByUsername(authentication.getCredentials();
 

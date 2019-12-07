@@ -53,8 +53,6 @@ public class CategoryController {
         return "/category/index";
     }
 
-
-
     @GetMapping("/form")
     public String create(Map<String,Object> model){
         Category category= new Category();
@@ -83,7 +81,7 @@ public class CategoryController {
                 try {
 
                     Files.copy(image.getInputStream(), rootAbsolutePath);
-                    flash.addFlashAttribute("info", "Se ha cargado correctamente '" + uniqueFilename + "'");
+                    flash.addFlashAttribute("success", "Se ha cargado correctamente '" + uniqueFilename + "'");
                     category.setImage(uniqueFilename);
 
 
@@ -120,7 +118,7 @@ public class CategoryController {
             categoryService.delete(id);
 
             if(uploadFileService.delete(category.getImage())){
-                flash.addFlashAttribute("info", "Imagen: "+ category.getImage()+" eliminada con éxito");
+                flash.addFlashAttribute("warning", "Imagen: "+ category.getImage()+" eliminada con éxito");
             }
         }
         return "redirect:/category/index";
@@ -132,7 +130,7 @@ public class CategoryController {
         if(id > 0){
             category = categoryService.findById(id);
             if (category == null){
-                flash.addFlashAttribute("error", "El ID de categoría no existe en la BBDD!");
+                flash.addFlashAttribute("error", "El id de la categoría no existe en la base de datos");
                 return "redirect:/category/index";
             }
         }else {

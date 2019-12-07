@@ -46,23 +46,15 @@ public class Product implements Serializable {
        this.status = true;
      }
 
-
     @PrePersist
     public void createdAt() {
         this.createdAt = new Date();
     }
 
-    /*@PrePersist
-    public void createdAt() {
-        this.createdAt = this.updatedAt = new Date();
-    }*/
-
-
     @PreUpdate
     public void updatedAt() {
         this.updatedAt = new Date();
     }
-
 
     public void setImage(String image) {
         this.image = image;

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,6 +27,30 @@ public class IncidentServiceImpl implements IIncidentService {
     @Transactional(readOnly = true)
     public List<Incident> getAll() {
         return incidentRepository.findAll();
+    }
+
+    @Override
+    public List<Incident> getIncidentsNotAssigned(Long id) {
+        List<Incident> incidents = incidentRepository.findAll();
+        List<Incident> slopes = new ArrayList<>();
+        for (Incident incident: incidents) {
+            if (incident.getReceiver() == null || incident.getReceiver().getId() == id) {
+                slopes.add(incident);
+            }
+        }
+        return slopes;
+    }
+
+    @Override
+    public List<Incident> getIncidentsByClientId(Long id) {
+        List<Incident> incidents = incidentRepository.findAll();
+        List<Incident> clientIncidents = new ArrayList<>();
+        for (Incident incident: incidents) {
+            if (incident.getTransmitter().getId() == id) {
+                clientIncidents.add(incident);
+            }
+        }
+        return clientIncidents;
     }
 
     @Override

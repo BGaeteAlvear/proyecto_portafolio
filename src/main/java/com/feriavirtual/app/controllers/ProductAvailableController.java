@@ -1,26 +1,19 @@
 package com.feriavirtual.app.controllers;
-
-import com.feriavirtual.app.models.entity.Category;
 import com.feriavirtual.app.models.entity.Person;
 import com.feriavirtual.app.models.entity.Product;
 import com.feriavirtual.app.models.entity.ProductAvailable;
 import com.feriavirtual.app.models.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
-import java.net.MalformedURLException;
+
 import java.util.List;
 import java.util.Map;
 
@@ -148,6 +141,7 @@ public class ProductAvailableController {
 
             productAvailableService.delete(id);
         }
+        flash.addFlashAttribute("warning", "El producto ha sido eliminado");
         return "redirect:/product-available/index";
     }
 
