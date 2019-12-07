@@ -42,10 +42,9 @@
 
                         <form th:action="@{/incident/form}" th:object="${incident}" method="post" enctype="multipart/form-data">
                             <div class="row">
-                                <div class="col-md-9">
+                                <div class="col-md-12">
                                     <div class="row">
-
-                                        <div th:if="${person.getRole().getId() == 3 || person.getRole().getId() == 4}" class="col-sm-12">
+                                        <div th:if="${person.getRole().getId() == 3 || person.getRole().getId() == 4}" class="col-md-6">
                                             <div class="form-group">
                                                 <label for="incidentType" class="col-form-label">Tipo de Incidente (*)</label>
                                                 <select id="incidentType" th:field="*{incidentType}" class="form-control">
@@ -60,8 +59,19 @@
                                                 </small>
                                             </div>
                                         </div>
-
-                                        <div th:if="${person.getRole().getId() == 3 || person.getRole().getId() == 4}"  class="col-sm-12">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="orderNumber" class="col-form-label">Número de Orden (*)</label>
+                                                <input id="orderNumber" type="number" min="1" th:field="*{orderNumber}" th:readonly="${editing}" class="form-control"/>
+                                                <small
+                                                    class="form-text text-danger"
+                                                    th:if="${#fields.hasErrors('orderNumber')}" th:errors="*{orderNumber}">
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div th:if="${person.getRole().getId() == 3 || person.getRole().getId() == 4}"  class="col-md-12">
                                             <div class="form-group">
                                                 <label for="message" class="col-form-label">Mensaje (*)</label>
                                                 <textarea id="message" type="text" th:field="*{message}" class="form-control"
@@ -70,7 +80,8 @@
                                                     th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></small>
                                             </div>
                                         </div>
-
+                                    </div>
+                                    <div class="row">
                                         <div th:if="${person.getRole().getId() == 1}" class="col-sm-12">
                                             <div class="form-group">
                                                 <label for="answer" class="col-form-label">Respuesta (*)</label>
@@ -80,14 +91,15 @@
                                                     th:if="${#fields.hasErrors('answer')}" th:errors="*{answer}"></small>
                                             </div>
                                         </div>
-
                                     </div>
-
-                                    <div class="col-md-12">
-                                        <div class="form-group ">
-                                            <input type="submit" th:value="${title}" class="btn btn-primary pull-right" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group ">
+                                                <input type="submit" th:value="${title}" class="btn btn-primary pull-right" />
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </form>
