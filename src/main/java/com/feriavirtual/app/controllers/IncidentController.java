@@ -49,7 +49,6 @@ public class IncidentController {
             list = incidentService.getIncidentsByClientId(person.getId());
         }
         //List<Incident> list = incidentService.getAll();
-
         /* DATOS TEMPLATE */
         model.addAttribute("title_header", "INCIDENTES");
         model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | INCIDENTES");
@@ -69,6 +68,7 @@ public class IncidentController {
         model.put("incident", incident);
         model.put("incidentTypes", incidentTypes);
         model.put("person", person);
+        model.put("editing", false);
         return "/incident/form";
     }
 
@@ -77,6 +77,10 @@ public class IncidentController {
         if (incident != null){
             Person person = (Person) session.getAttribute("userSession");
             if (person.getRole().getId() == 3 || person.getRole().getId() == 4) {
+                if (incident.getOrderNumber() < 1) {
+                    flash.addFlashAttribute("warning", "El número de orden no puede ser menor a 1.");
+                    return "redirect:/incident/form";
+                }
                 incident.setStatus(true);
                 incident.setTransmitter(person);
                 incident.setReceiver(null);
@@ -85,8 +89,8 @@ public class IncidentController {
                 status.setComplete();
                 flash.addFlashAttribute("success", "El incidente ha sido almacenado");
             } else if (person.getRole().getId() == 1) {
-                incident.setStatus(true);
                 incident.setReceiver(person);
+                incident.setStatus(false);
                 incidentService.save(incident);
                 status.setComplete();
                 flash.addFlashAttribute("success", "El incidente ha sido respondido");
@@ -121,9 +125,11 @@ public class IncidentController {
             return "redirect:/incident/index";
         }
         model.put("incident", incident);
+        logger.info(String.valueOf(incident));
         model.put("incidentTypes", incidentTypes);
         model.put("title", "Editar Incidente");
         model.put("person", person);
+        model.put("editing", true);
 
         return "/incident/form";
     }
