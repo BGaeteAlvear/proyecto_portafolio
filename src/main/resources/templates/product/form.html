@@ -13,11 +13,6 @@
 
             <!-- Content -->
             <div id="page-content">
-                <input type="hidden" th:if="${info != null}" id="info" th:value="${info}">
-                <input type="hidden" th:if="${error != null}" id="danger" th:value="${error}">
-                <input type="hidden" th:if="${success != null}" id="success" th:value="${success}">
-                <input type="hidden" th:if="${warning != null}" id="warning" th:value="${warning}">
-
 
                 <div class="panel mt-2">
                     <div class="panel-heading">
@@ -25,7 +20,7 @@
                     </div>
                     <div class="panel-body">
 
-                        <div th:object="${category}" th:remove="tag">
+                        <div th:object="${product}" th:remove="tag">
                             <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
                                 role="alert">
                                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
@@ -33,21 +28,21 @@
                         </div>
 
 
-                        <div th:object="${category}" th:remove="tag">
+                        <div th:object="${product}" th:remove="tag">
                             <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
                                 role="alert">
                                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
                             </ul>
                         </div>
 
-                        <form th:action="@{/category/form}" th:object="${category}" method="post"
-                              enctype="multipart/form-data">
+
+                        <form th:action="@{/product/form}" th:object="${product}" method="post" enctype="multipart/form-data">
                             <div class="row">
-                                <div th:if="${category.image != null}" class="col-md-3">
-                                    <img th:if="${#strings.length(category.image)>0}"
+                                <div th:if="${product.image != null}" class="col-md-3">
+                                    <img th:if="${#strings.length(product.image)>0}"
                                          style="width: 100%; height: 300px!important; object-fit: cover;"
                                          id="image-preview" class="rounded float-left"
-                                         th:src="@{'/uploads/'+ ${category.image}}" th:alt="${category.image}"/>
+                                         th:src="@{'/uploads/'+ ${product.image}}" th:alt="${product.image}"/>
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <div class="fileUpload blue-btn py-2">
@@ -60,7 +55,7 @@
                                     </div>
                                 </div>
 
-                                <div th:if="${category.image == null}" class="col-md-3">
+                                <div th:if="${product.image == null}" class="col-md-3">
                                     <img src="http://www.tourniagara.com/wp-content/uploads/2014/10/default-img.gif"
                                          class="rounded float-left"
                                          style="width: 100%; height: 300px!important; object-fit: cover;"
@@ -76,19 +71,32 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-md-9">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group" id="idName">
                                                 <label for="name" class="col-form-label">Nombre (*)</label>
-                                                <input onkeyup="lengthValidator(this,'nameCounter',50,'idName')"
-                                                       id="name" type="text"
+                                                <input onkeyup="lengthValidator(this,'nameCounter',50,'idName')" id="name" type="text"
                                                        th:field="*{name}" class="form-control counter-text"
-                                                       th:errorclass="'form-control alert-danger'" required/> <small
+                                                       th:errorclass="'form-control alert-danger'" required  /> <small
                                                     class="form-text text-danger "
                                                     th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
                                                 <span id="nameCounter"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="category" class="col-form-label">Categoría (*)</label>
+                                                <select id="category" th:field="*{category}" class="form-control" required >
+                                                    <option th:each="category : ${list_categories}"
+                                                            th:value="${category.id}"
+                                                            th:text="${category.name}"
+                                                            th:selected="${category.id == 1}"/>
+                                                </select>
+                                                <small
+                                                        class="form-text text-danger"
+                                                        th:if="${#fields.hasErrors('category')}" th:errors="*{category}">
+                                                </small>
                                             </div>
                                         </div>
 
@@ -96,26 +104,20 @@
                                         <div class="col-sm-12">
                                             <div class="form-group" id="idDescripcion">
                                                 <label for="description" class="col-form-label">Descripción</label>
-                                                <textarea
-                                                        onkeyup="lengthValidator(this, 'descripCounter', 500, 'idDescripcion')"
-                                                        id="description" type="text"
-                                                        th:field="*{description}" class="form-control counter-text"
-                                                        th:errorclass="'form-control alert-danger'" cols="30" rows="12"
-                                                        required/> <small
+                                                <textarea onkeyup="lengthValidator(this, 'descripCounter', 500, 'idDescripcion')" id="description" type="text"
+                                                          th:field="*{description}" class="form-control counter-text"
+                                                          th:errorclass="'form-control alert-danger'" cols="30" rows="12" required  /> <small
                                                     class="form-text text-danger"
-                                                    th:if="${#fields.hasErrors('description')}"
-                                                    th:errors="*{description}"></small>
+                                                    th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
                                                 <span id="descripCounter"></span>
                                             </div>
                                         </div>
-
 
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group ">
-                                            <input type="submit" th:value="${title}"
-                                                   class="btn btn-primary pull-right"/>
+                                            <input type="submit" th:value="${title}" class="btn btn-primary pull-right" />
                                         </div>
                                     </div>
                                 </div>
@@ -144,12 +146,12 @@
         var file = this.files[0];
         var filename = readURL(this);
         $(this).parent().children('span').html(filename);
-        var mime_types = ['image/jpeg', 'image/png'];
-        if (mime_types.indexOf(file.type) == -1) {
+        var mime_types = [ 'image/jpeg', 'image/png' ];
+        if(mime_types.indexOf(file.type) == -1) {
             alert('Error : Incorrect file type');
             return;
         }
-        if (file.size > 2 * 1924 * 1524) {
+        if(file.size > 2*1924*1524) {
             alert('Error :  3MB');
             return;
         }
@@ -157,7 +159,6 @@
         // set src of image and show
         $('#image-preview').attr('src', _PREVIEW_URL);
     });
-
     function readURL(input) {
         var url = input.value;
         var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
@@ -167,13 +168,13 @@
             var path = $(input).val();
             var filename = path.replace(/^.*\\/, "");
             // $('.fileUpload span').html('Uploaded Proof : ' + filename);
-            return "Uploaded file : " + filename;
+            return "Uploaded file : "+filename;
         } else {
             $(input).val("");
             return "Only image/pdf formats are allowed!";
         }
     }
+
 </script>
 </body>
 </html>
-
