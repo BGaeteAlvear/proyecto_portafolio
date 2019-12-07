@@ -5,6 +5,7 @@ import com.feriavirtual.app.models.entity.IncidentType;
 import com.feriavirtual.app.models.repository.IIncidentRepository;
 import com.feriavirtual.app.models.repository.IIncidentTypeRepository;
 import com.feriavirtual.app.models.service.IIncidentService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +32,7 @@ public class IncidentServiceImpl implements IIncidentService {
 
     @Override
     public List<Incident> getIncidentsNotAssigned(Long id) {
-        List<Incident> incidents = incidentRepository.findAll();
+        List<Incident> incidents = incidentRepository.findAll(Sort.by(Sort.Direction.DESC, "status"));
         List<Incident> slopes = new ArrayList<>();
         for (Incident incident: incidents) {
             if (incident.getReceiver() == null || incident.getReceiver().getId() == id) {
@@ -43,7 +44,7 @@ public class IncidentServiceImpl implements IIncidentService {
 
     @Override
     public List<Incident> getIncidentsByClientId(Long id) {
-        List<Incident> incidents = incidentRepository.findAll();
+        List<Incident> incidents = incidentRepository.findAll(Sort.by(Sort.Direction.DESC, "status"));
         List<Incident> clientIncidents = new ArrayList<>();
         for (Incident incident: incidents) {
             if (incident.getTransmitter().getId() == id) {

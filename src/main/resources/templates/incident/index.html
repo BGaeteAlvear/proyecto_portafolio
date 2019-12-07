@@ -35,6 +35,7 @@
                             <tr>
 
                                 <th data-align="center" data-sortable="true" >Id</th>
+                                <th data-sortable="true">Número de Orden</th>
                                 <th data-sortable="true" style="white-space: nowrap">Mensaje</th>
                                 <th data-sortable="true">Estado</th>
                                 <th data-sortable="true">Emisor</th>
@@ -46,8 +47,9 @@
                             <tbody>
                             <tr th:each="incident, iterator : ${list}">
                                 <td data-align="center" th:text="${iterator.index + 1}"></td>
+                                <td th:text="${incident.orderNumber}"></td>
                                 <td th:text="${incident.message}"></td>
-                                <td th:text="${incident.status} ? 'Activo' : 'Inactivo'"></td>
+                                <td th:text="${incident.status} ? 'Activo' : 'Cerrado'"></td>
                                 <td th:text="${incident.transmitter.name}"></td>
                                 <td th:text="${incident.receiver == null} ? 'Pendiente' : ${incident.receiver.name}"></td>
                                 <td th:text="${incident.answer == null} ? 'Pendiente' : ${incident.answer}"></td>

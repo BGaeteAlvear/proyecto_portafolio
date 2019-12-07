@@ -25,9 +25,14 @@ public class Incident implements Serializable {
     private Person receiver;
     @ManyToOne(fetch = FetchType.LAZY)
     public IncidentType incidentType;
+    private Integer orderNumber;
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public Boolean getStatus() {
+        return status;
     }
 
     public Person getTransmitter() {
@@ -52,5 +57,13 @@ public class Incident implements Serializable {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public Integer getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
     }
 }
