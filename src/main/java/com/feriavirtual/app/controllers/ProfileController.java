@@ -98,7 +98,7 @@ public class ProfileController {
                 mailMessage.setSubject("Completar registo");
                 mailMessage.setFrom("rodolfo.quezada.s@gmail.com");
                 mailMessage.setText("Para confirmar la cuenta haz click aca : "
-                        +"http://localhost:8080/profile/confirm-account/"+confirmationToken.getConfirmationToken());
+                        +"http://10.15.72.109:8080/profile/confirm-account/"+confirmationToken.getConfirmationToken());
 
                 emailSenderService.sendEmail(mailMessage);
                 flash.addAttribute("info","Se ha enviado un email para confirmar el perfil");

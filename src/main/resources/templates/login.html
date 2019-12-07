@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xml:th="https://www.thymeleaf.org/" lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
@@ -53,6 +54,11 @@
     <!-- LOGIN FORM -->
     <!--===================================================-->
     <div class="cls-content">
+        <input type="hidden" th:if="${info != null}" id="info" th:value="${info}">
+        <input type="hidden" th:if="${error != null}" id="danger" th:value="${error}">
+        <input type="hidden" th:if="${success != null}" id="success" th:value="${success}">
+        <input type="hidden" th:if="${warning != null}" id="warning" th:value="${warning}">
+
         <div class="cls-content-sm panel">
             <div class="panel-body">
                 <div class="mar-ver pad-btm">
@@ -91,6 +97,54 @@
     <script th:src="@{/assets/js/bootstrap.min.js}"></script>
     <!--NiftyJS [ RECOMMENDED ]-->
     <script th:src="@{/static/assets/js/nifty.min.js}"></script>
+
+    <script>
+        console.log($('#info').val());
+        if($('#info').val()){
+            $.niftyNoty({
+                type: 'info',
+                container : 'floating',
+                title : 'Info!',
+                message : $('#info').val() ,
+                closeBtn : true,
+                timer : 5500
+            });
+        }
+        console.log($('#danger').val());
+        if($('#danger').val()){
+            $.niftyNoty({
+                type: 'danger',
+                container : 'floating',
+                title : 'Error',
+                message : $('#danger').val() ,
+                closeBtn : true,
+                timer : 5500
+            });
+        }
+
+        if($('#warning').val()){
+            $.niftyNoty({
+                type: 'warning',
+                container : 'floating',
+                title : 'Alerta',
+                message : $('#warning').val() ,
+                closeBtn : true,
+                timer : 5500
+            });
+        }
+
+        if($('#success').val()){
+            $.niftyNoty({
+                type: 'success',
+                container : 'floating',
+                title : 'Exito!',
+                message : $('#success').val() ,
+                closeBtn : true,
+                timer : 5500
+            });
+        }
+
+    </script>
 </div>
 </body>
 </html>
