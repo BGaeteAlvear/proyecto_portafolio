@@ -51,12 +51,12 @@
                             <tbody>
                             <tr th:each="productAvailable, iterator : ${list_products_available}">
                                 <td data-align="center" th:text="${iterator.index + 1}"></td>
-                                <td >
-                                    <img th:if= "${#strings.length(productAvailable.product)>0}" class="img-thumbnail rounded note-float-left" style="max-width: 25%;"
+                                <td style="width: 15%">
+                                    <img th:if= "${#strings.length(productAvailable.product)>0}" class="img-thumbnail rounded note-float-left" style=" object-fit: contain;"
                                          th:src="@{'/uploads/'+ ${productAvailable.product.image}}" th:alt="${productAvailable.product.image}"/>
                                 </td>
                                 <td th:text="${productAvailable.product.name}"></td>
-                                <td th:text="${productAvailable.product.description}"></td>
+                                <td th:text="${#strings.abbreviate(productAvailable.product.description,70)}"></td>
                                 <td th:text="${productAvailable.price}">$</td>
                                 <td th:text="${productAvailable.product.category.name}"></td>
                                 <td th:text="${productAvailable.stock}"></td>

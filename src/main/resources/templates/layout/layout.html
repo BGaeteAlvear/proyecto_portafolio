@@ -27,7 +27,7 @@
         <link th:href="@{/assets/plugins/pace/pace.min.css}" rel="stylesheet">
         <script th:href="@{/assets/plugins/pace/pace.min.js}"></script>
         <!--Demo [ DEMONSTRATION ]-->
-        <link th:href="@{/assets/css/demo/nifty-demo.min.css}" rel="stylesheet">
+<!--        <link th:href="@{/assets/css/demo/nifty-demo.min.css}" rel="stylesheet">-->
 
         <!-- ICONS -->
         <link th:href="@{/assets/plugins/ionicons/css/ionicons.min.css}" rel="stylesheet">
@@ -740,6 +740,7 @@
                 <!-- Optional JavaScript -->
                 <!-- jQuery first, then Bootstrap JS -->
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
                 <!--script th:src="@{/assets/js/popper.min.js}"></script-->
 <!--                <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>-->
                 <!--Bootstrap Datepicker [ OPTIONAL ]-->
@@ -758,10 +759,10 @@
 <!--                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.min.js}"></script>-->
 <!--                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.resize.min.js}"></script>-->
 <!--                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.tooltip.min.js}"></script>-->
-                <script th:src="@{/assets/js/demo/tables-bs-table.js}"></script>
+<!--                <script th:src="@{/assets/js/demo/tables-bs-table.js}"></script>-->
 
-                <!--X-editable [ OPTIONAL ]-->
-                <script th:src="@{/assets/plugins/x-editable/js/bootstrap-editable.min.js}"></script>
+<!--                &lt;!&ndash;X-editable [ OPTIONAL ]&ndash;&gt;-->
+<!--                <script th:src="@{/assets/plugins/x-editable/js/bootstrap-editable.min.js}"></script>-->
 
                 <!--Bootstrap Table [ OPTIONAL ]-->
                 <script th:src="@{/assets/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
@@ -826,7 +827,7 @@
                         };
 
                         $('#date_expire').datepicker({
-                            format: 'dd-mm-yyyy',
+                            dateFormat: 'dd-mm-yy',
                             monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                             monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
                             dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
@@ -837,6 +838,8 @@
                             nextText: 'Sig>',
                             currentText: 'Hoy',
                         });
+
+
                         console.log($('#info').val());
                         if($('#info').val()){
                             $.niftyNoty({

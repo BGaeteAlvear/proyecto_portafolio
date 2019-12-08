@@ -64,6 +64,7 @@ public class ProductAvailableController {
         ProductAvailable pa;
         Person productor =  (Person) session.getAttribute("userSession");
         List<Product> ListProduct = productService.getAll();
+        model.addAttribute("ListProduct", ListProduct);
         if (result.hasErrors()){
             model.addAttribute("title_header", "PRODUCTOS DISPONIBLES");
             model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | PRODUCTOS DISPONIBLES");
@@ -148,7 +149,7 @@ public class ProductAvailableController {
     @GetMapping("/form/{id}")
     public String edit(@PathVariable(value = "id")Long id, Map<String, Object> model, RedirectAttributes flash){
         ProductAvailable productAvailable = null;
-        List<Product> product = productService.getAll();
+        List<Product> ListProduct = productService.getAll();
         if(id > 0){
             productAvailable = productAvailableService.findById(id);
 
@@ -160,8 +161,8 @@ public class ProductAvailableController {
             flash.addFlashAttribute("error", "El id del producto disponible no puede ser cero");
             return "redirect:/product-available/index";
         }
+        model.put("ListProduct", ListProduct);
         model.put("productAvailable", productAvailable);
-        model.put("listProduct", product);
         model.put("title_header", "Editar Producto Disponible" );
         model.put("title", "Editar producto disponible");
         return "/product-available/form";

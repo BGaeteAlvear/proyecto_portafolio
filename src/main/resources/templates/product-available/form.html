@@ -48,12 +48,12 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="product" class="col-form-label">Producto (*)</label>
-                                                <select id="product" th:field="*{product}" class="form-control select2" required >
+                                                <select id="product" th:field="*{product}" class="form-control select2 text-uppercase" required >
                                                     <option value="" selected disabled>Seleccione un Producto</option>
-                                                    <option th:each="prod : ${ListProduct}"
+                                                    <option class="text-uppercase" th:each="prod : ${ListProduct}"
                                                             th:value="${prod.id}"
                                                             th:text="${prod.name}"
-                                                            />
+                                                    ></option>
                                                 </select>
                                                 <small
                                                         class="form-text text-danger"
@@ -62,12 +62,10 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6" style="float: left">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="date_expire" class="col-form-label">Fecha de Expiración (*)</label>
-
                                                 <input th:field="*{date_expire}" id="date_expire" type="text" required class="form-control">
-
                                                 <small class="form-text text-danger"
                                                        th:if="${#fields.hasErrors('date_expire')}" th:errors="*{date_expire}"></small>
                                             </div>
@@ -93,17 +91,17 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="sale_type" class="col-form-label">Tipo Venta (*)</label>
-                                                <select id="sale_type" th:field="*{saleType}" class="form-control select2" required >
-                                                    <option value="" selected disabled>Seleccione Tipo</option>
-                                                    <option value="EXTERNA" >EXTERNA</option>
-                                                    <option value="INTERNA" >INTERNA</option>
-                                                </select>
-                                                <small th:if="${#fields.hasErrors('saleType')}" th:errors="*{saleType}"></small>
-                                            </div>
-                                        </div>
+<!--                                        <div class="col-md-6">-->
+<!--                                            <div class="form-group">-->
+<!--                                                <label for="sale_type" class="col-form-label">Tipo Venta (*)</label>-->
+<!--                                                <select id="sale_type" th:field="*{saleType}" class="form-control select2" required >-->
+<!--                                                    <option value="" selected disabled>Seleccione Tipo</option>-->
+<!--                                                    <option value="EXTERNA" >EXTERNA</option>-->
+<!--                                                    <option value="INTERNA" >INTERNA</option>-->
+<!--                                                </select>-->
+<!--                                                <small th:if="${#fields.hasErrors('saleType')}" th:errors="*{saleType}"></small>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
 
                                         <div class="col-sm-6">
                                             <div class="form-group">
