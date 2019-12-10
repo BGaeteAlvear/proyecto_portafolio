@@ -77,6 +77,9 @@ public class Person implements Serializable {
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PurchaseOrder> list;
 
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Postulation> listPostulation;
+
     public Person(){
         this.enabled = true;
         this.passwordRecovery = 1;

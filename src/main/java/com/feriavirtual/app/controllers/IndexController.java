@@ -29,11 +29,13 @@ public class IndexController {
                          HttpServletRequest request, Model model, HttpSession session){
         logger.info("Entra en IndexController");
         Person person = null;
+        System.out.println("entra a la clase =========================================");
         // Datos Usuario
         try{
             User user2 = (User) authentication.getPrincipal();
             person = personService.findByUsername(user2.getUsername());
             session.setAttribute("userSession", person);
+            System.out.println("USER "+person.getId());
         }catch (Exception ex){
             System.out.println(ex.getMessage());
         }
@@ -45,7 +47,7 @@ public class IndexController {
         Person dataUser = (Person) session.getAttribute("userSession");
         /* DATOS USER */
         model.addAttribute("user", authentication);
-        model.addAttribute("userSession", dataUser.getId());
+//        model.addAttribute("userSession", dataUser.getId());
 
 
         return "home/index";

@@ -25,13 +25,13 @@ public class PurchaseOrder implements Serializable {
 
     // CLIENTE
     @NotNull
-    private int customer_id;
+    private Long customer_id;
     @NotNull
     private String customer_type; //INTERNO /EXTERNO
 
     // PRODUCTO
     @NotNull
-    private int product_id;
+    private Long product_id;
     @NotNull
     private int quantity_order;
     @NotNull
@@ -47,10 +47,10 @@ public class PurchaseOrder implements Serializable {
     private String description;
 
     //PRODUCTOR
-    private int prod_public_tender_id;
+    private Long prod_public_tender_id;
 
     //TRANSPORTISTA
-    private int trans_public_tender_id;
+    private Long trans_public_tender_id;
 
     //DATOS ADUANA
     private double aduana;

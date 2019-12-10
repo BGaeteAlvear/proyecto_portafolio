@@ -36,15 +36,15 @@
                                     <div class="col-12">
                                         <p class="mb-2" th:text="${product.description}"></p>
                                         <hr>
-                                        <form id="new_order" th:action="@{/purchase-orders/form}" th:object="${purchaseOrder}" method="post" enctype="multipart/form-data">
+                                        <form id="new_order" th:action="@{/purchase-order/form}" th:object="${purchaseOrder}" method="post" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label for="unity_order" class="col-form-label">Unidad *</label>
-                                                        <select id="unity_order" th:field="*{unity_order}" name="unity_order" class="form-control" required>
+                                                        <label class="col-form-label">Unidad *</label>
+                                                        <select class="form-control" required>
                                                             <option value="" selected disabled>Seleccione Unidad
                                                             </option>
-                                                            <option value="1">KG</option>
+                                                            <option value="KG">KG</option>
                                                         </select>
                                                         <small class="form-text text-danger"></small>
                                                     </div>
@@ -56,8 +56,8 @@
                                                         <div class="number-spinner">
                                                             <span class="ns-btn"><a data-dir="dwn"><span
                                                                     class="icon-minus"></span></a></span>
-                                                            <input type="text" th:field="*{quantity_order}" name="quantity_order" id="quantity_order"
-                                                                   class="pl-ns-value" min="100" value="1" maxlength=200>
+                                                            <input type="text"  name="quantity_order" id="quantity"
+                                                                   class="pl-ns-value" min="100" th:field="*{quantity_order}"  maxlength=200>
                                                             <span class="ns-btn"><a data-dir="up"><span
                                                                     class="icon-plus"></span></a></span>
                                                         </div>

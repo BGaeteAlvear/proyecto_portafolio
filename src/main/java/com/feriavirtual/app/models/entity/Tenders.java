@@ -22,10 +22,10 @@ public class Tenders implements Serializable {
     private int status; // 1 active / 2 finished
 
     @NotNull
-    private int purchaseOrderId;
+    private Long purchaseOrderId;
 
     @NotNull
-    private int postulationId;
+    private Long postulationId;
 
     @NotNull
     private int tendersType;  // 1 productor  / 2 transportista

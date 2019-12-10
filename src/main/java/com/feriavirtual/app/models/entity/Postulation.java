@@ -18,7 +18,10 @@ public class Postulation implements Serializable {
     private Long id;
 
     @NotNull
-    private int tenderId;
+    private Long tenderId;
+
+    @NotNull
+    private Long person_id;
 
     @NotNull
     private int amount;
@@ -38,5 +41,8 @@ public class Postulation implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Tenders tenders;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Person person;
     
 }
