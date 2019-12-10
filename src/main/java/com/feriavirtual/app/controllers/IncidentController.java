@@ -41,6 +41,7 @@ public class IncidentController {
     @GetMapping("/index")
     public String index(Model model, HttpSession session){
         Person person = (Person) session.getAttribute("userSession");
+        logger.info(String.valueOf(person.getId()));
         List<Incident> list = new ArrayList<>();
         if (person.getRole().getId() == 1) {
             list = incidentService.getIncidentsNotAssigned(person.getId());

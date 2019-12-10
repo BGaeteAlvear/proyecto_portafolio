@@ -53,7 +53,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().permitAll()
         ; */
 
-        http.authorizeRequests().antMatchers("/assets/**", "/css/**", "/js/**", "/images/**", "/profile/**").permitAll()
+        http.authorizeRequests().antMatchers("/assets/**", "/css/**", "/js/**", "/images/**", "/profile/**", "/api/purchase-order/**", "/api/purchase-order-location/**").permitAll()
                 /*.antMatchers("/ver/**").hasAnyRole("USER")*/
                 /*.antMatchers("/uploads/**").hasAnyRole("USER")*/
                 /*.antMatchers("/form/**").hasAnyRole("ADMIN")*/
@@ -62,7 +62,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/product/**").permitAll()
                 .antMatchers("/category/**").permitAll()
                 .antMatchers("/transport/**").hasAnyAuthority("ADMIN", "TRANSPORTISTA")
-                .antMatchers("/incident/**").hasAnyAuthority("EXTERNO", "ADMIN")
+//                .antMatchers("/incident/**").hasAnyAuthority("EXTERNO", "ADMIN")
                 .antMatchers("/person/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/product-available/**").permitAll()
                 .anyRequest().authenticated()
