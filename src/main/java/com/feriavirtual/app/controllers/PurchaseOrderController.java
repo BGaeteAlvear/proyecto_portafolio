@@ -46,7 +46,6 @@ public class PurchaseOrderController {
     private final IProductService productService;
     private final IPurchaseOrderService purchaseOrderService;
     private final ICategoryService categoryService;
-    private final IPurchaseOrderService purchaseOrderService;
     private final Logger log= LoggerFactory.getLogger(getClass());
 
 
@@ -54,7 +53,6 @@ public class PurchaseOrderController {
         this.productService = productService;
         this.purchaseOrderService = purchaseOrderService;
         this.categoryService = categoryService;
-        this.purchaseOrderService = purchaseOrderService;
     }
 
 

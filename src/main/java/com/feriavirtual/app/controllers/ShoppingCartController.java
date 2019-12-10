@@ -4,6 +4,7 @@ import com.feriavirtual.app.models.entity.*;
 import com.feriavirtual.app.models.repository.IPurchaseOrderRepository;
 import com.feriavirtual.app.models.service.*;
 import jdk.nashorn.internal.runtime.options.LoggingOption;
+import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,16 +66,35 @@ public class ShoppingCartController {
 
         PurchaseOrder purchaseOrder = new PurchaseOrder();
         Product product = productService.findById(id);
+
+        System.out.println(product);
         Person customer =  (Person) session.getAttribute("userSession");
         String type = "externo";
-        Person person = personService.findById(customer.getId());
-        System.out.println(person);
+
+        Person customerUser =  new Person();
+        customerUser.setId(customer.getId());
+        customerUser.setUsername(customer.getUsername());
+        customerUser.setName(customer.getName());
+//        customerUser.setRole(customer.getRole());
+        customerUser.setEmail(customer.getEmail());
+        customerUser.setLastName(customer.getLastName());
+        customerUser.setVeryLastName(customer.getVeryLastName());
+        customerUser.setCity(customer.getCity());
+        customerUser.setBirthDate(customer.getBirthDate());
+//        User user2 = (User) authentication.getPrincipal();
+//        customerUser.setAuthority(user2.);
+        customerUser.setAddress(customer.getAddress());
+        customerUser.setCommercialAddress(customer.getCommercialAddress());
+        customerUser.setCompanyName(customer.getCompanyName());
+
         purchaseOrder.setCustomer_type(type);
         purchaseOrder.setProduct_id(product.getId());
         purchaseOrder.setProduct(product);
-        purchaseOrder.setPerson(person);
+        purchaseOrder.setPerson(customerUser);
         purchaseOrder.setUnity_order(1);
-        purchaseOrder.setCustomer_id(customer.getId());
+        purchaseOrder.setCustomer_id(customerUser.getId());
+
+//        System.out.println(purchaseOrder);
 
         model.addAttribute("title_header", "TIENDA DE PRODUCTOS");
         model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | "+product.getName().toUpperCase());
