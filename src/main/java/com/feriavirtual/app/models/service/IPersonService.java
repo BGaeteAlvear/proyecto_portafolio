@@ -3,6 +3,8 @@ package com.feriavirtual.app.models.service;
 import com.feriavirtual.app.models.entity.Authority;
 import com.feriavirtual.app.models.entity.Person;
 import com.feriavirtual.app.models.entity.Role;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -23,5 +25,7 @@ public interface IPersonService {
     Authority findAuthorityById(Long id);
     Authority findAuthorityByName (String name);
 
+    Person findPersonByIdParams(Long id);
+    Person getById(Long id);
 
 }

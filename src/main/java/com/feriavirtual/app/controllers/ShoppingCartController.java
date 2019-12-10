@@ -67,34 +67,23 @@ public class ShoppingCartController {
         PurchaseOrder purchaseOrder = new PurchaseOrder();
         Product product = productService.findById(id);
 
-        System.out.println(product);
+        System.out.println(product.getName());
+
         Person customer =  (Person) session.getAttribute("userSession");
         String type = "externo";
 
-        Person customerUser =  new Person();
-        customerUser.setId(customer.getId());
-        customerUser.setUsername(customer.getUsername());
-        customerUser.setName(customer.getName());
-//        customerUser.setRole(customer.getRole());
-        customerUser.setEmail(customer.getEmail());
-        customerUser.setLastName(customer.getLastName());
-        customerUser.setVeryLastName(customer.getVeryLastName());
-        customerUser.setCity(customer.getCity());
-        customerUser.setBirthDate(customer.getBirthDate());
-//        User user2 = (User) authentication.getPrincipal();
-//        customerUser.setAuthority(user2.);
-        customerUser.setAddress(customer.getAddress());
-        customerUser.setCommercialAddress(customer.getCommercialAddress());
-        customerUser.setCompanyName(customer.getCompanyName());
+        Person p2 = personService.getById(customer.getId());
+
+        System.out.println(p2.getName());
 
         purchaseOrder.setCustomer_type(type);
         purchaseOrder.setProduct_id(product.getId());
         purchaseOrder.setProduct(product);
-        purchaseOrder.setPerson(customerUser);
         purchaseOrder.setUnity_order(1);
-        purchaseOrder.setCustomer_id(customerUser.getId());
+        purchaseOrder.setPerson(customer);
+        purchaseOrder.setCustomer_id(customer.getId());
 
-//        System.out.println(purchaseOrder);
+        System.out.println("ORDER PERSON : "+ purchaseOrder.getPerson().getName());
 
         model.addAttribute("title_header", "TIENDA DE PRODUCTOS");
         model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | "+product.getName().toUpperCase());

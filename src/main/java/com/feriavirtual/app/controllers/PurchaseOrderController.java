@@ -60,7 +60,7 @@ public class PurchaseOrderController {
     public String index (Model model){
         List<Product> listProducts = productService.getAll();
         /* DATOS TEMPLATE */
-        model.addAttribute("title_header", "ORDER DE COMPRA");
+        model.addAttribute("title_header", "ORDER DE COMPRA Nª#00012");
         model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | ORDEN DE COMPRA");
         model.addAttribute("subtitle_header", "DETALLE DE ORDEN DE COMPRA");
 
@@ -70,7 +70,10 @@ public class PurchaseOrderController {
 
     @PostMapping("/form")
    public String  store(@Valid PurchaseOrder purchaseOrder, Model model){
-        purchaseOrderService.save(purchaseOrder);
+        System.out.println(" ============================================================= ");
+        System.out.println(purchaseOrder);
+        System.out.println(" ============================================================= ");
+//        purchaseOrderService.save(purchaseOrder);
         List<PurchaseOrder> listOrders = purchaseOrderService.getAll();
         model.addAttribute("listOrders", listOrders);
         return "redirect:/purchase-order/index";

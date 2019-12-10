@@ -20,21 +20,17 @@ public class PurchaseOrder implements Serializable {
 
     //PURCHASE_ORDER
     private Long id;
-    @NotNull
     private int status;  // 1 ACEPTADA, 2 EN LICITACION , 3 LICITACIONES ACEPTADAS , 4 RECEPCIONADO EN BODEGA, 5 EN TRANSITO , 6 RECEPCIONADO, 7 FINALIZADO
 
     // CLIENTE
-    @NotNull
     private Long customer_id;
-    @NotNull
     private String customer_type; //INTERNO /EXTERNO
 
     // PRODUCTO
-    @NotNull
     private Long product_id;
-    @NotNull
+
     private int quantity_order;
-    @NotNull
+
     private int unity_order;
 
     @Column(name = "created_at")
@@ -42,7 +38,6 @@ public class PurchaseOrder implements Serializable {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date createdAt;
 
-    @NotEmpty
     @Lob
     private String description;
 

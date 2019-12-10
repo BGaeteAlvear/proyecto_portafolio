@@ -126,33 +126,33 @@ public class PersonController {
                    //  aca tengo q cambiar de la persona el authoriti
 
                 }
-                /*
-            if (person.getUsername() != null && person.getPassword() != null){
-                Usuario usuario = new Usuario();
-                Authority authority = new Authority();
-               try{
-                   usuario.setUserName(person.getUsername());
-                   usuario.setPassword(passwordEncoder.encode(person.getPassword()));
-                   usuario.setEnabled(false);
-
-                   authority.setAuthority("por asignar");
-                   usuario.getAuthorities().add(authority);
-                   System.out.println("-- Usuario antes de grabar" + usuario.toString());
-                   System.out.println("-- authority antes de grabar" + authority.toString());
-                   try{
-                       System.out.println("-- Entra al try" + usuario.toString());
-
-                       usuarioService.saveAuthority(authority);
-                       usuarioService.save(usuario);
-                   }catch (RuntimeException e){
-                       System.out.println("-- RuntimeException: "  + e.toString());
-                   }
-
-                   System.out.println("- Usuario creado con exito");
-               }catch (Exception e){
-                   System.out.println("-- Person Controller - guardar usuario Error : " + e.toString());
-               }
-            } */
+//                /*
+//            if (person.getUsername() != null && person.getPassword() != null){
+//                Usuario usuario = new Usuario();
+//                Authority authority = new Authority();
+//               try{
+//                   usuario.setUserName(person.getUsername());
+//                   usuario.setPassword(passwordEncoder.encode(person.getPassword()));
+//                   usuario.setEnabled(false);
+//
+//                   authority.setAuthority("por asignar");
+//                   usuario.getAuthorities().add(authority);
+//                   System.out.println("-- Usuario antes de grabar" + usuario.toString());
+//                   System.out.println("-- authority antes de grabar" + authority.toString());
+//                   try{
+//                       System.out.println("-- Entra al try" + usuario.toString());
+//
+//                       usuarioService.saveAuthority(authority);
+//                       usuarioService.save(usuario);
+//                   }catch (RuntimeException e){
+//                       System.out.println("-- RuntimeException: "  + e.toString());
+//                   }
+//
+//                   System.out.println("- Usuario creado con exito");
+//               }catch (Exception e){
+//                   System.out.println("-- Person Controller - guardar usuario Error : " + e.toString());
+//               }
+//            } */
             try{
                 System.out.println("++ Person: " + person.toString());
                 personService.save(person);
