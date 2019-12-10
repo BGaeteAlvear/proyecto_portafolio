@@ -4,7 +4,6 @@ import com.feriavirtual.app.models.entity.Category;
 import com.feriavirtual.app.models.entity.Product;
 import com.feriavirtual.app.models.service.ICategoryService;
 import com.feriavirtual.app.models.service.IProductService;
-import com.feriavirtual.app.models.service.IPurchaseOrderService;
 import com.feriavirtual.app.models.service.IUploadFileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,18 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 
 /*
@@ -49,7 +41,7 @@ public class PurchaseOrderController {
 
 
 
-    private final IPurchaseOrderService productService;
+    private final IProductService productService;
     private final ICategoryService categoryService;
     private final Logger log= LoggerFactory.getLogger(getClass());
 
@@ -60,6 +52,7 @@ public class PurchaseOrderController {
         this.productService = productService;
         this.categoryService = categoryService;
     }
+
 
     @GetMapping("/index")
     public String index (Model model){
