@@ -1,9 +1,9 @@
 package com.feriavirtual.app.models.entity;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.xml.soap.Text;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +42,9 @@ public class Product implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     public Category category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private OrdenCompra ordenCompra;
+
     public Product(){
        this.status = true;
      }
@@ -73,6 +76,6 @@ public class Product implements Serializable {
     }
 
     @OneToMany(mappedBy = "product" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<PurchaseOrder> listPurchaseOrders;
+    private List<PurchaseOrder> purchaseOrderList;
 
 }

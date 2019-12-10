@@ -35,5 +35,8 @@ public class Postulation implements Serializable {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Tenders tenders;
     
 }

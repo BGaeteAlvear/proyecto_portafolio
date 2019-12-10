@@ -60,8 +60,14 @@ public class PurchaseOrder implements Serializable {
     //GANANCIAS
     private double gain;
 
-    @OneToMany(mappedBy = "purchase_order" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "purchaseOrder" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Tenders> listTenders;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Product product;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Person person;
 
     public PurchaseOrder() {
         this.status = 1;

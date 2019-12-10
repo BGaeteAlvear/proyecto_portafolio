@@ -3,7 +3,6 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
@@ -41,7 +40,10 @@ public class Tenders implements Serializable {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date expirateDate;
 
-    @OneToMany(mappedBy = "tender" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tenders" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Postulation> listPostulations;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private PurchaseOrder purchaseOrder;
 
 }
