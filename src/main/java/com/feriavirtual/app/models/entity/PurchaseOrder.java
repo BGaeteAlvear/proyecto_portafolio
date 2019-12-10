@@ -23,7 +23,6 @@ public class PurchaseOrder implements Serializable {
     @NotNull
     private int status;  // 1 ACEPTADA, 2 EN LICITACION , 3 LICITACIONES ACEPTADAS , 4 RECEPCIONADO EN BODEGA, 5 EN TRANSITO , 6 RECEPCIONADO, 7 FINALIZADO
 
-
     // CLIENTE
     @NotNull
     private int customer_id;

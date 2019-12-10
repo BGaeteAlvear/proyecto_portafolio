@@ -1,9 +1,11 @@
 package com.feriavirtual.app.controllers;
 
 import com.feriavirtual.app.models.entity.*;
+import com.feriavirtual.app.models.repository.IPurchaseOrderRepository;
 import com.feriavirtual.app.models.service.ICategoryService;
 import com.feriavirtual.app.models.service.IProductAvailableService;
 import com.feriavirtual.app.models.service.IProductService;
+import com.feriavirtual.app.models.service.IPurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,8 @@ public class ShoppingCartController {
     private ICategoryService categoryService;
     @Autowired
     private IProductService productService;
+    @Autowired
+    private IPurchaseOrderService purchaseOrderService;
 
     @GetMapping("/index")
     public String index (Model model, HttpSession session){
@@ -55,22 +59,15 @@ public class ShoppingCartController {
 
     @GetMapping("/product/detail/{id}")
     public String productDetail (@PathVariable(value = "id")Long id,Model model, HttpSession session){
+        PurchaseOrder purchaseOrder = new PurchaseOrder();
         Product product = productService.findById(id);
         model.addAttribute("title_header", "TIENDA DE PRODUCTOS");
         model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | "+product.getName().toUpperCase());
         model.addAttribute("subtitle_header","PRODUCTOS  / "+product.category.getName().toUpperCase()+" / "+product.getName().toUpperCase());
         model.addAttribute("product", product);
+        model.addAttribute("purchaseOrder", purchaseOrder);
         return "/shopping-cart/detail";
     }
 
-    @PostMapping("/product/request/order-process")
-    public String orderValidation(@PathVariable(value = "id")Long id, BindingResult result, Model model){
-        Product product = productService.findById(id);
-        model.addAttribute("title_header", "TIENDA DE PRODUCTOS");
-        model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | "+product.getName().toUpperCase());
-        model.addAttribute("subtitle_header","PRODUCTOS  / "+product.category.getName().toUpperCase()+" / "+product.getName().toUpperCase());
-        model.addAttribute("product", product);
-        return "/shopping-cart/detail";
-    }
 
 }

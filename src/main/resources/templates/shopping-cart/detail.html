@@ -36,15 +36,15 @@
                                     <div class="col-12">
                                         <p class="mb-2" th:text="${product.description}"></p>
                                         <hr>
-                                        <form id="new_order" action="">
+                                        <form id="new_order" th:action="@{/purchase-orders/form}" th:object="${purchaseOrder}" method="post" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label for="unity" class="col-form-label">Unidad *</label>
-                                                        <select id="unity" name="unity" class="form-control" required>
+                                                        <label for="unity_order" class="col-form-label">Unidad *</label>
+                                                        <select id="unity_order" th:field="*{unity_order}" name="unity_order" class="form-control" required>
                                                             <option value="" selected disabled>Seleccione Unidad
                                                             </option>
-                                                            <option value="kg">KG</option>
+                                                            <option value="1">KG</option>
                                                         </select>
                                                         <small class="form-text text-danger"></small>
                                                     </div>
@@ -56,8 +56,8 @@
                                                         <div class="number-spinner">
                                                             <span class="ns-btn"><a data-dir="dwn"><span
                                                                     class="icon-minus"></span></a></span>
-                                                            <input type="text" name="quantity" id="quantity"
-                                                                   class="pl-ns-value" value="1" maxlength=200>
+                                                            <input type="text" th:field="*{quantity_order}" name="quantity_order" id="quantity_order"
+                                                                   class="pl-ns-value" min="100" value="1" maxlength=200>
                                                             <span class="ns-btn"><a data-dir="up"><span
                                                                     class="icon-plus"></span></a></span>
                                                         </div>
@@ -66,8 +66,8 @@
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <textarea name="description" class="form-control" id=""
-                                                                  cols="30" rows="10"></textarea>
+                                                        <textarea name="description" maxlength="500" th:field="*{description}" class="form-control" id=""
+                                                                  cols="30" rows="3"></textarea>
                                                     </div>
                                                 </div>
 
@@ -103,7 +103,8 @@
 
 <script>
 
-    $('#nextStep').click(function () {
+    $('#nextStep').click(function (e) {
+        e.preventDefault();
         swal({
             title: "Crear Orden de compra?",
             text: "Desea solicitar el producto seleccionado",
