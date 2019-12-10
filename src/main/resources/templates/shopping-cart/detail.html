@@ -36,13 +36,14 @@
                                     <div class="col-12">
                                         <p class="mb-2" th:text="${product.description}"></p>
                                         <hr>
-                                        <form action="">
+                                        <form id="new_order" action="">
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="unity" class="col-form-label">Unidad *</label>
-                                                        <select id="unity" name="unity" class="form-control" required >
-                                                            <option value="" selected disabled>Seleccione Unidad</option>
+                                                        <select id="unity" name="unity" class="form-control" required>
+                                                            <option value="" selected disabled>Seleccione Unidad
+                                                            </option>
                                                             <option value="kg">KG</option>
                                                         </select>
                                                         <small class="form-text text-danger"></small>
@@ -53,15 +54,27 @@
                                                     <div class="form-group">
                                                         <label for="quantity" class="col-form-label">Cantidad</label>
                                                         <div class="number-spinner">
-                                                            <span class="ns-btn"><a data-dir="dwn"><span class="icon-minus"></span></a></span>
-                                                            <input type="text" name="quantity" id="quantity" class="pl-ns-value" value="1" maxlength=200>
-                                                            <span class="ns-btn"><a data-dir="up"><span class="icon-plus"></span></a></span>
+                                                            <span class="ns-btn"><a data-dir="dwn"><span
+                                                                    class="icon-minus"></span></a></span>
+                                                            <input type="text" name="quantity" id="quantity"
+                                                                   class="pl-ns-value" value="1" maxlength=200>
+                                                            <span class="ns-btn"><a data-dir="up"><span
+                                                                    class="icon-plus"></span></a></span>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <button type="submit" class="btn btn-warning btn-rounded"><i class="fa fa-cart-plus"></i> SOLICITAR PRODUCTO</button>
+                                                    <div class="form-group">
+                                                        <textarea name="description" class="form-control" id=""
+                                                                  cols="30" rows="10"></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <button id="nextStep" class="btn btn-warning btn-rounded"><i
+                                                            class="fa fa-cart-plus"></i> SOLICITAR PRODUCTO
+                                                    </button>
                                                 </div>
                                             </div>
                                         </form>
@@ -86,5 +99,33 @@
     <footer th:replace="layout/layout :: footer"></footer>
 
 </div>
+
+
+<script>
+
+    $('#nextStep').click(function () {
+        swal({
+            title: "Crear Orden de compra?",
+            text: "Desea solicitar el producto seleccionado",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-primary",
+            cancelButtonClass: "btn-danger",
+            confirmButtonText: "Si, Solicitar",
+            cancelButtonText: "No, Cancelar",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                swal("Orden de Compra Creada!", "te enviamos un correo con el detalle de tu compra.", "success");
+                $('#new_order').submit();
+            } else {
+                swal("Cancelado", "Operación ha sido cancelada correctamente", "error");
+            }
+        });
+    });
+
+</script>
 </body>
 </html>
