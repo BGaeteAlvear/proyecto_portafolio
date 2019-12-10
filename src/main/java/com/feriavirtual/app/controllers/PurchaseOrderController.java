@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -82,8 +83,7 @@ public class PurchaseOrderController {
 
         String type = "externo";
 
-
-
+        purchaseOrder.setCreatedAt(new Date());
 
         purchaseOrder.setProd_public_tender_id(1l);
         purchaseOrder.setTrans_public_tender_id(2l);
@@ -102,10 +102,6 @@ public class PurchaseOrderController {
 
 
         purchaseOrderService.save(purchaseOrder);
-        List<PurchaseOrder> listOrders = purchaseOrderService.getAll();
-        model.addAttribute("listOrders", listOrders);
-
-
 
         session.removeAttribute("producto");
         return "redirect:/purchase-order/index";
@@ -152,9 +148,11 @@ public class PurchaseOrderController {
     @GetMapping("/index")
     public String index2(@Valid Product product, @Valid PurchaseOrder purchaseOrder,  Model model)
     {
-        List<Product> listProducts = productService.getAll();
+        List<PurchaseOrder> listOrders = purchaseOrderService.getAll();
+        model.addAttribute("listOrders", listOrders);
+
         /* DATOS TEMPLATE */
-        model.addAttribute("title_header", "ORDER DE COMPRA Nª#00012");
+        model.addAttribute("title_header", "LISTA DE COMPRA");
         model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | ORDEN DE COMPRA");
         model.addAttribute("subtitle_header", "DETALLE DE ORDEN DE COMPRA");
 
