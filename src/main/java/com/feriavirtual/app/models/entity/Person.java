@@ -1,15 +1,12 @@
 package com.feriavirtual.app.models.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -76,6 +73,9 @@ public class Person implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Authority authority;
+
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<PurchaseOrder> list;
 
     public Person(){
         this.enabled = true;
