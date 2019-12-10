@@ -3,7 +3,6 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -19,10 +18,9 @@ public class Product implements Serializable {
     @SequenceGenerator(name = "SEQ_PRODUCTS",allocationSize = 1,sequenceName = "SEQ_PRODUCTS")
 
     private Long id;
-    @NotEmpty
+
     private String name;
 
-    @NotEmpty
     @Lob
     private String description;
 

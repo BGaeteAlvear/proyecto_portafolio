@@ -52,7 +52,14 @@ public class PersonServiceImpl implements IPersonService {
 
     @Override
     public Person findByUsername(String username) {
-        return personRepository.findByUsername(username);
+       return personRepository.findByUsername(username);
+   //     return personRepository.findByUsernameIs(username);
+    }
+
+    @Override
+    public Person buscarPorUsuario(String username) {
+      //  return personRepository.buscarPorUsuario(username);
+        return null;
     }
 
     @Override

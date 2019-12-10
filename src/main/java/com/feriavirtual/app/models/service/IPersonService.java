@@ -17,6 +17,7 @@ public interface IPersonService {
     Person findByUsername(String username);
 
 
+    Person buscarPorUsuario(String username);
 
     List<Role> getAllRoles();
     Role saveRoles(Role role);

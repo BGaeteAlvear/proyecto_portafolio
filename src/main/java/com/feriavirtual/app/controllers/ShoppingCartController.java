@@ -1,22 +1,19 @@
 package com.feriavirtual.app.controllers;
 
-import com.feriavirtual.app.models.entity.*;
-import com.feriavirtual.app.models.repository.IPurchaseOrderRepository;
+import com.feriavirtual.app.models.entity.Category;
+import com.feriavirtual.app.models.entity.Person;
+import com.feriavirtual.app.models.entity.Product;
+import com.feriavirtual.app.models.entity.PurchaseOrder;
 import com.feriavirtual.app.models.service.*;
-import jdk.nashorn.internal.runtime.options.LoggingOption;
-import org.apache.catalina.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -69,21 +66,11 @@ public class ShoppingCartController {
 
         System.out.println(product.getName());
 
-        Person customer =  (Person) session.getAttribute("userSession");
-        String type = "externo";
+        session.setAttribute("producto", product);
 
-        Person p2 = personService.getById(customer.getId());
 
-        System.out.println(p2.getName());
 
-        purchaseOrder.setCustomer_type(type);
-        purchaseOrder.setProduct_id(product.getId());
-        purchaseOrder.setProduct(product);
-        purchaseOrder.setUnity_order(1);
-        purchaseOrder.setPerson(customer);
-        purchaseOrder.setCustomer_id(customer.getId());
-
-        System.out.println("ORDER PERSON : "+ purchaseOrder.getPerson().getName());
+//        System.out.println("ORDER PERSON : "+ purchaseOrder.getPerson().getName());
 
         model.addAttribute("title_header", "TIENDA DE PRODUCTOS");
         model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | "+product.getName().toUpperCase());

@@ -1,21 +1,21 @@
 package com.feriavirtual.app.controllers;
 
 import com.feriavirtual.app.models.entity.Category;
+import com.feriavirtual.app.models.entity.Person;
 import com.feriavirtual.app.models.entity.Product;
 import com.feriavirtual.app.models.entity.PurchaseOrder;
 import com.feriavirtual.app.models.service.ICategoryService;
+import com.feriavirtual.app.models.service.IPersonService;
 import com.feriavirtual.app.models.service.IProductService;
 import com.feriavirtual.app.models.service.IPurchaseOrderService;
-import com.feriavirtual.app.models.service.IUploadFileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -46,13 +46,15 @@ public class PurchaseOrderController {
     private final IProductService productService;
     private final IPurchaseOrderService purchaseOrderService;
     private final ICategoryService categoryService;
+    private final IPersonService personService;
     private final Logger log= LoggerFactory.getLogger(getClass());
 
 
-    public PurchaseOrderController(IProductService productService, ICategoryService categoryService, IPurchaseOrderService purchaseOrderService) {
+    public PurchaseOrderController(IProductService productService, ICategoryService categoryService, IPurchaseOrderService purchaseOrderService, IPersonService personService) {
         this.productService = productService;
         this.purchaseOrderService = purchaseOrderService;
         this.categoryService = categoryService;
+        this.personService = personService;
     }
 
 
@@ -69,13 +71,43 @@ public class PurchaseOrderController {
 
 
     @PostMapping("/form")
-   public String  store(@Valid PurchaseOrder purchaseOrder, Model model){
+   public String  store(@Valid PurchaseOrder purchaseOrder, Model model, HttpSession session){
         System.out.println(" ============================================================= ");
         System.out.println(purchaseOrder);
         System.out.println(" ============================================================= ");
-//        purchaseOrderService.save(purchaseOrder);
+
+        Person customer =  (Person) session.getAttribute("userSession");
+
+        Product product = (Product) session.getAttribute("producto");
+
+        String type = "externo";
+
+
+
+
+        purchaseOrder.setProd_public_tender_id(1l);
+        purchaseOrder.setTrans_public_tender_id(2l);
+
+
+        Person p2 = personService.getById(customer.getId());
+
+        System.out.println(p2.getName());
+
+        purchaseOrder.setCustomer_type(type);
+        purchaseOrder.setProduct_id(product.getId());
+        purchaseOrder.setProduct(product);
+        purchaseOrder.setUnity_order(1);
+        purchaseOrder.setPerson(customer);
+        purchaseOrder.setCustomer_id(customer.getId());
+
+
+        purchaseOrderService.save(purchaseOrder);
         List<PurchaseOrder> listOrders = purchaseOrderService.getAll();
         model.addAttribute("listOrders", listOrders);
+
+
+
+        session.removeAttribute("producto");
         return "redirect:/purchase-order/index";
     }
 
@@ -117,5 +149,17 @@ public class PurchaseOrderController {
     }
 
 
+    @GetMapping("/index")
+    public String index2(@Valid Product product, @Valid PurchaseOrder purchaseOrder,  Model model)
+    {
+        List<Product> listProducts = productService.getAll();
+        /* DATOS TEMPLATE */
+        model.addAttribute("title_header", "ORDER DE COMPRA Nª#00012");
+        model.addAttribute("title_page", "PLATAFORMA MAIPO GRANDE | ORDEN DE COMPRA");
+        model.addAttribute("subtitle_header", "DETALLE DE ORDEN DE COMPRA");
+
+        System.out.println("esa funcionando");
+        return "/purchase-order/index";
+    }
 
 }

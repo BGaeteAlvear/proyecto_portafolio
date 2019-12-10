@@ -1,9 +1,7 @@
 package com.feriavirtual.app.models.service;
 
 
-import com.feriavirtual.app.models.entity.Authority;
 import com.feriavirtual.app.models.entity.Person;
-import com.feriavirtual.app.models.entity.Role;
 import com.feriavirtual.app.models.entity.Usuario;
 import com.feriavirtual.app.models.repository.IPersonRepository;
 import com.feriavirtual.app.models.repository.IUsuarioRepository;
@@ -19,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +42,8 @@ public class JpaUserDetailsService implements UserDetailsService {
         } */
 
         Person person = personRepository.findByUsername(userName);
+        System.out.println("aca funciona la cagada !!! ");
+        System.out.println("--- Person" + person.toString());
 
         if (person == null) {
             logger.error("Error login");
