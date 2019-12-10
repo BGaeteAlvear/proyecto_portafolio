@@ -2,8 +2,10 @@ package com.feriavirtual.app.controllers;
 
 import com.feriavirtual.app.models.entity.Category;
 import com.feriavirtual.app.models.entity.Product;
+import com.feriavirtual.app.models.entity.PurchaseOrder;
 import com.feriavirtual.app.models.service.ICategoryService;
 import com.feriavirtual.app.models.service.IProductService;
+import com.feriavirtual.app.models.service.IPurchaseOrderService;
 import com.feriavirtual.app.models.service.IUploadFileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,14 +45,16 @@ public class PurchaseOrderController {
 
     private final IProductService productService;
     private final ICategoryService categoryService;
+    private final IPurchaseOrderService purchaseOrderService;
     private final Logger log= LoggerFactory.getLogger(getClass());
 
     @Autowired
     private IUploadFileService uploadFileService;
 
-    public PurchaseOrderController(IProductService productService, ICategoryService categoryService) {
+    public PurchaseOrderController(IProductService productService, ICategoryService categoryService, IPurchaseOrderService purchaseOrderService) {
         this.productService = productService;
         this.categoryService = categoryService;
+        this.purchaseOrderService = purchaseOrderService;
     }
 
 
@@ -148,6 +152,17 @@ public class PurchaseOrderController {
         model.put("title_header", "Editar Producto");
         model.put("title", "Editar producto");
         return "/product/form";
+    }
+
+    // este es el controlador brian
+    @GetMapping("/purchaseOrderByUserId/{id}")
+    public String purchaseOrderByUserId(@PathVariable(value = "id")Long id, Model model){
+
+        List<PurchaseOrder> list =  purchaseOrderService.getPurchaseOrderByPersonId(id);
+
+        model.addAttribute("lista_ordenes" , list);
+
+        return "/purchase-order/index";
     }
 
 
