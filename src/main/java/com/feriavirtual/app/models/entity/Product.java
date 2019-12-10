@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.xml.soap.Text;
 import java.io.Serializable;
 import java.util.Date;
-
+import java.util.List;
 
 
 @Entity
@@ -71,5 +71,8 @@ public class Product implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    @OneToMany(mappedBy = "product" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<PurchaseOrder> listPurchaseOrders;
 
 }

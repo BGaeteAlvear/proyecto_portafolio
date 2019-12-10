@@ -16,8 +16,8 @@ public class ProductAvailable implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_PRODUCTS_AVAILABLE")
     @SequenceGenerator(name = "SEQ_PRODUCTS_AVAILABLE",allocationSize = 1,sequenceName = "SEQ_PRODUCTS_AVAILABLE")
-
     private Long id;
+
     @NotNull
     private int stock;
 
