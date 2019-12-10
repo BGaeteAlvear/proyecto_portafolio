@@ -46,13 +46,15 @@ public class PurchaseOrderController {
     private final IProductService productService;
     private final IPurchaseOrderService purchaseOrderService;
     private final ICategoryService categoryService;
+    private final IPurchaseOrderService purchaseOrderService;
     private final Logger log= LoggerFactory.getLogger(getClass());
 
 
-    public PurchaseOrderController(IProductService productService, IPurchaseOrderService purchaseOrderService, ICategoryService categoryService) {
+    public PurchaseOrderController(IProductService productService, ICategoryService categoryService, IPurchaseOrderService purchaseOrderService) {
         this.productService = productService;
         this.purchaseOrderService = purchaseOrderService;
         this.categoryService = categoryService;
+        this.purchaseOrderService = purchaseOrderService;
     }
 
 
@@ -77,6 +79,41 @@ public class PurchaseOrderController {
     }
 
 
+
+
+
+    @GetMapping("/form/{id}")
+    public String edit(@PathVariable(value = "id")Long id, Map<String, Object> model, RedirectAttributes flash){
+        Product product = null;
+        List<Category> listCategories = categoryService.getAll();
+        if(id > 0){
+            product = productService.findById(id);
+
+           if (product == null){
+                flash.addFlashAttribute("error", "El id del producto no existe en la base de datos");
+                return "redirect:/product/index";
+            }
+        }else {
+            flash.addFlashAttribute("error", "El ID del producto no puede ser cero!");
+            return "redirect:/product/index";
+        }
+        model.put("product", product);
+        model.put("list_categories", listCategories);
+        model.put("title_header", "Editar Producto");
+        model.put("title", "Editar producto");
+        return "/product/form";
+    }
+
+    // este es el controlador brian
+    @GetMapping("/purchaseOrderByUserId/{id}")
+    public String purchaseOrderByUserId(@PathVariable(value = "id")Long id, Model model){
+
+        List<PurchaseOrder> list =  purchaseOrderService.getPurchaseOrderByPersonId(id);
+
+        model.addAttribute("lista_ordenes" , list);
+
+        return "/purchase-order/index";
+    }
 
 
 
