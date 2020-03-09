@@ -4,6 +4,8 @@ import com.feriavirtual.app.models.entity.Product;
 import com.feriavirtual.app.models.service.ICategoryService;
 import com.feriavirtual.app.models.service.IProductService;
 import com.feriavirtual.app.models.service.IUploadFileService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -18,8 +20,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 
 /*
@@ -42,8 +48,11 @@ import java.util.Map;
 @SessionAttributes("product")
 public class ProductController {
 
+
+
     private final IProductService productService;
     private final ICategoryService categoryService;
+    private final Logger log= LoggerFactory.getLogger(getClass());
 
     @Autowired
     private IUploadFileService uploadFileService;
@@ -91,7 +100,7 @@ public class ProductController {
     }
 
 
-    @GetMapping (value = "/uploads/{filename:.+}")
+    /*@GetMapping (value = "/uploads/{filename:.+}")
     public ResponseEntity<Resource> verImagen(@PathVariable String filename){
 
         Resource recurso = null;
@@ -102,7 +111,7 @@ public class ProductController {
         }
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\""+ recurso.getFilename()+ "\"")
                 .body(recurso);
-    }
+    }*/
 
 
     @PostMapping("/form")
@@ -110,23 +119,40 @@ public class ProductController {
                          @RequestParam("file") MultipartFile image, RedirectAttributes flash, SessionStatus status){
 
         if(!image.isEmpty()){
-            if (product.getId()!=null && product.getId()>0
+            String uniqueFilename = UUID.randomUUID().toString()+"_"+image.getOriginalFilename();
+            Path rootPath = Paths.get("uploads").resolve(uniqueFilename);
+
+            Path rootAbsolutePath =rootPath.toAbsolutePath();
+            log.info("rootPath: "+ rootPath);
+            log.info("rootAbsolutePath: "+ rootAbsolutePath);
+
+            if ((image.getSize()/ (1024 * 1024))<15) {
+           /* if (product.getId()!=null && product.getId()>0
                     && product.getImage()!=null
                     && product.getImage().length()>0  ){
 
                 uploadFileService.delete(product.getImage());
-            }
-            String uniqueFilename= null;
-            try {
-                uniqueFilename = uploadFileService.copy(image);
-            } catch (IOException e) {
-                e.printStackTrace();
+            }*/
+
+
+                try {
+                    Files.copy(image.getInputStream(), rootAbsolutePath);
+                    flash.addFlashAttribute("success", "Se ha cargado correctamente '" + uniqueFilename + "'");
+                    product.setImage(uniqueFilename);
+                    //uniqueFilename = uploadFileService.copy(image);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }else{
+                flash.addFlashAttribute("error","Imagen excede el Límite");
+                return "redirect:/product/form";
             }
 
-            flash.addFlashAttribute("info","Se ha cargado correctamente '"+ uniqueFilename+ "'");
-            product.setImage(uniqueFilename);
+                /*flash.addFlashAttribute("info", "Se ha cargado correctamente '" + uniqueFilename + "'");
+                product.setImage(uniqueFilename);*/
 
-           if (result.hasErrors()){
+            if (result.hasErrors()){
                 model.addAttribute("title","Crear Producto");
                 return "/product/form";
             }
@@ -150,7 +176,7 @@ public class ProductController {
             productService.delete(id);
 
                 if(uploadFileService.delete(product.getImage())){
-                    flash.addFlashAttribute("success", "Imagen: "+ product.getImage()+" eliminada con éxito");
+                    flash.addFlashAttribute("warning", "Imagen: "+ product.getImage()+" eliminada con éxito");
                 }
 
         }

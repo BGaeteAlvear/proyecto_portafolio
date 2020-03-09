@@ -6,15 +6,12 @@ import com.feriavirtual.app.models.service.JpaUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -56,12 +53,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().permitAll()
         ; */
 
-        http.authorizeRequests().antMatchers("/assets/**", "/css/**", "/js/**", "/images/**", "/profile/**").permitAll()
+        http.authorizeRequests().antMatchers("/assets/**", "/css/**", "/js/**", "/images/**", "/profile/**", "/api/purchase-order/**", "/api/purchase-order-location/**").permitAll()
                 /*.antMatchers("/ver/**").hasAnyRole("USER")*/
                 /*.antMatchers("/uploads/**").hasAnyRole("USER")*/
                 /*.antMatchers("/form/**").hasAnyRole("ADMIN")*/
                 /*.antMatchers("/eliminar/**").hasAnyRole("ADMIN")*/
                 /*.antMatchers("/factura/**").hasAnyRole("ADMIN")*/
+                .antMatchers("/product/**").permitAll()
+                .antMatchers("/category/**").permitAll()
+                .antMatchers("/transport/**").hasAnyAuthority("ADMIN", "TRANSPORTISTA")
+//                .antMatchers("/incident/**").hasAnyAuthority("EXTERNO", "ADMIN")
+                .antMatchers("/person/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/product-available/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -73,7 +76,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedPage("/error_403");
                ;
-
     }
 
     @Autowired

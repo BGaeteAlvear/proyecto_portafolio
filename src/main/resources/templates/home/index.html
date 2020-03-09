@@ -15,15 +15,14 @@
 
                 <div class="row">
                     <div class="col-lg-7">
-                        <h1>Bienvenido  </h1><h1 th:text="${user.getName()}"> </h1>
-                        <h1>SESSION  </h1><h5 th:text="${userSession}"> </h5>
-                        <h1>DATOS  </h1><h5 th:text="${user.getCredentials()}"> </h5>
-                        <h1>DATOS  </h1><h5 th:text="${user.getPrincipal()}"> </h5>
+                        </br>
+                        <h4 class="ti-uppercase">Bienvenido  </h4>
+                    <span> <p>Hola </p><h4 th:text="${user.getName()}"> </h4> </span>
+                    <span> <p>Rol: </p><h4 th:text="${user.getAuthorities()}"> </h4></span>
                     </div>
                     <div class="col-lg-5">
                         <div class="row">
                             <div class="col-sm-6 col-lg-6">
-
                                 <!--Sparkline Area Chart-->
                                 <div class="panel panel-success panel-colorful">
                                     <div class="pad-all">

@@ -21,7 +21,7 @@
                 <div class="panel">
                     <div class="panel-heading"></div>
                     <div class="panel-body">
-                        <a th:href="@{/product-available/form}" class="btn btn-success p-3">Nuevo Producto </a>
+                        <a sec:authorize="hasAuthority('PRODUCTOR')" th:href="@{/product-available/form}" class="btn btn-success p-3">Nuevo Producto </a>
                         <table  data-toggle="table"
                                 data-search="true"
                                 data-show-refresh="true"
@@ -49,14 +49,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="productAvailable : ${list_products_available}">
-                                <td data-align="center" th:text="${productAvailable.id}"></td>
-                                <td >
-                                    <img th:if= "${#strings.length(productAvailable.product)>0}" class="img-thumbnail rounded note-float-left" style="max-width: 25%;"
+                            <tr th:each="productAvailable, iterator : ${list_products_available}">
+                                <td data-align="center" th:text="${iterator.index + 1}"></td>
+                                <td style="width: 15%">
+                                    <img th:if= "${#strings.length(productAvailable.product)>0}" class="img-thumbnail rounded note-float-left" style=" object-fit: contain;"
                                          th:src="@{'/uploads/'+ ${productAvailable.product.image}}" th:alt="${productAvailable.product.image}"/>
                                 </td>
                                 <td th:text="${productAvailable.product.name}"></td>
-                                <td th:text="${productAvailable.product.description}"></td>
+                                <td th:text="${#strings.abbreviate(productAvailable.product.description,70)}"></td>
                                 <td th:text="${productAvailable.price}">$</td>
                                 <td th:text="${productAvailable.product.category.name}"></td>
                                 <td th:text="${productAvailable.stock}"></td>
@@ -65,8 +65,8 @@
                                 <td th:text="${productAvailable.createdAt}"></td>
                                 <td th:text="${productAvailable.updatedAt}"></td>
                                 <td>
-                                    <a class="btn btn-info btn-icon add-tooltip" data-original-title="Editar" th:href="@{/product-available/form/} + ${productAvailable.id}" ><i class="ion-edit"></i></a>
-                                    <a class="btn btn-danger btn-icon add-tooltip"  data-original-title="Eliminar" th:href="@{/product-available/eliminar/} + ${productAvailable.id}" ><i class="ion-trash-a"></i></a>
+                                    <a sec:authorize="hasAuthority('PRODUCTOR')" class="btn btn-info btn-icon add-tooltip" data-original-title="Editar" th:href="@{/product-available/form/} + ${productAvailable.id}" ><i class="ion-edit"></i></a>
+                                    <a sec:authorize="hasAuthority('PRODUCTOR')" class="btn btn-danger btn-icon add- tooltip"  data-original-title="Eliminar" th:href="@{/product-available/eliminar/} + ${productAvailable.id}" ><i class="ion-trash-a"></i></a>
                                 </td>
                             </tr>
                             </tbody>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<div id="container" class="effect aside-float aside-bright mainnav-lg">
+
+    <header th:replace="layout/layout :: header"></header>
+
+    <div class="boxed">
+        <div id="content-container">
+
+            <div th:replace="layout/layout :: page-head"></div>
+
+            <!-- Content -->
+            <div id="page-content">
+                <input type="hidden" th:if="${info != null}" id="info" th:value="${info}">
+                <input type="hidden" th:if="${error != null}" id="danger" th:value="${error}">
+                <input type="hidden" th:if="${success != null}" id="success" th:value="${success}">
+                <input type="hidden" th:if="${warning != null}" id="warning" th:value="${warning}">
+                <form th:action="@{/product-available/form}" method="post" enctype="multipart/form-data">
+
+                    <div class="panel mt-2">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-bold text-uppercase">PEDIDO</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <img src="https://atasouthport.com/wp-content/uploads/2017/04/default-image.jpg"  style="width: 100%; height: 300px!important; object-fit: cover;"
+                                         id="image-preview" class="rounded float-left" alt="">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="customer">Producto</label>
+                                            <input type="text" id="customer" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="type">Categoria</label>
+                                            <input type="text" id="type" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="email">Cantidad</label>
+                                            <input type="text" id="email" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="direccion">Unidad</label>
+                                            <input type="text" id="direccion" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label for="city">Descripcion</label>
+                                            <textarea name="" class="form-control"  id="" cols="30" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel mt-2">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-bold text-uppercase">Datos del Cliente </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label for="customer">Cliente</label>
+                                            <input type="text" id="customer" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="type">Tipo</label>
+                                            <input type="text" id="type" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="email">Email</label>
+                                            <input type="text" id="email" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="direccion">Dirección</label>
+                                            <input type="text" id="direccion" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="city">Ciudad</label>
+                                            <input type="text" id="city" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="country">País</label>
+                                            <input type="text" id="country" class="form-control" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel mt-2">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-bold text-uppercase">PROVEEDOR</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label for="customer">Nombre</label>
+                                            <input type="text" id="customer" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="type">Apellido</label>
+                                            <input type="text" id="type" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="country">Empresa</label>
+                                            <input type="text" id="country" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="email">Email</label>
+                                            <input type="text" id="email" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="direccion">Dirección</label>
+                                            <input type="text" id="direccion" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="city">Ciudad</label>
+                                            <input type="text" id="city" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="country">País</label>
+                                            <input type="text" id="country" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="country">Monto Licitación</label>
+                                            <input type="text" id="country" class="form-control" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel mt-2">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-bold text-uppercase">TRANSPORTISTA</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label for="customer">Nombre</label>
+                                            <input type="text" id="customer" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="type">Apellido</label>
+                                            <input type="text" id="type" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="country">Empresa</label>
+                                            <input type="text" id="country" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="email">Email</label>
+                                            <input type="text" id="email" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="direccion">Dirección</label>
+                                            <input type="text" id="direccion" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="city">Ciudad</label>
+                                            <input type="text" id="city" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="country">País</label>
+                                            <input type="text" id="country" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="country">Monto Licitación</label>
+                                            <input type="text" id="country" class="form-control" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel mt-2">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-bold text-uppercase">DATOS ADUANAS Y SEGUROS</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label for="customer">Nombre Aseguradora</label>
+                                            <input type="text" id="customer" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="type">Valor Seguro </label>
+                                            <input type="text" id="type" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="country">Valor Aduana</label>
+                                            <input type="text" id="country" class="form-control" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel mt-2">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-bold text-uppercase">DETALLE DE GANANCIA</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label for="customer">MAIPO GRANDE</label>
+                                            <input type="text" id="customer" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="type">PRODUCTOR</label>
+                                            <input type="text" id="type" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="country">TRANSPORTISTA</label>
+                                            <input type="text" id="country" class="form-control" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- End Content -->
+
+        </div>
+
+        <!-- MENU PRINCIPAL -->
+        <nav th:replace="layout/layout :: mainnav-container"></nav>
+        <!-- END MENU PRINCIPAL -->
+
+    </div>
+
+    <footer th:replace="layout/layout :: footer"></footer>
+
+</div>
+
+<script>
+    $(function () {
+        $('#sale_type').bootstrapToggle({
+            on: '1',
+            off: '0'
+        });
+    })
+</script>
+</body>
+</html>

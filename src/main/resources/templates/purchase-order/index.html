@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+<div id="container" class="effect aside-float aside-bright mainnav-lg">
+
+    <header th:replace="layout/layout :: header"></header>
+
+
+    <div class="boxed">
+        <div id="content-container">
+
+            <div th:replace="layout/layout :: page-head"></div>
+
+            <!-- Content -->
+            <div id="page-content">
+                <input type="hidden" th:if="${info != null}" id="info" th:value="${info}">
+                <input type="hidden" th:if="${error != null}" id="danger" th:value="${error}">
+                <input type="hidden" th:if="${success != null}" id="success" th:value="${success}">
+                <input type="hidden" th:if="${warning != null}" id="warning" th:value="${warning}">
+
+                <div class="panel">
+                    <div class="panel-heading"></div>
+                    <div class="panel-body">
+                        <table  data-toggle="table"
+                                data-search="true"
+                                data-show-refresh="true"
+                                data-show-toggle="true"
+                                data-show-columns="true"
+                                data-sort-name="id"
+                                data-page-list="[5, 10, 20]"
+                                data-page-size="5"
+                                data-pagination="true" data-show-pagination-switch="true">
+                            <thead class="thead-inverse">
+                            <tr>
+
+                                <th data-align="center" data-sortable="true" >Numero de Orden</th>
+                                <th data-sortable="true" >Categoria</th>
+                                <th data-sortable="true" >Producto</th>
+                                <th data-sortable="true">Cantidad</th>
+                                <th data-sortable="true">Fecha</th>
+                                <th data-sortable="true">Descripción</th>
+                                <th data-align="center">Opciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="order, iterator : ${listOrders}">
+                                <td data-align="center" th:text="${order.id}"></td>
+                                <td th:text="${order.product.category.name}"></td>
+                                <td th:text="${order.product.name}"></td>
+                                <td th:text="${order.quantity_order}"></td>
+                                <td th:text="${order.createdAt}"></td>
+                                <td th:text="${order.description}"></td>
+                                <td>
+                                    <a  class="btn btn-info btn-icon add-tooltip" data-original-title="Editar" th:href="@{/order/form/} + ${order.id}" ><i class="ion-edit"></i></a>
+<!--                                    <a class="btn btn-danger btn-icon add-tooltip"  data-original-title="Eliminar" th:href="@{/order/eliminar/} + ${category.id}" ><i class="ion-trash-a"></i></a>-->
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End Content -->
+
+        </div>
+
+        <!-- MENU PRINCIPAL -->
+        <nav th:replace="layout/layout :: mainnav-container"></nav>
+        <!-- END MENU PRINCIPAL -->
+
+    </div>
+
+    <footer th:replace="layout/layout :: footer"></footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+</div>
+</body>
+</html>
+

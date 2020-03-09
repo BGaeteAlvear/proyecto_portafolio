@@ -38,13 +38,34 @@
 
                         <form th:action="@{/product/form}" th:object="${product}" method="post" enctype="multipart/form-data">
                             <div class="row">
-                                <div class="col-md-3">
-                                    <img src="http://www.tourniagara.com/wp-content/uploads/2014/10/default-img.gif" class="rounded float-left" style="width: 100%; height: 300px!important; object-fit: cover;"  id="image-preview" alt="...">
+                                <div th:if="${product.image != null}" class="col-md-3">
+                                    <img th:if="${#strings.length(product.image)>0}"
+                                         style="width: 100%; height: 300px!important; object-fit: cover;"
+                                         id="image-preview" class="rounded float-left"
+                                         th:src="@{'/uploads/'+ ${product.image}}" th:alt="${product.image}"/>
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <div class="fileUpload blue-btn py-2">
-                                                <input type="file" name="file" accept="image/*" class="form-control uploadFile"  required />
-                                                <small class="form-text text-danger" ></small>
+                                                <input type="file" name="file" accept="image/*"
+                                                       class="form-control uploadFile" th:value="*{image}"/>
+                                                <small class="form-text text-danger"></small>
+                                                <h5 style="font-weight: bold">Subir Foto</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div th:if="${product.image == null}" class="col-md-3">
+                                    <img src="http://www.tourniagara.com/wp-content/uploads/2014/10/default-img.gif"
+                                         class="rounded float-left"
+                                         style="width: 100%; height: 300px!important; object-fit: cover;"
+                                         id="image-preview" alt="...">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="fileUpload blue-btn py-2">
+                                                <input type="file" name="file" accept="image/*"
+                                                       class="form-control uploadFile" required/>
+                                                <small class="form-text text-danger"></small>
                                                 <h5 style="font-weight: bold">Subir Foto</h5>
                                             </div>
                                         </div>
@@ -53,12 +74,14 @@
                                 <div class="col-md-9">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <div class="form-group">
+                                            <div class="form-group" id="idName">
                                                 <label for="name" class="col-form-label">Nombre (*)</label>
-                                                <input id="name" type="text" th:field="*{name}" class="form-control"
+                                                <input onkeyup="lengthValidator(this,'nameCounter',50,'idName')" id="name" type="text"
+                                                       th:field="*{name}" class="form-control counter-text"
                                                        th:errorclass="'form-control alert-danger'" required  /> <small
-                                                    class="form-text text-danger"
+                                                    class="form-text text-danger "
                                                     th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                                                <span id="nameCounter"></span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -79,12 +102,14 @@
 
 
                                         <div class="col-sm-12">
-                                            <div class="form-group">
+                                            <div class="form-group" id="idDescripcion">
                                                 <label for="description" class="col-form-label">Descripción</label>
-                                                <textarea id="description" type="text" th:field="*{description}" class="form-control"
+                                                <textarea onkeyup="lengthValidator(this, 'descripCounter', 500, 'idDescripcion')" id="description" type="text"
+                                                          th:field="*{description}" class="form-control counter-text"
                                                           th:errorclass="'form-control alert-danger'" cols="30" rows="12" required  /> <small
                                                     class="form-text text-danger"
                                                     th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                                                <span id="descripCounter"></span>
                                             </div>
                                         </div>
 
@@ -149,6 +174,7 @@
             return "Only image/pdf formats are allowed!";
         }
     }
+
 </script>
 </body>
 </html>

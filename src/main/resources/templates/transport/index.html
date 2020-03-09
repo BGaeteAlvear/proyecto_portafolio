@@ -21,7 +21,7 @@
                 <div class="panel">
                     <div class="panel-heading"></div>
                     <div class="panel-body">
-                        <a th:href="@{/transport/form}" class="btn btn-success p-3">Nuevo Transporte</a>
+                        <a sec:authorize="hasAuthority('TRANSPORTISTA')" th:href="@{/transport/form}" class="btn btn-success p-3">Nuevo Transporte</a>
                         <table  data-toggle="table"
                                 data-search="true"
                                 data-show-refresh="true"
@@ -41,14 +41,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="transport : ${list}">
-                                <td th:text="${transport.id}"></td>
+                            <tr th:each="transport, iterator : ${list}">
+                                <td th:text="${iterator.index + 1}"></td>
                                 <td th:text="${transport.transportType.name}"></td>
                                 <td th:text="${transport.refrigeration} ? 'Si' : 'No'"></td>
                                 <td th:text="${transport.capacity}"></td>
                                 <td>
-                                    <a class="btn btn-info btn-icon add-tooltip" data-original-title="Editar" th:href="@{/transport/form/} + ${transport.id}" ><i class="ion-edit"></i></a>
-                                    <a class="btn btn-danger btn-icon add-tooltip"  data-original-title="Eliminar" th:href="@{/transport/delete/} + ${transport.id}" ><i class="ion-trash-a"></i></a>
+                                    <a sec:authorize="hasAuthority('TRANSPORTISTA')" class="btn btn-info btn-icon add-tooltip" data-original-title="Editar" th:href="@{/transport/form/} + ${transport.id}" ><i class="ion-edit"></i></a>
+                          <!--  <a class="btn btn-danger btn-icon add-tooltip"  data-original-title="Eliminar" th:href="@{/transport/delete/} + ${transport.id}" ><i class="ion-trash-a"></i></a> -->
                                 </td>
                             </tr>
                             </tbody>

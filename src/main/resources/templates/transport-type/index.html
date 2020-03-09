@@ -41,8 +41,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="transporType : ${list}">
-                                <td data-align="center" th:text="${transporType.id}"></td>
+                            <tr th:each="transporType, iterator : ${list}">
+                                <td data-align="center" th:text="${iterator.index + 1}"></td>
                                 <td th:text="${transporType.name}"></td>
                                 <td th:text="${transporType.description}"></td>
                                 <td>

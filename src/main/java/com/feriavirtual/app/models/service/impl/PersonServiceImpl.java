@@ -35,7 +35,7 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     @Transactional(readOnly = true)
     public Person findById(Long id) {
-        return personRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        return personRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
@@ -52,7 +52,14 @@ public class PersonServiceImpl implements IPersonService {
 
     @Override
     public Person findByUsername(String username) {
-        return personRepository.findByUsername(username);
+       return personRepository.findByUsername(username);
+   //     return personRepository.findByUsernameIs(username);
+    }
+
+    @Override
+    public Person buscarPorUsuario(String username) {
+      //  return personRepository.buscarPorUsuario(username);
+        return null;
     }
 
     @Override
@@ -67,16 +74,26 @@ public class PersonServiceImpl implements IPersonService {
 
     @Override
     public Role findRoleById(Long id) {
-        return  roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        return  roleRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public Authority findAuthorityById(Long id) {
-        return authorityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        return authorityRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public Authority findAuthorityByName(String name) {
         return authorityRepository.findByAuthority(name);
+    }
+
+    @Override
+    public Person findPersonByIdParams(Long id) {
+        return personRepository.findPersonByIdParams(id);
+    }
+
+    @Override
+    public Person getById(Long id) {
+        return personRepository.getOne(id);
     }
 }

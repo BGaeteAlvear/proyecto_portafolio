@@ -9,6 +9,7 @@ public interface IProductAvailableService {
     List<ProductAvailable> getAll();
     ProductAvailable findById(Long id);
     List<ProductAvailable> findByPerson(Person person);
+    List<ProductAvailable> findBySaleTypeEquals(String saleType);
     ProductAvailable save(ProductAvailable productAvailable);
     void delete(Long id);
 }

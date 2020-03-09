@@ -27,7 +27,7 @@
         <link th:href="@{/assets/plugins/pace/pace.min.css}" rel="stylesheet">
         <script th:href="@{/assets/plugins/pace/pace.min.js}"></script>
         <!--Demo [ DEMONSTRATION ]-->
-        <link th:href="@{/assets/css/demo/nifty-demo.min.css}" rel="stylesheet">
+<!--        <link th:href="@{/assets/css/demo/nifty-demo.min.css}" rel="stylesheet">-->
 
         <!-- ICONS -->
         <link th:href="@{/assets/plugins/ionicons/css/ionicons.min.css}" rel="stylesheet">
@@ -61,7 +61,7 @@
 <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/css/datepicker.css">-->
 <!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.min.js"></script>-->
 <!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/i18n/datepicker.es.min.js"></script>-->
-
+        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
         <!-- CUSTOM CSS -->
         <link th:href="@{/assets/css/demo/custom-login.css}" rel="stylesheet">
         <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
@@ -71,7 +71,10 @@
         <!--Bootstrap Datepicker [ OPTIONAL ]-->
         <link th:href="@{/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css}" rel="stylesheet">
 
+<!--        <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet">-->
+<!--        <script src="//cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>-->
 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css" />
 
     </head>
 
@@ -168,7 +171,6 @@
 
                                         </div>
                                         <div class="col-sm-4 col-md-3">
-
                                             <!--Mega menu list-->
                                             <ul class="list-unstyled">
                                                 <li class="dropdown-header"><i class="demo-pli-mail icon-lg icon-fw"></i> Mailbox</li>
@@ -596,8 +598,7 @@
                                             <a th:href="@{/shopping-cart/index}">
                                                 <i class="demo-pli-gear"></i>
                                                 <span class="menu-title">
-                                                    Carrito de Compras
-                                                    <span class="pull-right badge badge-warning">24</span>
+                                                     Tienda de Productos
                                                 </span>
                                             </a>
                                         </li>
@@ -740,12 +741,13 @@
                 <!-- Optional JavaScript -->
                 <!-- jQuery first, then Bootstrap JS -->
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
                 <!--script th:src="@{/assets/js/popper.min.js}"></script-->
 <!--                <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>-->
                 <!--Bootstrap Datepicker [ OPTIONAL ]-->
 <!--                <script th:src="@{/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js}"></script>-->
 
-
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
 
                 <!--BootstrapJS [ RECOMMENDED ]-->
                 <script th:src="@{/assets/js/bootstrap.min.js}"></script>
@@ -758,10 +760,10 @@
 <!--                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.min.js}"></script>-->
 <!--                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.resize.min.js}"></script>-->
 <!--                <script th:src="@{/assets/plugins/flot-charts/jquery.flot.tooltip.min.js}"></script>-->
-                <script th:src="@{/assets/js/demo/tables-bs-table.js}"></script>
+<!--                <script th:src="@{/assets/js/demo/tables-bs-table.js}"></script>-->
 
-                <!--X-editable [ OPTIONAL ]-->
-                <script th:src="@{/assets/plugins/x-editable/js/bootstrap-editable.min.js}"></script>
+<!--                &lt;!&ndash;X-editable [ OPTIONAL ]&ndash;&gt;-->
+<!--                <script th:src="@{/assets/plugins/x-editable/js/bootstrap-editable.min.js}"></script>-->
 
                 <!--Bootstrap Table [ OPTIONAL ]-->
                 <script th:src="@{/assets/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
@@ -799,8 +801,7 @@
                 <!--Select2 [ OPTIONAL ]-->
                 <script th:src="@{/assets/plugins/select2/js/select2.min.js}"></script>
 
-
-
+                <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 
                 <script>
@@ -827,7 +828,7 @@
                         };
 
                         $('#date_expire').datepicker({
-                            format: 'dd-mm-yyyy',
+                            dateFormat: 'dd-mm-yy',
                             monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                             monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
                             dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
@@ -838,6 +839,8 @@
                             nextText: 'Sig>',
                             currentText: 'Hoy',
                         });
+
+
                         console.log($('#info').val());
                         if($('#info').val()){
                             $.niftyNoty({
@@ -883,7 +886,51 @@
                             });
                         }
 
+
+
                     });
+
+                    function lengthValidator(v_input, v_response, v_maxLength, v_parent) {
+
+                        if ($(v_input).val().length <= v_maxLength) {
+                            $('#'+v_response).html((v_maxLength - $(v_input).val().length) + ' carateres restantes');
+                            $('#'+v_parent).removeClass('has-error');
+                        } else {
+                            $('#'+v_response).html('Largo máximo de '+ v_maxLength+' caracteres excedido!');
+                            $('#'+v_parent).addClass('has-error');
+                            $(v_input).focusout();
+                            $(v_input).attr('maxlength', v_maxLength);
+                        }
+
+
+                    }
+
+                    var numberSpinner = (function() {
+                        $('.number-spinner>.ns-btn>a').click(function() {
+                            var btn = $(this),
+                                oldValue = btn.closest('.number-spinner').find('input').val().trim(),
+                                newVal = 0;
+
+                            if (btn.attr('data-dir') === 'up') {
+                                newVal = parseInt(oldValue) + 1;
+                            } else {
+                                if (oldValue > 1) {
+                                    newVal = parseInt(oldValue) - 1;
+                                } else {
+                                    newVal = 1;
+                                }
+                            }
+                            btn.closest('.number-spinner').find('input').val(newVal);
+                        });
+                        $('.number-spinner>input').keypress(function(evt) {
+                            evt = (evt) ? evt : window.event;
+                            var charCode = (evt.which) ? evt.which : evt.keyCode;
+                            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                return false;
+                            }
+                            return true;
+                        });
+                    })();
 
                 </script>
             </footer>

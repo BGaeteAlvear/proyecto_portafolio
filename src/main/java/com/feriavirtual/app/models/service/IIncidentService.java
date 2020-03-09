@@ -8,6 +8,8 @@ import java.util.List;
 public interface IIncidentService {
 
     List<Incident> getAll();
+    List<Incident> getIncidentsNotAssigned(Long id);
+    List<Incident> getIncidentsByClientId(Long id);
     Incident save(Incident incident);
     Incident findById(Long id);
     void delete(Long id);
